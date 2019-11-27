@@ -1,5 +1,5 @@
-workbox.skipWaiting();
-workbox.clientsClaim();
+workbox.core.skipWaiting();
+workbox.core.clientsClaim();
 
 workbox.routing.registerRoute(
   new RegExp('https:.*min.(css|js)'),
