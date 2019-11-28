@@ -1,0 +1,65 @@
+@import './colors';
+
+#login-page {
+  &__main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to bottom right, $brand_blue_light3, $brand_blue_dark);
+
+    #main-- {
+      &img__snorlax {
+        margin-top: 10vh;
+        height: 20vh;
+      }
+
+      &div__ {
+        &connection-container {
+          margin-top: 5vh;
+          width: 400px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          border-radius: 5px;
+          box-shadow: 5px 5px rgba(0, 0, 0, 0.3);
+          background: white;
+
+          @media (max-width: 400px) {
+            width: 300px;
+          }
+
+          #connection-container-- {
+            &h1__title {
+              margin-top: 3vh;
+              font-size: 3rem;
+              font-family: pacifico;
+              color: $brand_orange_dark;
+            }
+
+            &div__ {
+              &button-group {
+                display: flex;
+                width: 100%;
+                margin: 3vh 0;
+                justify-content: space-evenly;
+                #button-group-- {
+                  &button__connect,
+                  &button__add {
+                    width: 100px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+#new_connection_form--content {
+  .MuiTextField-root {
+    padding-bottom: 15px;
+  }
+}

@@ -1,0 +1,29 @@
+@import './colors';
+
+button,
+span {
+  &.MuiButton-contained.MuiButton-containedPrimary {
+    background-color: $brand_orange;
+    color: #ffffff;
+    &:hover {
+      background-color: lighten($brand_orange, 10%);
+    }
+    &.Mui-disabled {
+      color: rgba(0, 0, 0, 0.26);
+      box-shadow: none;
+      background-color: rgba(0, 0, 0, 0.12);
+    }
+  }
+  &.MuiButton-contained.MuiButton-containedSecondary {
+    background-color: $brand_blue;
+    color: #ffffff;
+    &:hover {
+      background-color: lighten($brand_blue, 10%);
+    }
+    &.Mui-disabled {
+      color: rgba(0, 0, 0, 0.26);
+      box-shadow: none;
+      background-color: rgba(0, 0, 0, 0.12);
+    }
+  }
+}
