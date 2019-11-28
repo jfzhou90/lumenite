@@ -36,7 +36,7 @@ const NewConnectionDialog = ({ open, onClose, connect }) => {
           validate={values => {
             const requiredFields = [
               'name',
-              'graphql',
+              'graphqlEndpoint',
               'userpoolId',
               'userpoolClientId',
               'username',
@@ -81,8 +81,8 @@ const NewConnectionDialog = ({ open, onClose, connect }) => {
               />
 
               <Field
-                name='graphql'
-                id='graphql'
+                name='graphqlEndpoint'
+                id='graphqlEndpoint'
                 type='text'
                 render={({ input, meta }) => {
                   const showError = !!meta.error && !!meta.touched;

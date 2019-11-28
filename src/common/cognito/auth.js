@@ -35,17 +35,10 @@ export const buildAuthUserFromCognitoSession = session => {
   const accessToken = session.getAccessToken().decodePayload();
   return {
     pk: split(userKeyToken, ':')[1],
-    sk: null,
-    tn: 'User',
     subscriberPk: idToken['custom:SubscriberId'],
     userType: idToken['custom:UserType'],
-    permGroups: [],
-    firstName: null,
-    lastName: null,
     email: idToken.email,
-    initials: null,
     username: accessToken.username,
-    permissions: [],
     auth: {
       accessToken: session.getAccessToken().getJwtToken(),
       idToken: session.getIdToken().getJwtToken(),
@@ -53,4 +46,27 @@ export const buildAuthUserFromCognitoSession = session => {
       expiry: session.getIdToken().getExpiration(),
     },
   };
+};
+
+export const getAccessToken = ({ userpoolId, userpoolClientId }) => {
+  console.log(userpoolClientId, userpoolId);
+  return new Promise((resolve, reject) => {
+    const poolData = {
+      UserPoolId: userpoolId,
+      ClientId: userpoolClientId,
+    };
+
+    const userPool = new AWSCognito.CognitoUserPool(poolData);
+    const cognitoUser = userPool.getCurrentUser();
+
+    cognitoUser.getSession((err, session) => {
+      if (err) {
+        reject(401);
+      } else {
+        const idToken = session.getIdToken().jwtToken;
+
+        resolve(idToken);
+      }
+    });
+  });
 };

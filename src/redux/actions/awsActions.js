@@ -6,7 +6,7 @@ export const connectToAws = connectionDetails => dispatch => {
 
   authenticateViaCognito(connectionDetails)
     .then(session => buildAuthUserFromCognitoSession(session))
-    .then(authUser => console.log('here', authUser));
-
-  setTimeout(() => dispatch({ type: types.CONNECTED_TO_AWS }), 5000);
+    .then(authUser => {
+      dispatch({ type: types.CONNECTED_TO_AWS, payload: { authUser, connectionDetails } });
+    });
 };
