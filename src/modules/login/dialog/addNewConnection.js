@@ -10,11 +10,18 @@ import {
 } from '@material-ui/core';
 import { Form, Field } from 'react-final-form';
 import { forEach } from 'lodash';
+import { useSelector } from 'react-redux';
 
-const NewConnectionDialog = ({ open, onClose }) => {
+const NewConnectionDialog = ({ open, onClose, connect }) => {
+  const isConnecting = useSelector(state => state.auth.isConnecting);
+
   const onSubmit = data => {
-    console.log(data);
+    connect(data);
   };
+
+  if (!open) {
+    return null;
+  }
 
   return (
     <Dialog open={open} onClose={onClose} aria-labelledby='new_connection_form'>
@@ -27,7 +34,14 @@ const NewConnectionDialog = ({ open, onClose }) => {
         <Form
           onSubmit={onSubmit}
           validate={values => {
-            const requiredFields = ['name', 'graphql', 'userpoolId', 'username', 'password'];
+            const requiredFields = [
+              'name',
+              'graphql',
+              'userpoolId',
+              'userpoolClientId',
+              'username',
+              'password',
+            ];
             const errors = {};
 
             forEach(requiredFields, field => {
@@ -38,7 +52,7 @@ const NewConnectionDialog = ({ open, onClose }) => {
 
             return errors;
           }}
-          render={({ handleSubmit, submitting, invalid }) => (
+          render={({ handleSubmit, invalid }) => (
             <form onSubmit={handleSubmit}>
               <Field
                 name='name'
@@ -117,6 +131,31 @@ const NewConnectionDialog = ({ open, onClose }) => {
               />
 
               <Field
+                name='userpoolClientId'
+                id='userpoolClientId'
+                type='text'
+                render={({ input, meta }) => {
+                  const showError = !!meta.error && !!meta.touched;
+                  return (
+                    <TextField
+                      label='Cognito Userpool Client Id'
+                      fullWidth
+                      required
+                      error={showError}
+                      InputProps={{
+                        inputProps: {
+                          maxLength: 30,
+                          autoComplete: 'off',
+                          'aria-required': true,
+                        },
+                      }}
+                      {...input}
+                    />
+                  );
+                }}
+              />
+
+              <Field
                 name='username'
                 id='username'
                 type='text'
@@ -165,10 +204,10 @@ const NewConnectionDialog = ({ open, onClose }) => {
                 }}
               />
               <DialogActions>
-                <Button onClick={onClose} color='primary'>
+                <Button onClick={onClose} color='secondary'>
                   Cancel
                 </Button>
-                <Button onClick={onClose} color='primary' disabled={invalid || submitting}>
+                <Button type='submit' color='primary' disabled={invalid || isConnecting}>
                   Connect
                 </Button>
               </DialogActions>

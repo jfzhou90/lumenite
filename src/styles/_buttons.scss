@@ -27,3 +27,19 @@ span {
     }
   }
 }
+
+button {
+  &.MuiButton-textPrimary {
+    color: $brand_orange;
+    &:hover {
+      background-color: lighten($brand_orange_light4, 1%);
+    }
+  }
+
+  &.MuiButton-textSecondary {
+    color: $brand_blue;
+    &:hover {
+      background-color: lighten($brand_blue_light5, 20%);
+    }
+  }
+}

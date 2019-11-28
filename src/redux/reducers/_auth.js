@@ -1,8 +1,12 @@
 import initialState from './initialState';
-// import * as types from '../actions/actionTypes';
+import * as types from '../actions/actionTypes';
 
 export default function authReducer(state = initialState.auth, action) {
   switch (action.type) {
+    case types.CONNECTING_TO_AWS:
+      return { ...state, isConnecting: true };
+    case types.CONNECTED_TO_AWS:
+      return { ...state, isConnecting: false };
     default:
       return state;
   }
