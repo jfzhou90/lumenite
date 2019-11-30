@@ -2,6 +2,7 @@ import React from 'react';
 import GraphiQL from 'graphiql';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Field } from 'react-final-form';
+import uuid from 'uuid/v4';
 
 import { getAccessToken } from '../../common/cognito/auth';
 import { connectToAws } from '../../redux/actions/awsActions';
@@ -45,63 +46,75 @@ const GraphQLEditor = () => {
       )
       .then(response => response.json());
   };
+
+  const copyUuid = () => {
+    const el = document.createElement('textarea');
+    el.value = uuid();
+    el.setAttribute('readonly', '');
+    el.style = { position: 'absolute', left: '-9999px' };
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+  };
   return (
-    <>
-      <GraphiQL fetcher={graphQLFetcher} editorTheme='orion'>
-        <GraphiQL.Logo>
-          <span className='editor--lumenite-title'>Lumenite</span>
-        </GraphiQL.Logo>
-        <GraphiQL.Footer>
-          <div className='footer_toolbar'>
-            <Form
-              onSubmit={changeUser}
-              validate={({ username, password }) => {
-                const error = {};
-                if (!username) {
-                  error.username = 'Required';
-                }
-                if (!password) {
-                  error.password = 'Required';
-                }
-                return error;
-              }}
-              render={({ handleSubmit, invalid, form }) => (
-                <form
-                  onSubmit={event => {
-                    handleSubmit(event);
-                    form.reset();
-                  }}
-                >
-                  <Field
-                    name='username'
-                    component='input'
-                    type='text'
-                    placeholder='Username'
-                    autoComplete='off'
-                  />
-                  <Field
-                    name='password'
-                    component='input'
-                    type='password'
-                    placeholder='Password'
-                    autoComplete='off'
-                  />
-                  <button disabled={invalid || isConnecting} type='submit'>
-                    Login
-                  </button>
-                </form>
-              )}
-            />
-            <span>
-              Logged in as <strong>{user.username}</strong>
-            </span>
-            <button className='logout-button' onClick={logout}>
-              Logout
-            </button>
-          </div>
-        </GraphiQL.Footer>
-      </GraphiQL>
-    </>
+    <GraphiQL fetcher={graphQLFetcher} editorTheme='orion'>
+      <GraphiQL.Logo>
+        <span className='editor--lumenite-title'>Lumenite</span>
+      </GraphiQL.Logo>
+      <GraphiQL.Footer>
+        <div className='footer_toolbar'>
+          <button onClick={copyUuid}>UUID</button>
+          <Form
+            onSubmit={changeUser}
+            validate={({ username, password }) => {
+              const error = {};
+              if (!username) {
+                error.username = 'Required';
+              }
+              if (!password) {
+                error.password = 'Required';
+              }
+              return error;
+            }}
+            render={({ handleSubmit, invalid, form }) => (
+              <form
+                onSubmit={event => {
+                  handleSubmit(event);
+                  form.reset();
+                }}
+              >
+                <Field
+                  name='username'
+                  component='input'
+                  type='text'
+                  placeholder='Username'
+                  autoComplete='off'
+                />
+                <Field
+                  name='password'
+                  component='input'
+                  type='password'
+                  placeholder='Password'
+                  autoComplete='off'
+                />
+
+                <button disabled={invalid || isConnecting} type='submit'>
+                  Login
+                </button>
+              </form>
+            )}
+          />
+
+          <span>
+            Logged in as <strong>{user.username}</strong>
+          </span>
+          <button className='logout-button' onClick={logout}>
+            Logout
+          </button>
+        </div>
+      </GraphiQL.Footer>
+    </GraphiQL>
   );
 };
 
