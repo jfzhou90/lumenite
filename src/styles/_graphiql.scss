@@ -28,11 +28,14 @@
         input {
           margin: 0 5px;
         }
+        @media (max-width: 1000px) {
+          display: none;
+        }
       }
 
       span {
-        @media(max-width: 1500px) {
-          display:none;
+        @media (max-width: 1500px) {
+          display: none;
         }
       }
 
