@@ -57,6 +57,7 @@ const GraphQLEditor = () => {
     document.execCommand('copy');
     document.body.removeChild(el);
   };
+
   return (
     <GraphiQL fetcher={graphQLFetcher} editorTheme='orion'>
       <GraphiQL.Logo>
@@ -64,7 +65,9 @@ const GraphQLEditor = () => {
       </GraphiQL.Logo>
       <GraphiQL.Footer>
         <div className='footer_toolbar'>
-          <button onClick={copyUuid}>UUID</button>
+          <button title='Copy UUID to clipboard' onClick={copyUuid}>
+            UUID
+          </button>
           <Form
             onSubmit={changeUser}
             validate={({ username, password }) => {
