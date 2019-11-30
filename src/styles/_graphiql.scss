@@ -52,6 +52,9 @@
       }
 
       span {
+        strong {
+          font-weight: bold;
+        }
         @media (max-width: 1500px) {
           display: none;
         }
