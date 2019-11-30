@@ -55,7 +55,7 @@ const ExistingConnectionDialog = ({ open, onClose, connect, connections }) => {
             onChange={onSelect}
             value={connection}
           >
-            {map(keys(connections), connection => (
+            {map(keys(connections).sort(), connection => (
               <MenuItem value={connection} key={connection}>
                 {connection}
               </MenuItem>
