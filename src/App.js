@@ -12,7 +12,7 @@ const App = () => {
 
   return (
     <>
-      <ToastContainer autoClose={5000} hideProgressBar />
+      <ToastContainer autoClose={3000} hideProgressBar />
       {isAuthenticated ? <GraphQLEditor /> : <LoginPage />}
     </>
   );
