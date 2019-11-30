@@ -1,5 +1,5 @@
 import * as AWSCognito from 'amazon-cognito-identity-js';
-import { split } from 'lodash';
+import { split, toLower } from 'lodash';
 
 export const authenticateViaCognito = ({ userpoolId, userpoolClientId, username, password }) => {
   const userPool = new AWSCognito.CognitoUserPool({
@@ -8,12 +8,12 @@ export const authenticateViaCognito = ({ userpoolId, userpoolClientId, username,
   });
 
   const authenticationDetails = new AWSCognito.AuthenticationDetails({
-    Username: username,
+    Username: toLower(username),
     Password: password,
   });
 
   const cognitoUser = new AWSCognito.CognitoUser({
-    Username: username,
+    Username: toLower(username),
     Pool: userPool,
   });
 
@@ -32,13 +32,13 @@ export const authenticateViaCognito = ({ userpoolId, userpoolClientId, username,
 export const buildAuthUserFromCognitoSession = session => {
   const userKeyToken = session.getIdToken().decodePayload().UserId;
   const idToken = session.getIdToken().decodePayload();
-  const accessToken = session.getAccessToken().decodePayload();
+
   return {
     pk: split(userKeyToken, ':')[1],
     subscriberPk: idToken['custom:SubscriberId'],
     userType: idToken['custom:UserType'],
     email: idToken.email,
-    username: accessToken.username,
+    username: idToken.preferred_username,
     auth: {
       accessToken: session.getAccessToken().getJwtToken(),
       idToken: session.getIdToken().getJwtToken(),
@@ -49,7 +49,6 @@ export const buildAuthUserFromCognitoSession = session => {
 };
 
 export const getAccessToken = ({ userpoolId, userpoolClientId }) => {
-  console.log(userpoolClientId, userpoolId);
   return new Promise((resolve, reject) => {
     const poolData = {
       UserPoolId: userpoolId,

@@ -7,6 +7,7 @@ import {
   DialogContentText,
   DialogActions,
   TextField,
+  CircularProgress,
 } from '@material-ui/core';
 import { Form, Field } from 'react-final-form';
 import { forEach } from 'lodash';
@@ -49,6 +50,10 @@ const NewConnectionDialog = ({ open, onClose, connect }) => {
                 errors[field] = 'Required';
               }
             });
+
+            if (!/^[\w-]+_.+$/.test(values.userpoolId)) {
+              errors.userpoolId = 'Invalid userpool id';
+            }
 
             return errors;
           }}
@@ -207,8 +212,12 @@ const NewConnectionDialog = ({ open, onClose, connect }) => {
                 <Button onClick={onClose} color='secondary'>
                   Cancel
                 </Button>
+
                 <Button type='submit' color='primary' disabled={invalid || isConnecting}>
                   Connect
+                  {isConnecting ? (
+                    <CircularProgress size='1rem' className='circular_progress' />
+                  ) : null}
                 </Button>
               </DialogActions>
             </form>

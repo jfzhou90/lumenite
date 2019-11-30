@@ -58,8 +58,23 @@
   }
 }
 
-#new_connection_form--content {
+#new_connection_form--content,
+#existing_connection_form--content {
   .MuiTextField-root {
     padding-bottom: 15px;
+  }
+  .circular_progress {
+    position: absolute;
+    left: 50;
+    right: 50;
+    top: 50;
+    bottom: 50;
+  }
+}
+
+#existing_connection_form--content {
+  .MuiFormControl-root {
+    width: 100%;
+    margin-bottom: 10px;
   }
 }

@@ -1,16 +1,43 @@
 import React from 'react';
 import GraphiQL from 'graphiql';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { Form, Field } from 'react-final-form';
 
 import { getAccessToken } from '../../common/cognito/auth';
+import { connectToAws } from '../../redux/actions/awsActions';
+import { LOGOUT } from '../../redux/actions/actionTypes';
 
 const GraphQLEditor = () => {
-  const { userpoolId, userpoolClientId } = useSelector(state => state.auth);
+  const {
+    currentEnv,
+    userpoolId,
+    userpoolClientId,
+    graphqlEndpoint,
+    user,
+    isConnecting,
+  } = useSelector(state => state.auth);
+  const dispatch = useDispatch();
+
+  const changeUser = newUserData => {
+    dispatch(
+      connectToAws({
+        ...newUserData,
+        name: currentEnv,
+        userpoolId,
+        userpoolClientId,
+        graphqlEndpoint,
+      })
+    );
+  };
+
+  const logout = () => {
+    dispatch({ type: LOGOUT });
+  };
 
   const graphQLFetcher = graphQLParams => {
     return getAccessToken({ userpoolId, userpoolClientId })
       .then(token =>
-        fetch('https://buquld7c4ra3rozcij62smq2uu.appsync-api.us-east-1.amazonaws.com/graphql', {
+        fetch(graphqlEndpoint, {
           method: 'post',
           headers: { 'Content-Type': 'application/json', authorization: token },
           body: JSON.stringify(graphQLParams),
@@ -18,7 +45,64 @@ const GraphQLEditor = () => {
       )
       .then(response => response.json());
   };
-  return <GraphiQL fetcher={graphQLFetcher} />;
+  return (
+    <>
+      <GraphiQL fetcher={graphQLFetcher} editorTheme='orion'>
+        <GraphiQL.Logo>
+          <span className='editor--lumenite-title'>Lumenite</span>
+        </GraphiQL.Logo>
+        <GraphiQL.Footer>
+          <div className='footer_toolbar'>
+            <Form
+              onSubmit={changeUser}
+              validate={({ username, password }) => {
+                const error = {};
+                if (!username) {
+                  error.username = 'Required';
+                }
+                if (!password) {
+                  error.password = 'Required';
+                }
+                return error;
+              }}
+              render={({ handleSubmit, invalid, form }) => (
+                <form
+                  onSubmit={event => {
+                    handleSubmit(event);
+                    form.reset();
+                  }}
+                >
+                  <Field
+                    name='username'
+                    component='input'
+                    type='text'
+                    placeholder='Username'
+                    autoComplete='off'
+                  />
+                  <Field
+                    name='password'
+                    component='input'
+                    type='password'
+                    placeholder='Password'
+                    autoComplete='off'
+                  />
+                  <button disabled={invalid || isConnecting} type='submit'>
+                    Change User
+                  </button>
+                </form>
+              )}
+            />
+            <span>
+              Currently signed in as {user.username}
+              <button className='logout-button' onClick={logout}>
+                Logout
+              </button>
+            </span>
+          </div>
+        </GraphiQL.Footer>
+      </GraphiQL>
+    </>
+  );
 };
 
 export default GraphQLEditor;

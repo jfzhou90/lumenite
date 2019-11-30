@@ -1,22 +1,29 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Button } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 
 import snorlaxPicture from '../../assets/img/snorlaxClipart.png';
 import NewConnectionDialog from './dialog/addNewConnection';
+import ExistingConnectionDialog from './dialog/connectExistingConnection';
 
 import { connectToAws } from '../../redux/actions/awsActions';
 
 const LoginPage = () => {
   const [openNewConnectionDialog, setNewConnectionDialog] = useState(false);
+  const [openExistingConnectionDialog, setExistingConnectionDialog] = useState(false);
+  const storedConnections = useMemo(() => JSON.parse(localStorage.getItem('connections')), []);
   const dispatch = useDispatch();
 
   const toggleNewConnectionDialog = () => {
     setNewConnectionDialog(!openNewConnectionDialog);
   };
 
-  const connect = async data => {
-    return dispatch(connectToAws(data));
+  const toggleExistingConnectionDialog = () => {
+    setExistingConnectionDialog(!openExistingConnectionDialog);
+  };
+
+  const newConnect = connectionDetails => {
+    return dispatch(connectToAws(connectionDetails));
   };
 
   return (
@@ -24,8 +31,16 @@ const LoginPage = () => {
       <NewConnectionDialog
         open={openNewConnectionDialog}
         onClose={toggleNewConnectionDialog}
-        connect={connect}
+        connect={newConnect}
       />
+
+      <ExistingConnectionDialog
+        open={openExistingConnectionDialog}
+        onClose={toggleExistingConnectionDialog}
+        connect={newConnect}
+        connections={storedConnections}
+      />
+
       <img id='main--img__snorlax' src={snorlaxPicture} alt='Snorlax' />
       <div id='main--div__connection-container'>
         <h1 id='connection-container--h1__title'>Lumenite</h1>
@@ -38,9 +53,16 @@ const LoginPage = () => {
           >
             New
           </Button>
-          <Button id='button-group--button__connect' variant='contained' color='primary'>
-            Connect
-          </Button>
+          {storedConnections ? (
+            <Button
+              id='button-group--button__connect'
+              variant='contained'
+              color='primary'
+              onClick={toggleExistingConnectionDialog}
+            >
+              Connect
+            </Button>
+          ) : null}
         </div>
       </div>
     </div>

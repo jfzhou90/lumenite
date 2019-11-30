@@ -8,5 +8,8 @@ export const connectToAws = connectionDetails => dispatch => {
     .then(session => buildAuthUserFromCognitoSession(session))
     .then(authUser => {
       dispatch({ type: types.CONNECTED_TO_AWS, payload: { authUser, connectionDetails } });
+    })
+    .catch(error => {
+      dispatch({ type: types.DISPLAY_ERROR, payload: error });
     });
 };
