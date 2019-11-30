@@ -15,7 +15,7 @@
 
   .history-contents {
     li:hover {
-      background: $brand_orange_light2;
+      background: $brand_orange_light1;
       color: #0c0c0d;
     }
   }
@@ -24,7 +24,8 @@
     .execute-options {
       background: #0c0c0d;
       .selected {
-        background: $brand_orange;
+        background: $brand_orange_light1;
+        color: #0c0c0d;
       }
     }
   }
