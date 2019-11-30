@@ -24,8 +24,15 @@
       height: 29px;
       width: 100%;
       form {
+        display: inline-flex;
         input {
           margin: 0 5px;
+        }
+      }
+
+      span {
+        @media(max-width: 1500px) {
+          display:none;
         }
       }
 

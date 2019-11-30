@@ -92,12 +92,10 @@ const GraphQLEditor = () => {
                 </form>
               )}
             />
-            <span>
-              Currently signed in as {user.username}
-              <button className='logout-button' onClick={logout}>
-                Logout
-              </button>
-            </span>
+            <span>Logged in as {user.username}</span>
+            <button className='logout-button' onClick={logout}>
+              Logout
+            </button>
           </div>
         </GraphiQL.Footer>
       </GraphiQL>
