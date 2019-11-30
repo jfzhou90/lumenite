@@ -98,7 +98,7 @@ const GraphQLEditor = () => {
       </GraphiQL.Logo>
       <GraphiQL.Footer>
         <div className='footer_toolbar'>
-          <button title='Copy UUID to clipboard' onClick={copyUuid}>
+          <button className='toolbar-button' title='Copy UUID to clipboard' onClick={copyUuid}>
             UUID
           </button>
           <Form
@@ -135,7 +135,7 @@ const GraphQLEditor = () => {
                   autoComplete='off'
                 />
 
-                <button disabled={invalid || isConnecting} type='submit'>
+                <button disabled={invalid || isConnecting} className='toolbar-button' type='submit'>
                   Login
                 </button>
               </form>
@@ -145,7 +145,7 @@ const GraphQLEditor = () => {
           <span>
             Logged in as <strong>{user.username}</strong>
           </span>
-          <button className='logout-button' onClick={logout}>
+          <button className='logout-button toolbar-button' onClick={logout}>
             Logout
           </button>
         </div>
