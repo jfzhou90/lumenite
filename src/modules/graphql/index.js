@@ -87,7 +87,7 @@ const GraphQLEditor = () => {
                     autoComplete='off'
                   />
                   <button disabled={invalid || isConnecting} type='submit'>
-                    Change User
+                    Login
                   </button>
                 </form>
               )}
