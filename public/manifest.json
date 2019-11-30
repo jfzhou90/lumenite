@@ -1,6 +1,6 @@
 {
   "short_name": "Lumenite",
-  "name": "Lumenite - AWS Cognito AppSync client",
+  "name": "Lumenite Client",
   "icons": [
     {
       "src": "favicon.ico",
