@@ -12,6 +12,22 @@
     color: White;
     border: none;
   }
+
+  .history-contents {
+    li:hover {
+      background: $brand_orange_light2;
+      color: #0c0c0d;
+    }
+  }
+
+  .execute-button-wrap {
+    .execute-options {
+      background: #0c0c0d;
+      .selected {
+        background: $brand_orange;
+      }
+    }
+  }
   .footer {
     height: 29px;
     background: $brand_orange;
