@@ -43,8 +43,9 @@
       form {
         display: inline-flex;
         input {
+          border-radius: 5px;
           width: 80px;
-          margin: 0 5px;
+          margin-right: 5px;
         }
         @media (max-width: 1000px) {
           display: none;
