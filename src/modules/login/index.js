@@ -1,19 +1,26 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
+import { keys } from 'lodash';
 
 import snorlaxPicture from '../../assets/img/snorlaxClipart.png';
 import NewConnectionDialog from './dialog/addNewConnection';
 import ExistingConnectionDialog from './dialog/connectExistingConnection';
+import StorageButton from './components/storageSpeedDial';
 
 import { connectToAws } from '../../redux/actions/awsActions';
 
 const LoginPage = () => {
   const [openNewConnectionDialog, setNewConnectionDialog] = useState(false);
   const [openExistingConnectionDialog, setExistingConnectionDialog] = useState(false);
-  const storedConnections = useMemo(() => JSON.parse(localStorage.getItem('connections')), []);
+  const [storedConnections, setStoredConnections] = useState(
+    JSON.parse(localStorage.getItem('connections'))
+  );
   const dispatch = useDispatch();
 
+  const resetConnection = () => {
+    setStoredConnections(null);
+  };
   const toggleNewConnectionDialog = () => {
     setNewConnectionDialog(!openNewConnectionDialog);
   };
@@ -65,6 +72,7 @@ const LoginPage = () => {
           ) : null}
         </div>
       </div>
+      <StorageButton resetApp={resetConnection} />
     </div>
   );
 };

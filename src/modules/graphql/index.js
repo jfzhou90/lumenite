@@ -4,7 +4,7 @@ import { useSelector, shallowEqual } from 'react-redux';
 
 import { getAccessToken } from '../../common/cognito/auth';
 
-import GraphQlFooter from './_footer';
+import GraphQlFooter from './components/_footer';
 
 const defaultQuery = `
 # Welcome to Lumenite

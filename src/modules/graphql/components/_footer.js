@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Form, Field } from 'react-final-form';
 import uuid from 'uuid/v4';
 
-import { connectToAws } from '../../redux/actions/awsActions';
-import { LOGOUT } from '../../redux/actions/actionTypes';
+import { connectToAws } from '../../../redux/actions/awsActions';
+import { LOGOUT } from '../../../redux/actions/actionTypes';
 
 const GraphQLFooter = () => {
   const {

@@ -36,6 +36,13 @@ button {
     }
   }
 
+  &.MuiButton-textPrimary.Danger-Button {
+    color: red;
+    &:hover {
+      background-color: lighten(red, 40%);
+    }
+  }
+
   &.MuiButton-textSecondary {
     color: $brand_blue;
     &:hover {
