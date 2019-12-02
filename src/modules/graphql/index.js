@@ -1,12 +1,10 @@
 import React from 'react';
 import GraphiQL from 'graphiql';
-import { useSelector, useDispatch } from 'react-redux';
-import { Form, Field } from 'react-final-form';
-import uuid from 'uuid/v4';
+import { useSelector, shallowEqual } from 'react-redux';
 
 import { getAccessToken } from '../../common/cognito/auth';
-import { connectToAws } from '../../redux/actions/awsActions';
-import { LOGOUT } from '../../redux/actions/actionTypes';
+
+import GraphQlFooter from './_footer';
 
 const defaultQuery = `
 # Welcome to Lumenite
@@ -42,31 +40,14 @@ const defaultQuery = `
 `;
 
 const GraphQLEditor = () => {
-  const {
-    currentEnv,
-    userpoolId,
-    userpoolClientId,
-    graphqlEndpoint,
-    user,
-    isConnecting,
-  } = useSelector(state => state.auth);
-  const dispatch = useDispatch();
-
-  const changeUser = newUserData => {
-    dispatch(
-      connectToAws({
-        ...newUserData,
-        name: currentEnv,
-        userpoolId,
-        userpoolClientId,
-        graphqlEndpoint,
-      })
-    );
-  };
-
-  const logout = () => {
-    dispatch({ type: LOGOUT });
-  };
+  const { userpoolId, userpoolClientId, graphqlEndpoint } = useSelector(
+    state => ({
+      userpoolId: state.auth.userpoolId,
+      userpoolClientId: state.auth.userpoolClientId,
+      graphqlEndpoint: state.auth.graphqlEndpoint,
+    }),
+    shallowEqual
+  );
 
   const graphQLFetcher = graphQLParams => {
     return getAccessToken({ userpoolId, userpoolClientId })
@@ -80,75 +61,13 @@ const GraphQLEditor = () => {
       .then(response => response.json());
   };
 
-  const copyUuid = () => {
-    const el = document.createElement('textarea');
-    el.value = uuid();
-    el.setAttribute('readonly', '');
-    el.style = { position: 'absolute', left: '-9999px' };
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
-  };
-
   return (
     <GraphiQL fetcher={graphQLFetcher} defaultQuery={defaultQuery} editorTheme='orion'>
       <GraphiQL.Logo>
         <span className='editor--lumenite-title'>Lumenite</span>
       </GraphiQL.Logo>
       <GraphiQL.Footer>
-        <div className='footer_toolbar'>
-          <button className='toolbar-button' title='Copy UUID to clipboard' onClick={copyUuid}>
-            UUID
-          </button>
-          <Form
-            onSubmit={changeUser}
-            validate={({ username, password }) => {
-              const error = {};
-              if (!username) {
-                error.username = 'Required';
-              }
-              if (!password) {
-                error.password = 'Required';
-              }
-              return error;
-            }}
-            render={({ handleSubmit, invalid, form }) => (
-              <form
-                onSubmit={event => {
-                  handleSubmit(event);
-                  form.reset();
-                }}
-              >
-                <Field
-                  name='username'
-                  component='input'
-                  type='text'
-                  placeholder='Username'
-                  autoComplete='off'
-                />
-                <Field
-                  name='password'
-                  component='input'
-                  type='password'
-                  placeholder='Password'
-                  autoComplete='off'
-                />
-
-                <button disabled={invalid || isConnecting} className='toolbar-button' type='submit'>
-                  Login
-                </button>
-              </form>
-            )}
-          />
-
-          <span>
-            Logged in as <strong>{user.username}</strong>
-          </span>
-          <button className='logout-button toolbar-button' onClick={logout}>
-            Logout
-          </button>
-        </div>
+        <GraphQlFooter />
       </GraphiQL.Footer>
     </GraphiQL>
   );
