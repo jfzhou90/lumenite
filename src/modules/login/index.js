@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
-import { keys } from 'lodash';
 
 import snorlaxPicture from '../../assets/img/snorlaxClipart.png';
 import NewConnectionDialog from './dialog/addNewConnection';
