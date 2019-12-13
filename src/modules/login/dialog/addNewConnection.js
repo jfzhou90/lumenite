@@ -20,6 +20,28 @@ const NewConnectionDialog = ({ open, onClose, connect }) => {
     connect(data);
   };
 
+  const validate = values => {
+    const requiredFields = [
+      'name',
+      'graphqlEndpoint',
+      'userpoolId',
+      'userpoolClientId',
+      'username',
+      'password',
+    ];
+    const errors = {};
+
+    forEach(requiredFields, field => {
+      if (!values[field]) {
+        errors[field] = 'Required';
+      } else if (field === 'userpoolId' && !/^[\w-]+_.+$/.test(values.userpoolId)) {
+        errors[field] = 'Invalid userpool id';
+      }
+    });
+
+    return errors;
+  };
+
   if (!open) {
     return null;
   }
@@ -34,31 +56,9 @@ const NewConnectionDialog = ({ open, onClose, connect }) => {
         </DialogContentText>
         <Form
           onSubmit={onSubmit}
-          validate={values => {
-            const requiredFields = [
-              'name',
-              'graphqlEndpoint',
-              'userpoolId',
-              'userpoolClientId',
-              'username',
-              'password',
-            ];
-            const errors = {};
-
-            forEach(requiredFields, field => {
-              if (!values[field]) {
-                errors[field] = 'Required';
-              }
-            });
-
-            if (!/^[\w-]+_.+$/.test(values.userpoolId)) {
-              errors.userpoolId = 'Invalid userpool id';
-            }
-
-            return errors;
-          }}
+          validate={validate}
           render={({ handleSubmit, invalid }) => (
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} noValidate>
               <Field
                 name='name'
                 id='name'
