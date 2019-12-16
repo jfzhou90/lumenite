@@ -1,15 +1,18 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Field } from 'react-final-form';
+import { map } from 'lodash';
 import uuid from 'uuid/v4';
 
 import { connectToAws } from '../../../redux/actions/awsActions';
 import { LOGOUT } from '../../../redux/actions/actionTypes';
+import encryptor from '../../../common/utils/encryptor';
 
 const GraphQLFooter = () => {
   const {
     currentEnv,
     user,
+    users,
     isConnecting,
     userpoolId,
     userpoolClientId,
@@ -86,13 +89,29 @@ const GraphQLFooter = () => {
             <button disabled={invalid || isConnecting} className='toolbar-button' type='submit'>
               Login
             </button>
+
+            <span>
+              Logged in as &nbsp;
+              <select
+                className='toolbar-select'
+                value={user.username}
+                onChange={event => {
+                  changeUser({
+                    username: event.target.value,
+                    password: encryptor.decrypt(users[event.target.value]),
+                  });
+                }}
+              >
+                {map(users, (_, key) => (
+                  <option key={key} value={key}>
+                    {key}
+                  </option>
+                ))}
+              </select>
+            </span>
           </form>
         )}
       />
-
-      <span>
-        Logged in as <strong>{user.username}</strong>
-      </span>
       <button className='logout-button toolbar-button' onClick={logout}>
         Logout
       </button>

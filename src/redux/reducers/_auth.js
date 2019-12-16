@@ -31,7 +31,12 @@ export default function authReducer(state = initialState.auth, action) {
         graphqlEndpoint: encryptor.encrypt(graphqlEndpoint),
         username: encryptor.encrypt(username),
         password: encryptor.encrypt(password),
+        users: {
+          [username]: encryptor.encrypt(password),
+        },
       };
+
+      let users = connection.users;
 
       if (!storedConnections) {
         localStorage.setItem(
@@ -42,7 +47,14 @@ export default function authReducer(state = initialState.auth, action) {
         );
       } else {
         const parsedStored = JSON.parse(storedConnections);
-        parsedStored[name] = connection;
+
+        if (!parsedStored[name]) {
+          parsedStored[name] = connection;
+        } else {
+          const combinedUsers = { ...parsedStored[name].users, ...connection.users };
+          parsedStored[name].users = combinedUsers;
+          users = combinedUsers;
+        }
 
         localStorage.setItem('connections', JSON.stringify(parsedStored));
       }
@@ -56,6 +68,7 @@ export default function authReducer(state = initialState.auth, action) {
         isConnecting: false,
         isAuthenticated: true,
         user: action.payload.authUser,
+        users: users,
       };
 
     case types.DISPLAY_ERROR:

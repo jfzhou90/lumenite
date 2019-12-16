@@ -52,8 +52,11 @@
       }
 
       span {
-        strong {
-          font-weight: bold;
+        padding-left: 30px;
+        align-self: center;
+
+        select {
+          height: 20px;
         }
         @media (max-width: 1500px) {
           display: none;
@@ -62,6 +65,11 @@
 
       .logout-button {
         margin: 0 5px;
+      }
+
+      .toolbar-select {
+        padding: 3px 11px 5px;
+        max-width: 150px;
       }
     }
   }

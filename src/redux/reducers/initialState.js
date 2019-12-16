@@ -7,5 +7,6 @@ export default {
     userpoolClientId: null,
     graphqlEndpoint: null,
     user: null,
+    users: [],
   },
 };
