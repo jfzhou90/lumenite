@@ -1,5 +1,6 @@
 import * as AWSCognito from 'amazon-cognito-identity-js';
-import { split, toLower } from 'lodash';
+import split from 'lodash/split';
+import toLower from 'lodash/toLower';
 
 export const authenticateViaCognito = ({ userpoolId, userpoolClientId, username, password }) => {
   const userPool = new AWSCognito.CognitoUserPool({

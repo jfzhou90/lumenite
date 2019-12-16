@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Field } from 'react-final-form';
-import { map } from 'lodash';
+import map from 'lodash/map';
 import uuid from 'uuid/v4';
 
 import { connectToAws } from '../../../redux/actions/awsActions';

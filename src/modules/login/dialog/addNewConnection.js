@@ -10,7 +10,7 @@ import {
   CircularProgress,
 } from '@material-ui/core';
 import { Form, Field } from 'react-final-form';
-import { forEach } from 'lodash';
+import forEach from 'lodash/forEach';
 import { useSelector } from 'react-redux';
 
 const NewConnectionDialog = ({ open, onClose, connect }) => {

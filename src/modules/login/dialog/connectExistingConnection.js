@@ -12,7 +12,8 @@ import {
   MenuItem,
 } from '@material-ui/core';
 import { useSelector } from 'react-redux';
-import { map, keys } from 'lodash';
+import map from 'lodash/map';
+import keys from 'lodash/keys';
 
 import encryptor from '../../../common/utils/encryptor';
 

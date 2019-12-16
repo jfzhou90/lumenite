@@ -1,5 +1,6 @@
 import { toast } from 'react-toastify';
 import encryptor from '../../common/utils/encryptor';
+import toLower from 'lodash/toLower';
 
 import initialState from './initialState';
 import * as types from '../actions/actionTypes';
@@ -32,7 +33,7 @@ export default function authReducer(state = initialState.auth, action) {
         username: encryptor.encrypt(username),
         password: encryptor.encrypt(password),
         users: {
-          [username]: encryptor.encrypt(password),
+          [toLower(username)]: encryptor.encrypt(password),
         },
       };
 
