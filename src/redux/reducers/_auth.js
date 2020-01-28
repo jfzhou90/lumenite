@@ -1,9 +1,8 @@
 import { toast } from 'react-toastify';
-import encryptor from '../../common/utils/encryptor';
-import toLower from 'lodash/toLower';
 
 import initialState from './initialState';
 import * as types from '../actions/actionTypes';
+import { saveConnection } from '../utils/authStorage';
 
 export default function authReducer(state = initialState.auth, action) {
   switch (action.type) {
@@ -15,61 +14,14 @@ export default function authReducer(state = initialState.auth, action) {
 
     case types.CONNECTED_TO_AWS:
       toast.success('You have been successfully authenticated!');
-      const {
-        name,
-        userpoolId,
-        userpoolClientId,
-        graphqlEndpoint,
-        username,
-        password,
-      } = action.payload.connectionDetails;
 
-      const storedConnections = localStorage.getItem('connections');
-
-      const connection = {
-        userpoolId: encryptor.encrypt(userpoolId),
-        userpoolClientId: encryptor.encrypt(userpoolClientId),
-        graphqlEndpoint: encryptor.encrypt(graphqlEndpoint),
-        username: encryptor.encrypt(username),
-        password: encryptor.encrypt(password),
-        users: {
-          [toLower(username)]: encryptor.encrypt(password),
-        },
-      };
-
-      let users = connection.users;
-
-      if (!storedConnections) {
-        localStorage.setItem(
-          'connections',
-          JSON.stringify({
-            [name]: connection,
-          })
-        );
-      } else {
-        const parsedStored = JSON.parse(storedConnections);
-
-        if (!parsedStored[name]) {
-          parsedStored[name] = connection;
-        } else {
-          const combinedUsers = { ...parsedStored[name].users, ...connection.users };
-          parsedStored[name].users = combinedUsers;
-          users = combinedUsers;
-        }
-
-        localStorage.setItem('connections', JSON.stringify(parsedStored));
-      }
-
+      const connection = saveConnection(action.payload.connectionDetails);
       return {
         ...state,
-        userpoolId,
-        userpoolClientId,
-        graphqlEndpoint,
-        currentEnv: name,
+        ...connection,
+        user: action.payload.authUser,
         isConnecting: false,
         isAuthenticated: true,
-        user: action.payload.authUser,
-        users: users,
       };
 
     case types.DISPLAY_ERROR:

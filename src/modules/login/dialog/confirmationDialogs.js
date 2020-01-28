@@ -10,7 +10,7 @@ import {
 
 export const DeleteHistoryDialog = ({ open, onClose, resetHistory }) => {
   return (
-    <Dialog open={open} onClose={onClose} aria-labelledBy='reset_history_dialog'>
+    <Dialog open={open} onClose={onClose} aria-labelledby='reset_history_dialog'>
       <DialogTitle>Delete all query histories</DialogTitle>
 
       <DialogContent>
@@ -33,7 +33,7 @@ export const DeleteHistoryDialog = ({ open, onClose, resetHistory }) => {
 
 export const ResetAppDialog = ({ open, onClose, resetApp }) => {
   return (
-    <Dialog open={open} onClose={onClose} aria-labelledBy='reset_history_dialog'>
+    <Dialog open={open} onClose={onClose} aria-labelledby='reset_history_dialog'>
       <DialogTitle>Reset Application Data</DialogTitle>
 
       <DialogContent>

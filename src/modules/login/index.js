@@ -59,7 +59,7 @@ const LoginPage = () => {
           >
             New
           </Button>
-          {storedConnections ? (
+          {storedConnections && (
             <Button
               id='button-group--button__connect'
               variant='contained'
@@ -68,7 +68,7 @@ const LoginPage = () => {
             >
               Connect
             </Button>
-          ) : null}
+          )}
         </div>
       </div>
       <StorageButton resetApp={resetConnection} />
