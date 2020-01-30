@@ -13,37 +13,29 @@ const StorageButton = ({ resetApp }) => {
   const [resetHistoryDialog, setResetHistoryDialog] = useState(false);
   const [resetAppDialog, setResetAppDialog] = useState(false);
 
+  const toggleResetHistoryDialog = () => setResetHistoryDialog(!resetHistoryDialog);
+
+  const toggleResetAppDialog = () => setResetAppDialog(!resetAppDialog);
+
+  const handleClose = () => setOpen(false);
+
+  const handleOpen = () => setOpen(true);
+
   const clearHistory = () => {
+    handleClose();
     localStorage.removeItem('graphiql:query');
     localStorage.removeItem('graphiql:operationName');
     localStorage.removeItem('graphiql:queries');
     toggleResetHistoryDialog();
-    handleClose();
   };
 
   const resetApplication = () => {
+    handleClose();
     const seed = localStorage.getItem('halfSeed');
     localStorage.clear();
     localStorage.setItem('halfSeed', seed);
     resetApp();
     toggleResetAppDialog();
-    handleClose();
-  };
-
-  const toggleResetHistoryDialog = () => {
-    setResetHistoryDialog(!resetHistoryDialog);
-  };
-
-  const toggleResetAppDialog = () => {
-    setResetAppDialog(!resetAppDialog);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
   };
 
   return (

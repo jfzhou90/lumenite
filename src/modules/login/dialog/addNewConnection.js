@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import includes from 'lodash/includes';
 import {
   Button,
   Dialog,
@@ -6,45 +7,32 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-  TextField,
   CircularProgress,
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
 } from '@material-ui/core';
-import { Form, Field } from 'react-final-form';
-import forEach from 'lodash/forEach';
+import { Form } from 'react-final-form';
 import { useSelector } from 'react-redux';
+import FormField from '../components/formField';
 
 const NewConnectionDialog = ({ open, onClose, connect }) => {
   const isConnecting = useSelector(state => state.auth.isConnecting);
+  const [authType, setAuthType] = useState('cognito');
+  const storedConnections = localStorage.getItem('connections');
+  const connectionsKeys = storedConnections ? Object.keys(JSON.parse(storedConnections)) : [];
 
-  const onSubmit = data => {
-    connect(data);
-  };
+  const required = value => (value ? undefined : 'Required');
+  const isValidName = value => (includes(connectionsKeys, value) ? 'invalid' : undefined);
+  const isValidUserPoolId = value => (/^[\w-]+_.+$/.test(value) ? undefined : 'Invalid');
+  const composeValidators = (...validators) => value =>
+    validators.reduce((error, validator) => error || validator(value), undefined);
 
-  const validate = values => {
-    const requiredFields = [
-      'name',
-      'graphqlEndpoint',
-      'userpoolId',
-      'userpoolClientId',
-      'username',
-      'password',
-    ];
-    const errors = {};
+  const updateAuthType = event => setAuthType(event.currentTarget.value);
 
-    forEach(requiredFields, field => {
-      if (!values[field]) {
-        errors[field] = 'Required';
-      } else if (field === 'userpoolId' && !/^[\w-]+_.+$/.test(values.userpoolId)) {
-        errors[field] = 'Invalid userpool id';
-      }
-    });
-
-    return errors;
-  };
-
-  if (!open) {
-    return null;
-  }
+  const onSubmit = data => connect(authType, data);
 
   return (
     <Dialog open={open} onClose={onClose} aria-labelledby='new_connection_form'>
@@ -54,160 +42,70 @@ const NewConnectionDialog = ({ open, onClose, connect }) => {
         <DialogContentText>
           To add a new connection, please enter the required fields.
         </DialogContentText>
+        <FormControl component='fieldset'>
+          <FormLabel component='legend'>Authentication Method</FormLabel>
+          <RadioGroup
+            aria-label='Authentication Method'
+            name='authenticationMethod'
+            value={authType}
+            onChange={updateAuthType}
+          >
+            <FormControlLabel value='cognito' control={<Radio color='primary' />} label='Cognito' />
+            <FormControlLabel value='apiKey' control={<Radio color='primary' />} label='API Key' />
+          </RadioGroup>
+        </FormControl>
         <Form
           onSubmit={onSubmit}
-          validate={validate}
           render={({ handleSubmit, invalid }) => (
             <form onSubmit={handleSubmit} noValidate>
-              <Field
+              <FormField
                 name='name'
                 id='name'
-                type='text'
-                render={({ input, meta }) => {
-                  const showError = !!meta.error && !!meta.touched;
-                  return (
-                    <TextField
-                      label='Connection Name'
-                      autoFocus
-                      fullWidth
-                      required
-                      error={showError}
-                      InputProps={{
-                        inputProps: {
-                          maxLength: 30,
-                          autoComplete: 'off',
-                          'aria-required': true,
-                        },
-                      }}
-                      {...input}
-                    />
-                  );
-                }}
+                label='Connection Name'
+                validate={composeValidators(isValidName, required)}
+                autoFocus
               />
 
-              <Field
+              <FormField
                 name='graphqlEndpoint'
                 id='graphqlEndpoint'
-                type='text'
-                render={({ input, meta }) => {
-                  const showError = !!meta.error && !!meta.touched;
-                  return (
-                    <TextField
-                      label='GraphQL Endpoint'
-                      fullWidth
-                      required
-                      error={showError}
-                      InputProps={{
-                        inputProps: {
-                          maxLength: 200,
-                          autoComplete: 'off',
-                          'aria-required': true,
-                        },
-                      }}
-                      {...input}
-                    />
-                  );
-                }}
+                label='GraphQL Endpoint'
+                validate={required}
+                maxLength={200}
               />
 
-              <Field
-                name='userpoolId'
-                id='userpoolId'
-                type='text'
-                render={({ input, meta }) => {
-                  const showError = !!meta.error && !!meta.touched;
-                  return (
-                    <TextField
-                      label='Cognito Userpool Id'
-                      fullWidth
-                      required
-                      error={showError}
-                      InputProps={{
-                        inputProps: {
-                          maxLength: 30,
-                          autoComplete: 'off',
-                          'aria-required': true,
-                        },
-                      }}
-                      {...input}
-                    />
-                  );
-                }}
-              />
+              {authType === 'cognito' && (
+                <>
+                  <FormField
+                    name='userpoolId'
+                    id='userpoolId'
+                    label='Cognito Userpool Id'
+                    validate={composeValidators(required, isValidUserPoolId)}
+                  />
 
-              <Field
-                name='userpoolClientId'
-                id='userpoolClientId'
-                type='text'
-                render={({ input, meta }) => {
-                  const showError = !!meta.error && !!meta.touched;
-                  return (
-                    <TextField
-                      label='Cognito Userpool Client Id'
-                      fullWidth
-                      required
-                      error={showError}
-                      InputProps={{
-                        inputProps: {
-                          maxLength: 30,
-                          autoComplete: 'off',
-                          'aria-required': true,
-                        },
-                      }}
-                      {...input}
-                    />
-                  );
-                }}
-              />
+                  <FormField
+                    name='userpoolClientId'
+                    id='userpoolClientId'
+                    label='Cognito Userpool Client Id'
+                    validate={required}
+                  />
 
-              <Field
-                name='username'
-                id='username'
-                type='text'
-                render={({ input, meta }) => {
-                  const showError = !!meta.error && !!meta.touched;
-                  return (
-                    <TextField
-                      label='Username'
-                      fullWidth
-                      required
-                      error={showError}
-                      InputProps={{
-                        inputProps: {
-                          maxLength: 30,
-                          autoComplete: 'off',
-                          'aria-required': true,
-                        },
-                      }}
-                      {...input}
-                    />
-                  );
-                }}
-              />
+                  <FormField name='username' id='username' label='Username' validate={required} />
 
-              <Field
-                name='password'
-                id='password'
-                type='password'
-                render={({ input, meta }) => {
-                  const showError = !!meta.error && !!meta.touched;
-                  return (
-                    <TextField
-                      label='Password'
-                      fullWidth
-                      required
-                      error={showError}
-                      InputProps={{
-                        inputProps: {
-                          maxLength: 30,
-                          'aria-required': true,
-                        },
-                      }}
-                      {...input}
-                    />
-                  );
-                }}
-              />
+                  <FormField
+                    name='password'
+                    id='password'
+                    label='Password'
+                    type='password'
+                    validate={required}
+                  />
+                </>
+              )}
+
+              {authType === 'apiKey' && (
+                <FormField name='apiKey' id='apiKey' label='API Key' validate={required} />
+              )}
+
               <DialogActions>
                 <Button onClick={onClose} color='secondary'>
                   Cancel

@@ -21,26 +21,27 @@ const ExistingConnectionDialog = ({ open, onClose, connect, connections }) => {
   const isConnecting = useSelector(state => state.auth.isConnecting);
   const [connection, selectConnection] = useState('');
 
-  const onSelect = event => {
-    if (event) {
-      selectConnection(event.target.value);
-    }
-  };
+  const onSelect = event => event && selectConnection(event.target.value);
 
   const onSubmit = () => {
-    connect({
-      name: connection,
-      userpoolId: encryptor.decrypt(connections[connection].userpoolId),
-      userpoolClientId: encryptor.decrypt(connections[connection].userpoolClientId),
-      graphqlEndpoint: encryptor.decrypt(connections[connection].graphqlEndpoint),
-      username: encryptor.decrypt(connections[connection].username),
-      password: encryptor.decrypt(connections[connection].password),
-    });
+    const auth = connections[connection];
+    if (auth.authType === 'apiKey' || auth.apiKey) {
+      connect('apiKey', {
+        name: connection,
+        graphqlEndpoint: encryptor.decrypt(auth.graphqlEndpoint),
+        apiKey: encryptor.decrypt(auth.apiKey),
+      });
+    } else {
+      connect('cognito', {
+        name: connection,
+        userpoolId: encryptor.decrypt(auth.userpoolId),
+        userpoolClientId: encryptor.decrypt(auth.userpoolClientId),
+        graphqlEndpoint: encryptor.decrypt(auth.graphqlEndpoint),
+        username: encryptor.decrypt(auth.username),
+        password: encryptor.decrypt(auth.password),
+      });
+    }
   };
-
-  if (!open) {
-    return null;
-  }
 
   return (
     <Dialog open={open} onClose={onClose} aria-labelledby='existing_connection_form'>

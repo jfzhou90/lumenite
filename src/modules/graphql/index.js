@@ -40,8 +40,10 @@ const defaultQuery = `
 `;
 
 const GraphQLEditor = () => {
-  const { userpoolId, userpoolClientId, graphqlEndpoint } = useSelector(
+  const { authType, apiKey, userpoolId, userpoolClientId, graphqlEndpoint } = useSelector(
     state => ({
+      authType: state.auth.authType,
+      apiKey: state.auth.apiKey,
       userpoolId: state.auth.userpoolId,
       userpoolClientId: state.auth.userpoolClientId,
       graphqlEndpoint: state.auth.graphqlEndpoint,
@@ -50,15 +52,28 @@ const GraphQLEditor = () => {
   );
 
   const graphQLFetcher = graphQLParams => {
-    return getAccessToken({ userpoolId, userpoolClientId })
-      .then(token =>
-        fetch(graphqlEndpoint, {
-          method: 'post',
-          headers: { 'Content-Type': 'application/json', authorization: token },
-          body: JSON.stringify(graphQLParams),
-        })
-      )
-      .then(response => response.json());
+    if (authType === 'cognito') {
+      return getAccessToken({ userpoolId, userpoolClientId })
+        .then(token =>
+          fetch(graphqlEndpoint, {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json', authorization: token },
+            body: JSON.stringify(graphQLParams),
+          })
+        )
+        .then(response => response.json());
+    }
+
+    if (authType === 'apiKey') {
+      return fetch(graphqlEndpoint, {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+        },
+        body: JSON.stringify(graphQLParams),
+      }).then(response => response.json());
+    }
   };
 
   return (
