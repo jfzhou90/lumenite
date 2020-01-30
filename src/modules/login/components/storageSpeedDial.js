@@ -9,7 +9,7 @@ import {
 import { DeleteHistoryDialog, ResetAppDialog } from '../dialog/confirmationDialogs';
 
 const StorageButton = ({ resetApp }) => {
-  const [open, setOpen] = useState(false);
+  const [speedDial, setSpeedDial] = useState(false);
   const [resetHistoryDialog, setResetHistoryDialog] = useState(false);
   const [resetAppDialog, setResetAppDialog] = useState(false);
 
@@ -17,16 +17,16 @@ const StorageButton = ({ resetApp }) => {
 
   const toggleResetAppDialog = () => setResetAppDialog(!resetAppDialog);
 
-  const handleClose = () => setOpen(false);
+  const closeSpeedDial = () => setSpeedDial(false);
 
-  const handleOpen = () => setOpen(true);
+  const openSpeedDial = () => setSpeedDial(true);
 
   const clearHistory = () => {
     toggleResetHistoryDialog();
     localStorage.removeItem('graphiql:query');
     localStorage.removeItem('graphiql:operationName');
     localStorage.removeItem('graphiql:queries');
-    handleClose();
+    closeSpeedDial();
   };
 
   const resetApplication = () => {
@@ -35,7 +35,7 @@ const StorageButton = ({ resetApp }) => {
     localStorage.clear();
     localStorage.setItem('halfSeed', seed);
     resetApp();
-    handleClose();
+    closeSpeedDial();
   };
 
   return (
@@ -55,9 +55,9 @@ const StorageButton = ({ resetApp }) => {
       <SpeedDial
         ariaLabel='Storage Options'
         icon={<StorageIcon />}
-        onClose={handleClose}
-        onOpen={handleOpen}
-        open={open}
+        onClose={closeSpeedDial}
+        onOpen={openSpeedDial}
+        open={speedDial}
         direction='up'
       >
         <SpeedDialAction
