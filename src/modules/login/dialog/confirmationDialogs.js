@@ -8,49 +8,40 @@ import {
   DialogActions,
 } from '@material-ui/core';
 
-export const DeleteHistoryDialog = ({ open, onClose, resetHistory }) => {
-  return (
-    <Dialog open={open} onClose={onClose} aria-labelledby='reset_history_dialog'>
-      <DialogTitle>Delete all query histories</DialogTitle>
+const ConfirmationDialog = ({ open, onClose, onConfirm, labelBy, title, content }) => (
+  <Dialog open={open} onClose={onClose} aria-labelledby={labelBy}>
+    <DialogTitle>{title}</DialogTitle>
 
-      <DialogContent>
-        <DialogContentText>
-          Warning: This permanently deletes all query histories, while keeping favorites intact.
-        </DialogContentText>
+    <DialogContent>
+      <DialogContentText>{content}</DialogContentText>
 
-        <DialogActions>
-          <Button className='Danger-Button' color='primary' onClick={resetHistory}>
-            Confirm
-          </Button>
-          <Button color='secondary' onClick={onClose}>
-            Cancel
-          </Button>
-        </DialogActions>
-      </DialogContent>
-    </Dialog>
-  );
-};
+      <DialogActions>
+        <Button className='Danger-Button' color='primary' onClick={onConfirm}>
+          Confirm
+        </Button>
+        <Button color='secondary' onClick={onClose}>
+          Cancel
+        </Button>
+      </DialogActions>
+    </DialogContent>
+  </Dialog>
+);
 
-export const ResetAppDialog = ({ open, onClose, resetApp }) => {
-  return (
-    <Dialog open={open} onClose={onClose} aria-labelledby='reset_history_dialog'>
-      <DialogTitle>Reset Application Data</DialogTitle>
+export const DeleteHistoryDialog = props => (
+  <ConfirmationDialog
+    {...props}
+    title='Delete all query histories'
+    content='Warning: This permanently deletes all query histories, while keeping favorites intact.'
+    labelBy='reset_history_dialog'
+  />
+);
 
-      <DialogContent>
-        <DialogContentText>
-          Warning: This will reset all application data, you will have to re-enter all connection
-          details if you want to continue to use this application.
-        </DialogContentText>
-
-        <DialogActions>
-          <Button className='Danger-Button' color='primary' onClick={resetApp}>
-            Confirm
-          </Button>
-          <Button color='secondary' onClick={onClose}>
-            Cancel
-          </Button>
-        </DialogActions>
-      </DialogContent>
-    </Dialog>
-  );
-};
+export const ResetAppDialog = props => (
+  <ConfirmationDialog
+    {...props}
+    title='Reset Application Data'
+    content='Warning: This will reset all application data, you will have to re-enter all connection
+    details if you want to continue to use this application.'
+    labelBy='reset_app_dialog'
+  />
+);

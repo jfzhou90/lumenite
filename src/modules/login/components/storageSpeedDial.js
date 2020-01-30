@@ -22,20 +22,20 @@ const StorageButton = ({ resetApp }) => {
   const handleOpen = () => setOpen(true);
 
   const clearHistory = () => {
-    handleClose();
+    toggleResetHistoryDialog();
     localStorage.removeItem('graphiql:query');
     localStorage.removeItem('graphiql:operationName');
     localStorage.removeItem('graphiql:queries');
-    toggleResetHistoryDialog();
+    handleClose();
   };
 
   const resetApplication = () => {
-    handleClose();
+    toggleResetAppDialog();
     const seed = localStorage.getItem('halfSeed');
     localStorage.clear();
     localStorage.setItem('halfSeed', seed);
     resetApp();
-    toggleResetAppDialog();
+    handleClose();
   };
 
   return (
@@ -43,13 +43,13 @@ const StorageButton = ({ resetApp }) => {
       <DeleteHistoryDialog
         open={resetHistoryDialog}
         onClose={toggleResetHistoryDialog}
-        resetHistory={clearHistory}
+        onConfirm={clearHistory}
       />
 
       <ResetAppDialog
         open={resetAppDialog}
         onClose={toggleResetAppDialog}
-        resetApp={resetApplication}
+        onConfirm={resetApplication}
       />
 
       <SpeedDial
