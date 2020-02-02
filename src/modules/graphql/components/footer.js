@@ -6,7 +6,7 @@ import uuid from 'uuid/v4';
 
 import { connectToCognito } from '../../../redux/actions/connectActions';
 import { LOGOUT } from '../../../redux/actions/actionTypes';
-import encryptor from '../../../common/utils/encryptor';
+import encryptor from '../../../lib/utils/encryptor';
 
 const GraphQLFooter = () => {
   const {
@@ -96,6 +96,7 @@ const GraphQLFooter = () => {
                   Logged in as &nbsp;
                   <select
                     className='toolbar-select'
+                    disabled={isConnecting}
                     value={user.username}
                     onChange={event => {
                       changeUser({

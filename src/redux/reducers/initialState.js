@@ -6,6 +6,8 @@ export default {
     userpoolId: null,
     userpoolClientId: null,
     graphqlEndpoint: null,
+    authType: null,
+    apiKey: null,
     user: null,
     users: [],
   },

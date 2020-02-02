@@ -1,5 +1,6 @@
-import encryptor from '../../common/utils/encryptor';
 import toLower from 'lodash/toLower';
+
+import encryptor from '../../lib/utils/encryptor';
 
 const encryptCognitoConnection = ({
   userpoolId,

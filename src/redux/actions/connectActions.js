@@ -1,5 +1,5 @@
 import * as types from './actionTypes';
-import { authenticateViaCognito, buildAuthUserFromCognitoSession } from '../../common/cognito/auth';
+import { authenticateViaCognito, buildAuthUserFromCognitoSession } from '../../lib/cognito/auth';
 
 export const connectToCognito = connectionDetails => dispatch => {
   dispatch({ type: types.CONNECTING_TO_GRAPHQL });
@@ -10,7 +10,7 @@ export const connectToCognito = connectionDetails => dispatch => {
       dispatch({ type: types.CONNECTED_TO_COGNITO, payload: { authUser, connectionDetails } });
     })
     .catch(error => {
-      dispatch({ type: types.DISPLAY_ERROR, payload: error });
+      dispatch({ type: types.CONNECT_ERROR, payload: error });
     });
 };
 
@@ -36,6 +36,6 @@ export const connectViaApiKey = connectionDetails => dispatch => {
       }
     })
     .catch(error => {
-      dispatch({ type: types.DISPLAY_ERROR, payload: error });
+      dispatch({ type: types.CONNECT_ERROR, payload: error });
     });
 };

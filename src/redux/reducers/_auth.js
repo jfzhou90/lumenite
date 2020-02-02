@@ -9,9 +9,6 @@ export default function authReducer(state = initialState.auth, action) {
     case types.CONNECTING_TO_GRAPHQL:
       return { ...state, isConnecting: true };
 
-    case types.LOGOUT:
-      return initialState.auth;
-
     case types.CONNECTED_TO_COGNITO:
       toast.success('You have been successfully authenticated!');
 
@@ -30,9 +27,12 @@ export default function authReducer(state = initialState.auth, action) {
       const apiConnection = saveApiConnection(action.payload.connectionDetails);
       return { ...state, ...apiConnection, isConnecting: false, isAuthenticated: true };
 
-    case types.DISPLAY_ERROR:
+    case types.CONNECT_ERROR:
       toast.error(`Error: ${action.payload.message}`);
       return { ...state, isConnecting: false };
+
+    case types.LOGOUT:
+      return initialState.auth;
 
     default:
       return state;

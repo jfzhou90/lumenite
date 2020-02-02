@@ -16,6 +16,7 @@ import {
 } from '@material-ui/core';
 import { Form } from 'react-final-form';
 import { useSelector } from 'react-redux';
+
 import FormField from '../components/formField';
 
 const NewConnectionDialog = ({ open, onClose, connect }) => {

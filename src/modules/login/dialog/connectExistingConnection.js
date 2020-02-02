@@ -15,7 +15,7 @@ import { useSelector } from 'react-redux';
 import map from 'lodash/map';
 import keys from 'lodash/keys';
 
-import encryptor from '../../../common/utils/encryptor';
+import encryptor from '../../../lib/utils/encryptor';
 
 const ExistingConnectionDialog = ({ open, onClose, connect, connections }) => {
   const isConnecting = useSelector(state => state.auth.isConnecting);
