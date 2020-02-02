@@ -77,14 +77,21 @@ const GraphQLEditor = () => {
   };
 
   return (
-    <GraphiQL fetcher={graphQLFetcher} defaultQuery={defaultQuery} editorTheme='orion'>
-      <GraphiQL.Logo>
-        <span className='editor--lumenite-title'>Lumenite</span>
-      </GraphiQL.Logo>
-      <GraphiQL.Footer>
-        <GraphQlFooter />
-      </GraphiQL.Footer>
-    </GraphiQL>
+    <div className='editor_div'>
+      <GraphiQL fetcher={graphQLFetcher} defaultQuery={defaultQuery} editorTheme='orion'>
+        <GraphiQL.Toolbar>
+          <GraphiQL.Menu label='File' title='File'>
+            <GraphiQL.MenuItem label='Save' title='Save' />
+          </GraphiQL.Menu>
+        </GraphiQL.Toolbar>
+        <GraphiQL.Logo>
+          <span className='editor_div--lumenite_title'>Lumenite</span>
+        </GraphiQL.Logo>
+        <GraphiQL.Footer>
+          <GraphQlFooter />
+        </GraphiQL.Footer>
+      </GraphiQL>
+    </div>
   );
 };
 

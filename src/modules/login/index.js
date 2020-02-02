@@ -30,7 +30,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div id='login-page__main'>
+    <div id='login_page--main'>
       <NewConnectionDialog
         open={openNewConnectionDialog}
         onClose={toggleNewConnectionDialog}
@@ -44,12 +44,12 @@ const LoginPage = () => {
         connections={storedConnections}
       />
 
-      <img id='main--img__snorlax' src={snorlaxPicture} alt='Snorlax' />
-      <div id='main--div__connection-container'>
-        <h1 id='connection-container--h1__title'>Lumenite</h1>
-        <div id='connection-container--div__button-group'>
+      <img id='main_img--snorlax' src={snorlaxPicture} alt='Snorlax' />
+      <div id='main_div--connection_container'>
+        <h1 id='connection_container--h1_title'>Lumenite</h1>
+        <div id='connection_container--button_group'>
           <Button
-            id='button-group--button__add'
+            id='button_group--add'
             variant='contained'
             color='primary'
             onClick={toggleNewConnectionDialog}
@@ -58,7 +58,7 @@ const LoginPage = () => {
           </Button>
           {storedConnections && (
             <Button
-              id='button-group--button__connect'
+              id='button_group--connect'
               variant='contained'
               color='primary'
               onClick={toggleExistingConnectionDialog}
@@ -69,7 +69,7 @@ const LoginPage = () => {
         </div>
       </div>
       <StorageButton resetApp={resetConnection} />
-      <div id='login-page__version'>v1.1.0</div>
+      <div id='login_page--version'>v1.1.0</div>
     </div>
   );
 };

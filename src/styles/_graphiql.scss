@@ -1,5 +1,12 @@
 @import './colors';
 
+.editor_div {
+  &--lumenite_title {
+    font-family: pacifico;
+    font-size: 1.5rem;
+  }
+}
+
 .graphiql-container {
   height: 100vh;
 
@@ -72,11 +79,6 @@
         max-width: 150px;
       }
     }
-  }
-
-  .editor--lumenite-title {
-    font-family: pacifico;
-    font-size: 1.5rem;
   }
 
   .history-contents,

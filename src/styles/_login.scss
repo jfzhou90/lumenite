@@ -1,21 +1,21 @@
 @import './colors';
 
-#login-page {
-  &__main {
+#login_page {
+  &--main {
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 100vh;
     background: #2a2a2e;
 
-    #main-- {
-      &img__snorlax {
+    #main {
+      &_img--snorlax {
         margin-top: 10vh;
         height: 20vh;
       }
 
-      &div__ {
-        &connection-container {
+      &_div-- {
+        &connection_container {
           margin-top: 5vh;
           width: 400px;
           display: flex;
@@ -29,32 +29,30 @@
             width: 300px;
           }
 
-          #connection-container-- {
-            &h1__title {
+          #connection_container-- {
+            &h1_title {
               margin-top: 3vh;
               font-size: 3rem;
               font-family: pacifico;
               color: $brand_orange_dark;
             }
 
-            &div__ {
-              &button-group {
-                display: flex;
-                width: 100%;
-                margin: 3vh 0;
-                justify-content: space-evenly;
-                #button-group-- {
-                  &button__connect,
-                  &button__add {
-                    width: 100px;
-                  }
+            &button_group {
+              display: flex;
+              width: 100%;
+              margin: 3vh 0;
+              justify-content: space-evenly;
+              #button_group-- {
+                &connect,
+                &add {
+                  width: 100px;
                 }
               }
             }
           }
         }
 
-        &storage-button {
+        &storage_button {
           position: absolute;
           bottom: 20px;
           right: 20px;
@@ -67,7 +65,7 @@
     }
   }
 
-  &__version {
+  &--version {
     position: absolute;
     left: 10px;
     bottom: 10px;
@@ -90,9 +88,7 @@
     top: 50;
     bottom: 50;
   }
-}
 
-#existing_connection_form--content {
   .MuiFormControl-root {
     width: 100%;
     margin-bottom: 10px;

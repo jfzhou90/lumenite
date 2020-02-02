@@ -39,7 +39,7 @@ const StorageButton = ({ resetApp }) => {
   };
 
   return (
-    <div id='main--div__storage-button'>
+    <div id='main_div--storage_button'>
       <DeleteHistoryDialog
         open={resetHistoryDialog}
         onClose={toggleResetHistoryDialog}
