@@ -2,7 +2,7 @@ import React from 'react';
 import GraphiQL from 'graphiql';
 import { useSelector, shallowEqual } from 'react-redux';
 
-import { getAccessToken } from '../../common/cognito/auth';
+import { getAccessToken } from '../../lib/cognito/auth';
 
 import GraphQlFooter from './components/footer';
 
