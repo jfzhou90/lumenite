@@ -6,8 +6,7 @@ import { getAccessToken } from '../../lib/cognito/auth';
 
 import GraphQlFooter from './components/footer';
 
-const defaultQuery = `
-# Welcome to Lumenite
+const defaultQuery = `# Welcome to Lumenite
 #
 # Lumenite is an in-browser tool for writing, validating, and
 # testing GraphQL queries.
@@ -29,13 +28,13 @@ const defaultQuery = `
 #
 # Keyboard shortcuts:
 #
-#  Prettify Query:  Shift-Ctrl-P (or press the prettify button above)
+#  Prettify Query:  Shift-Ctrl-P
 #
-#     Merge Query:  Shift-Ctrl-M (or press the merge button above)
+#     Merge Query:  Shift-Ctrl-M
 #
-#       Run Query:  Ctrl-Enter (or press the play button above)
+#       Run Query:  Ctrl-Enter
 #
-#   Auto Complete:  Ctrl-Space (or just start typing)
+#   Auto Complete:  Ctrl-Space
 #
 `;
 
@@ -78,12 +77,9 @@ const GraphQLEditor = () => {
 
   return (
     <div className='editor_div'>
+      {/* TODO: ADD COLLECTION FEATURE*/}
       <GraphiQL fetcher={graphQLFetcher} defaultQuery={defaultQuery} editorTheme='orion'>
-        <GraphiQL.Toolbar>
-          <GraphiQL.Menu label='File' title='File'>
-            <GraphiQL.MenuItem label='Save' title='Save' />
-          </GraphiQL.Menu>
-        </GraphiQL.Toolbar>
+        {/* <GraphiQL.Toolbar></GraphiQL.Toolbar> */}
         <GraphiQL.Logo>
           <span className='editor_div--lumenite_title'>Lumenite</span>
         </GraphiQL.Logo>

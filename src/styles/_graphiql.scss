@@ -1,47 +1,19 @@
 @import './colors';
 
 .editor_div {
+  display: flex;
+  flex-direction: row;
   &--lumenite_title {
     font-family: pacifico;
     font-size: 1.5rem;
   }
-}
 
-.graphiql-container {
-  height: 100vh;
-
-  .topBar,
-  .variable-editor-title,
-  .history-title-bar,
-  .docExplorerShow,
-  .doc-explorer-title-bar {
-    background: $brand_orange;
-    color: White;
-    border: none;
-  }
-
-  .history-contents {
-    li:hover {
-      background: $brand_orange_light1;
-      color: #0c0c0d;
-    }
-  }
-
-  .execute-button-wrap {
-    .execute-options {
-      background: #0c0c0d;
-      .selected {
-        background: $brand_orange_light1;
-        color: #0c0c0d;
-      }
-    }
-  }
   .footer {
     height: 29px;
     background: $brand_orange;
     border: none;
 
-    .footer_toolbar {
+    &_toolbar {
       display: inline-flex;
       justify-content: space-around;
       align-items: center;
@@ -77,6 +49,37 @@
       .toolbar-select {
         padding: 3px 11px 5px;
         max-width: 150px;
+      }
+    }
+  }
+}
+
+.graphiql-container {
+  height: 100vh;
+
+  .topBar,
+  .variable-editor-title,
+  .history-title-bar,
+  .docExplorerShow,
+  .doc-explorer-title-bar {
+    background: $brand_orange;
+    color: White;
+    border: none;
+  }
+
+  .history-contents {
+    li:hover {
+      background: $brand_orange_light1;
+      color: #0c0c0d;
+    }
+  }
+
+  .execute-button-wrap {
+    .execute-options {
+      background: #0c0c0d;
+      .selected {
+        background: $brand_orange_light1;
+        color: #0c0c0d;
       }
     }
   }
