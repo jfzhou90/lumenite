@@ -34,6 +34,12 @@ const GraphQLFooter = () => {
     );
   };
 
+  const selectUser = ({ target: { value: username } }) =>
+    changeUser({
+      username: username,
+      password: encryptor.decrypt(users[username]),
+    });
+
   const logout = () => dispatch({ type: LOGOUT });
 
   return (
@@ -87,12 +93,7 @@ const GraphQLFooter = () => {
                     className='toolbar-select'
                     disabled={isConnecting}
                     value={user.username}
-                    onChange={event => {
-                      changeUser({
-                        username: event.target.value,
-                        password: encryptor.decrypt(users[event.target.value]),
-                      });
-                    }}
+                    onChange={selectUser}
                   >
                     {map(users, (_, key) => (
                       <option key={key} value={key}>
