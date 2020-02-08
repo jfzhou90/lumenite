@@ -2,7 +2,8 @@ import React from 'react';
 import GraphiQL from 'graphiql';
 import { useSelector, shallowEqual } from 'react-redux';
 
-import { getAccessToken } from '../../lib/cognito/auth';
+import { getAccessToken } from '../../lib/auth/cognito';
+import { fetchIntrospectionQuery } from '../../lib/auth/restApi';
 
 import GraphQlFooter from './components/footer';
 
@@ -52,26 +53,13 @@ const GraphQLEditor = () => {
 
   const graphQLFetcher = graphQLParams => {
     if (authType === 'cognito') {
-      return getAccessToken({ userpoolId, userpoolClientId })
-        .then(token =>
-          fetch(graphqlEndpoint, {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json', authorization: token },
-            body: JSON.stringify(graphQLParams),
-          })
-        )
-        .then(response => response.json());
+      return getAccessToken({ userpoolId, userpoolClientId }).then(token =>
+        fetchIntrospectionQuery({ graphqlEndpoint, token, graphQLParams })
+      );
     }
 
     if (authType === 'apiKey') {
-      return fetch(graphqlEndpoint, {
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': apiKey,
-        },
-        body: JSON.stringify(graphQLParams),
-      }).then(response => response.json());
+      return fetchIntrospectionQuery({ graphqlEndpoint, apiKey, graphQLParams });
     }
   };
 

@@ -2,10 +2,10 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Field } from 'react-final-form';
 import map from 'lodash/map';
-import uuid from 'uuid/v4';
 
 import { connectToCognito } from '../../../redux/actions/connectActions';
 import { LOGOUT } from '../../../redux/actions/actionTypes';
+import { generateUuid } from '../../../lib/utils/qol';
 import encryptor from '../../../lib/utils/encryptor';
 
 const GraphQLFooter = () => {
@@ -34,22 +34,11 @@ const GraphQLFooter = () => {
     );
   };
 
-  const copyUuid = () => {
-    const el = document.createElement('textarea');
-    el.value = uuid();
-    el.setAttribute('readonly', '');
-    el.style = { position: 'absolute', left: '-9999px' };
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
-  };
-
   const logout = () => dispatch({ type: LOGOUT });
 
   return (
     <div className='footer_toolbar'>
-      <button className='toolbar-button' title='Copy UUID to clipboard' onClick={copyUuid}>
+      <button className='toolbar-button' title='Copy UUID to clipboard' onClick={generateUuid}>
         UUID
       </button>
       {authType === 'cognito' && (

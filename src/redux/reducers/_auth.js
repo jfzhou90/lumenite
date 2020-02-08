@@ -1,40 +1,45 @@
 import { toast } from 'react-toastify';
+import produce from 'immer';
 
 import initialState from './initialState';
 import * as types from '../actions/actionTypes';
-import { saveCognitoConnection, saveApiConnection } from '../utils/authStorage';
 
-export default function authReducer(state = initialState.auth, action) {
-  switch (action.type) {
-    case types.CONNECTING_TO_GRAPHQL:
-      return { ...state, isConnecting: true };
+const authReducer = (state = initialState.auth, action) =>
+  produce(state, draft => {
+    switch (action.type) {
+      case types.CONNECTING_TO_GRAPHQL:
+        draft.isConnecting = true;
+        break;
 
-    case types.CONNECTED_TO_COGNITO:
-      toast.success('You have been successfully authenticated!');
+      case types.CONNECT_ERROR:
+        toast.error(`Error: ${action.payload.message}`);
+        draft.isConnecting = false;
+        break;
 
-      const cognitoConnection = saveCognitoConnection(action.payload.connectionDetails);
-      return {
-        ...state,
-        ...cognitoConnection,
-        user: action.payload.authUser,
-        isConnecting: false,
-        isAuthenticated: true,
-      };
+      case types.CONNECTED_TO_COGNITO:
+        const { user, cognitoConnection } = action.payload;
+        toast.success('You have been successfully authenticated!');
+        Object.assign(draft, {
+          isConnecting: false,
+          isAuthenticated: true,
+          ...cognitoConnection,
+          user,
+        });
+        break;
 
-    case types.CONNECTED_VIA_APIKEY:
-      toast.success('You have been successfully authenticated!');
+      case types.CONNECTED_VIA_APIKEY:
+        const { apiConnection } = action.payload;
+        toast.success('You have been successfully authenticated!');
+        Object.assign(draft, { isConnecting: false, isAuthenticated: true, ...apiConnection });
+        break;
 
-      const apiConnection = saveApiConnection(action.payload.connectionDetails);
-      return { ...state, ...apiConnection, isConnecting: false, isAuthenticated: true };
+      case types.LOGOUT:
+        Object.assign(draft, { ...initialState.auth });
+        break;
 
-    case types.CONNECT_ERROR:
-      toast.error(`Error: ${action.payload.message}`);
-      return { ...state, isConnecting: false };
+      default:
+        return draft;
+    }
+  });
 
-    case types.LOGOUT:
-      return initialState.auth;
-
-    default:
-      return state;
-  }
-}
+export default authReducer;
