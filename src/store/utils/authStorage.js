@@ -22,7 +22,7 @@ const encryptCognitoConnection = ({
 
 const encryptApiConnection = ({ graphqlEndpoint, apiKey }) => ({
   graphqlEndpoint: encryptor.encrypt(graphqlEndpoint),
-  apiKey: encryptor.encrypt(apiKey),
+  apiKey: apiKey ? encryptor.encrypt(apiKey) : null,
   authType: 'apiKey',
 });
 

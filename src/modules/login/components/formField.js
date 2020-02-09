@@ -10,6 +10,7 @@ const FormField = ({
   autoFocus = false,
   type = 'text',
   maxLength = 30,
+  required = true,
 }) => (
   <Field
     name={name}
@@ -23,7 +24,7 @@ const FormField = ({
           label={label}
           autoFocus={autoFocus}
           fullWidth
-          required
+          required={required}
           error={showError}
           InputProps={{
             inputProps: {
