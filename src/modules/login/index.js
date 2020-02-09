@@ -3,18 +3,17 @@ import Button from '@material-ui/core/Button';
 import { useDispatch } from 'react-redux';
 
 import snorlaxPicture from '../../assets/img/snorlaxClipart.png';
-import NewConnectionDialog from './dialog/addNewConnection';
-import ExistingConnectionDialog from './dialog/connectExistingConnection';
+import NewConnectionDialog from './dialog/newConnection';
+import ExistingConnectionDialog from './dialog/existingConnection';
 import StorageButton from './components/storageSpeedDial';
 
 import { connectToCognito, connectViaApiKey } from '../../store/asyncActions/auth';
+import { getStoredConnections } from '../../store/utils/authStorage';
 
 const LoginPage = () => {
   const [openNewConnectionDialog, setNewConnectionDialog] = useState(false);
   const [openExistingConnectionDialog, setExistingConnectionDialog] = useState(false);
-  const [storedConnections, setStoredConnections] = useState(
-    JSON.parse(localStorage.getItem('connections'))
-  );
+  const [storedConnections, setStoredConnections] = useState(getStoredConnections());
   const dispatch = useDispatch();
 
   const resetConnection = () => setStoredConnections(null);

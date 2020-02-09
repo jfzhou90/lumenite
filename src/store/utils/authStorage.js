@@ -86,3 +86,5 @@ export const saveApiConnection = connectionDetails => {
     authType: 'apiKey',
   };
 };
+
+export const getStoredConnections = () => JSON.parse(localStorage.getItem('connections'));
