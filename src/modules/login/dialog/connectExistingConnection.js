@@ -71,7 +71,7 @@ const ExistingConnectionDialog = ({ open, onClose, connect, connections }) => {
           </Button>
           <Button onClick={onSubmit} color='primary' disabled={!connection || isConnecting}>
             Connect
-            {isConnecting ? <CircularProgress size='1rem' className='circular_progress' /> : null}
+            {isConnecting && <CircularProgress size='1rem' className='circular_progress' />}
           </Button>
         </DialogActions>
       </DialogContent>

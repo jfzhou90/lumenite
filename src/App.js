@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
 import LoginPage from './modules/login';
-import GraphQLEditor from './modules/graphql';
+import GraphQLEditor from './modules/graphiqlEditor';
 
 import 'react-toastify/dist/ReactToastify.css';
 

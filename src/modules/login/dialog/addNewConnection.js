@@ -75,6 +75,10 @@ const NewConnectionDialog = ({ open, onClose, connect }) => {
                 maxLength={200}
               />
 
+              {authType === 'apiKey' && (
+                <FormField name='apiKey' id='apiKey' label='API Key' validate={required} />
+              )}
+
               {authType === 'cognito' && (
                 <>
                   <FormField
@@ -103,10 +107,6 @@ const NewConnectionDialog = ({ open, onClose, connect }) => {
                 </>
               )}
 
-              {authType === 'apiKey' && (
-                <FormField name='apiKey' id='apiKey' label='API Key' validate={required} />
-              )}
-
               <DialogActions>
                 <Button onClick={onClose} color='secondary'>
                   Cancel
@@ -114,9 +114,7 @@ const NewConnectionDialog = ({ open, onClose, connect }) => {
 
                 <Button type='submit' color='primary' disabled={invalid || isConnecting}>
                   Connect
-                  {isConnecting ? (
-                    <CircularProgress size='1rem' className='circular_progress' />
-                  ) : null}
+                  {isConnecting && <CircularProgress size='1rem' className='circular_progress' />}
                 </Button>
               </DialogActions>
             </form>

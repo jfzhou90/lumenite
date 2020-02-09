@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Form, Field } from 'react-final-form';
 import map from 'lodash/map';
 
-import { connectToCognito } from '../../../store/actions/authActions';
+import { connectToCognito } from '../../../store/asyncActions/auth';
 import { authActions } from '../../../store/slices/auth';
 import { generateUuid } from '../../../lib/utils/qol';
 import encryptor from '../../../lib/utils/encryptor';

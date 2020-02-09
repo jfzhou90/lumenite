@@ -69,7 +69,7 @@ const LoginPage = () => {
         </div>
       </div>
       <StorageButton resetApp={resetConnection} />
-      <div id='login_page--version'>v1.1.0</div>
+      <div id='login_page--version'>v1.1.1</div>
     </div>
   );
 };
