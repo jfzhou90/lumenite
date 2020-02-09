@@ -1,6 +1,5 @@
 import { toast } from 'react-toastify';
 import { createSlice } from '@reduxjs/toolkit';
-import { authSession } from '../utils/authStorage';
 
 const initialState = {
   isAuthenticated: false,
@@ -17,7 +16,7 @@ const initialState = {
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState: authSession.get() || initialState,
+  initialState: initialState,
   reducers: {
     CONNECTING(state) {
       state.isConnecting = true;
@@ -35,16 +34,13 @@ const authSlice = createSlice({
         ...cognitoConnection,
         user,
       });
-      authSession.set(state);
     },
     CONNECTED_VIA_APIKEY(state, action) {
       const { apiConnection } = action.payload;
       toast.success('You have been successfully authenticated!');
       Object.assign(state, { isConnecting: false, isAuthenticated: true, ...apiConnection });
-      authSession.set(state);
     },
     LOGOUT(state) {
-      authSession.remove();
       Object.assign(state, initialState);
     },
   },
