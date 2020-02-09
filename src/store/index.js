@@ -17,7 +17,12 @@ import authReducer from './slices/auth';
 const middlewares = [thunk];
 
 if (process.env.NODE_ENV === 'development') {
-  const { logger } = require('redux-logger');
+  const { createLogger } = require('redux-logger');
+  const logger = createLogger({
+    diff: true,
+    duration: true,
+    collapsed: true,
+  });
   middlewares.push(logger);
 }
 
