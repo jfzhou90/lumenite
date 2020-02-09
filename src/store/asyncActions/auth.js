@@ -1,35 +1,35 @@
-import * as types from './actionTypes';
 import { authenticateViaCognito, buildAuthUserFromCognitoSession } from '../../lib/auth/cognito';
 import { authenticateViaApikey } from '../../lib/auth/restApi';
 import { saveCognitoConnection, saveApiConnection } from '../utils/authStorage';
+import { authActions } from '../slices/auth';
 
 export const connectToCognito = connectionDetails => dispatch => {
-  dispatch({ type: types.CONNECTING_TO_GRAPHQL });
+  dispatch(authActions.CONNECTING());
 
   authenticateViaCognito(connectionDetails)
     .then(session => buildAuthUserFromCognitoSession(session))
     .then(user => {
       const cognitoConnection = saveCognitoConnection(connectionDetails);
-      dispatch({ type: types.CONNECTED_TO_COGNITO, payload: { user, cognitoConnection } });
+      dispatch(authActions.CONNECTED_TO_COGNITO({ user, cognitoConnection }));
     })
     .catch(error => {
-      dispatch({ type: types.CONNECT_ERROR, payload: error });
+      dispatch(authActions.CONNECT_ERROR(error));
     });
 };
 
 export const connectViaApiKey = connectionDetails => dispatch => {
-  dispatch({ type: types.CONNECTING_TO_GRAPHQL });
+  dispatch(authActions.CONNECTING());
 
   authenticateViaApikey(connectionDetails)
     .then(response => {
       if (response.data?.__schema) {
         const apiConnection = saveApiConnection(connectionDetails);
-        dispatch({ type: types.CONNECTED_VIA_APIKEY, payload: { apiConnection } });
+        dispatch(authActions.CONNECTED_VIA_APIKEY({ apiConnection }));
       } else {
         throw new Error('Something went wrong, please try again.');
       }
     })
     .catch(error => {
-      dispatch({ type: types.CONNECT_ERROR, payload: error });
+      dispatch(authActions.CONNECT_ERROR(error));
     });
 };

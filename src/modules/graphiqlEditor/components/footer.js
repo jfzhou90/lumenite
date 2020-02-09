@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Form, Field } from 'react-final-form';
 import map from 'lodash/map';
 
-import { connectToCognito } from '../../../redux/actions/connectActions';
-import { LOGOUT } from '../../../redux/actions/actionTypes';
+import { connectToCognito } from '../../../store/asyncActions/auth';
+import { authActions } from '../../../store/slices/auth';
 import { generateUuid } from '../../../lib/utils/qol';
 import encryptor from '../../../lib/utils/encryptor';
 
@@ -40,7 +40,7 @@ const GraphQLFooter = () => {
       password: encryptor.decrypt(users[username]),
     });
 
-  const logout = () => dispatch({ type: LOGOUT });
+  const logout = () => dispatch(authActions.LOGOUT());
 
   return (
     <div className='footer_toolbar'>
