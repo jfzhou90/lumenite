@@ -86,12 +86,3 @@ export const saveApiConnection = connectionDetails => {
     authType: 'apiKey',
   };
 };
-
-export const authSession = {
-  set: data => sessionStorage.setItem('auth', JSON.stringify(data)),
-  get: () => {
-    const session = sessionStorage.getItem('auth');
-    return session && JSON.parse(session);
-  },
-  remove: () => sessionStorage.clear(),
-};
