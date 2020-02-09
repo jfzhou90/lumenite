@@ -76,7 +76,7 @@ const NewConnectionDialog = ({ open, onClose, connect }) => {
               />
 
               {authType === 'apiKey' && (
-                <FormField name='apiKey' id='apiKey' label='API Key' validate={required} />
+                <FormField name='apiKey' id='apiKey' label='API Key' required={false} />
               )}
 
               {authType === 'cognito' && (

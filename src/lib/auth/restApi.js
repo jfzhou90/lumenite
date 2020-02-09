@@ -12,6 +12,7 @@ export const authenticateViaApikey = ({ graphqlEndpoint, apiKey }) =>
 
 export const fetchIntrospectionQuery = ({ graphqlEndpoint, apiKey, token, graphQLParams }) => {
   const authorization = apiKey ? { 'x-api-key': apiKey } : token ? { authorization: token } : {};
+
   return fetch(graphqlEndpoint, {
     method: 'post',
     headers: {
