@@ -1,6 +1,15 @@
 import thunk from 'redux-thunk';
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import { persistReducer, persistStore } from 'redux-persist';
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
 import sessionStorage from 'redux-persist/lib/storage/session';
 
 import authReducer from './slices/auth';
@@ -22,7 +31,14 @@ export default () => {
     reducer: {
       auth: persistReducer(authPersistConfig, authReducer),
     },
-    middleware: [...getDefaultMiddleware(), ...middlewares],
+    middleware: [
+      ...getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }),
+      ...middlewares,
+    ],
   });
   const persistor = persistStore(store);
 
