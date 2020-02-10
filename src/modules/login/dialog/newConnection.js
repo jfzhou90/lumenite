@@ -21,7 +21,7 @@ import FormField from '../components/formField';
 
 const NewConnectionDialog = ({ open, onClose, connect }) => {
   const isConnecting = useSelector(state => state.auth.isConnecting);
-  const [authType, setAuthType] = useState('cognito');
+  const [authType, setAuthType] = useState('apiKey');
   const storedConnections = localStorage.getItem('connections');
   const connectionsKeys = storedConnections ? Object.keys(JSON.parse(storedConnections)) : [];
 
@@ -51,8 +51,8 @@ const NewConnectionDialog = ({ open, onClose, connect }) => {
             value={authType}
             onChange={updateAuthType}
           >
-            <FormControlLabel value='cognito' control={<Radio color='primary' />} label='Cognito' />
             <FormControlLabel value='apiKey' control={<Radio color='primary' />} label='API Key' />
+            <FormControlLabel value='cognito' control={<Radio color='primary' />} label='Cognito' />
           </RadioGroup>
         </FormControl>
         <Form
