@@ -14,17 +14,29 @@ import sessionStorage from 'redux-persist/lib/storage/session';
 
 import authReducer from './slices/auth';
 
-const middlewares = [thunk];
+const logger =
+  process.env.NODE_ENV === 'development'
+    ? require('redux-logger').createLogger({
+        diff: true,
+        duration: true,
+        collapsed: true,
+      })
+    : null;
 
-if (process.env.NODE_ENV === 'development') {
-  const { createLogger } = require('redux-logger');
-  const logger = createLogger({
-    diff: true,
-    duration: true,
-    collapsed: true,
-  });
+const middlewares = [thunk];
+if (logger) {
   middlewares.push(logger);
 }
+
+// if (process.env.NODE_ENV === 'development') {
+//   const { createLogger } = require('redux-logger');
+//   const logger = createLogger({
+//     diff: true,
+//     duration: true,
+//     collapsed: true,
+//   });
+//   middlewares.push(logger);
+// }
 
 const authPersistConfig = {
   key: 'auth',

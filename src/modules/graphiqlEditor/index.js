@@ -61,11 +61,13 @@ const GraphQLEditor = () => {
     if (authType === 'apiKey') {
       return fetchIntrospectionQuery({ graphqlEndpoint, apiKey, graphQLParams });
     }
+
+    return undefined;
   };
 
   return (
     <div className='editor_div'>
-      {/* TODO: ADD COLLECTION FEATURE*/}
+      {/* TODO: ADD COLLECTION FEATURE */}
       <GraphiQL fetcher={graphQLFetcher} defaultQuery={defaultQuery} editorTheme='orion'>
         {/* <GraphiQL.Toolbar></GraphiQL.Toolbar> */}
         <GraphiQL.Logo>

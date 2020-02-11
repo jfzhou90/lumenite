@@ -1,3 +1,4 @@
+/* eslint-disable */
 workbox.core.skipWaiting();
 workbox.core.clientsClaim();
 

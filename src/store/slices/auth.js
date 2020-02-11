@@ -14,9 +14,10 @@ const initialState = {
   users: [],
 };
 
+/* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 const authSlice = createSlice({
   name: 'auth',
-  initialState: initialState,
+  initialState,
   reducers: {
     CONNECTING(state) {
       state.isConnecting = true;

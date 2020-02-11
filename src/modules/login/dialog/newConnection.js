@@ -16,6 +16,7 @@ import {
 } from '@material-ui/core';
 import { Form } from 'react-final-form';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import FormField from '../components/formField';
 
@@ -123,6 +124,12 @@ const NewConnectionDialog = ({ open, onClose, connect }) => {
       </DialogContent>
     </Dialog>
   );
+};
+
+NewConnectionDialog.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  connect: PropTypes.func.isRequired,
 };
 
 export default NewConnectionDialog;

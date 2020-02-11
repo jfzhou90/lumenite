@@ -26,6 +26,7 @@ const LoginPage = () => {
   const connect = (authType, connectionDetails) => {
     if (authType === 'cognito') return dispatch(connectToCognito(connectionDetails));
     if (authType === 'apiKey') return dispatch(connectViaApiKey(connectionDetails));
+    return null;
   };
 
   return (

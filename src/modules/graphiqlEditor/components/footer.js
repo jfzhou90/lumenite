@@ -36,7 +36,7 @@ const GraphQLFooter = () => {
 
   const selectUser = ({ target: { value: username } }) =>
     changeUser({
-      username: username,
+      username,
       password: encryptor.decrypt(users[username]),
     });
 
@@ -44,7 +44,12 @@ const GraphQLFooter = () => {
 
   return (
     <div className='footer_toolbar'>
-      <button className='toolbar-button' title='Copy UUID to clipboard' onClick={generateUuid}>
+      <button
+        type='button'
+        className='toolbar-button'
+        title='Copy UUID to clipboard'
+        onClick={generateUuid}
+      >
         UUID
       </button>
       {authType === 'cognito' && (
@@ -93,7 +98,7 @@ const GraphQLFooter = () => {
                     className='toolbar-select'
                     disabled={isConnecting}
                     value={user.username}
-                    onChange={selectUser}
+                    onBlur={selectUser}
                   >
                     {map(users, (_, key) => (
                       <option key={key} value={key}>
@@ -107,7 +112,7 @@ const GraphQLFooter = () => {
           />
         </>
       )}
-      <button className='logout-button toolbar-button' onClick={logout}>
+      <button type='button' className='logout-button toolbar-button' onClick={logout}>
         Logout
       </button>
     </div>
