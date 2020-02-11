@@ -28,16 +28,6 @@ if (logger) {
   middlewares.push(logger);
 }
 
-// if (process.env.NODE_ENV === 'development') {
-//   const { createLogger } = require('redux-logger');
-//   const logger = createLogger({
-//     diff: true,
-//     duration: true,
-//     collapsed: true,
-//   });
-//   middlewares.push(logger);
-// }
-
 const authPersistConfig = {
   key: 'auth',
   storage: sessionStorage,
