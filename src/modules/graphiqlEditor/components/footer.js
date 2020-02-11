@@ -23,6 +23,8 @@ const GraphQLFooter = () => {
   const dispatch = useDispatch();
 
   const changeUser = newUserData => {
+    if (newUserData.username === user.username) return;
+
     dispatch(
       connectToCognito({
         ...newUserData,
@@ -98,6 +100,7 @@ const GraphQLFooter = () => {
                     className='toolbar-select'
                     disabled={isConnecting}
                     value={user.username}
+                    onChange={selectUser}
                     onBlur={selectUser}
                   >
                     {map(users, (_, key) => (
