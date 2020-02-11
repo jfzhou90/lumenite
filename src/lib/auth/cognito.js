@@ -61,7 +61,7 @@ export const getAccessToken = ({ userpoolId, userpoolClientId }) => {
 
     cognitoUser.getSession((err, session) => {
       if (err) {
-        reject(401);
+        reject(new Error(401));
       } else {
         const idToken = session.getIdToken().jwtToken;
 

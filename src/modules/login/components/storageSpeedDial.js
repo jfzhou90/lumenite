@@ -5,6 +5,7 @@ import {
   History as HistoryIcon,
   DeleteForever as DeleteAllIcon,
 } from '@material-ui/icons';
+import PropTypes from 'prop-types';
 
 import { DeleteHistoryDialog, ResetAppDialog } from '../dialog/confirmationDialogs';
 
@@ -75,6 +76,10 @@ const StorageButton = ({ resetApp }) => {
       </SpeedDial>
     </div>
   );
+};
+
+StorageButton.propTypes = {
+  resetApp: PropTypes.func.isRequired,
 };
 
 export default StorageButton;

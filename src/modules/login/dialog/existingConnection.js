@@ -14,6 +14,7 @@ import {
 import { useSelector } from 'react-redux';
 import map from 'lodash/map';
 import keys from 'lodash/keys';
+import PropTypes from 'prop-types';
 
 import encryptor from '../../../lib/utils/encryptor';
 
@@ -57,9 +58,9 @@ const ExistingConnectionDialog = ({ open, onClose, connect, connections }) => {
             onChange={onSelect}
             value={connection}
           >
-            {map(keys(connections).sort(), connection => (
-              <MenuItem value={connection} key={connection}>
-                {connection}
+            {map(keys(connections).sort(), connectionItem => (
+              <MenuItem value={connectionItem} key={connectionItem}>
+                {connectionItem}
               </MenuItem>
             ))}
           </Select>
@@ -77,6 +78,23 @@ const ExistingConnectionDialog = ({ open, onClose, connect, connections }) => {
       </DialogContent>
     </Dialog>
   );
+};
+
+ExistingConnectionDialog.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  connect: PropTypes.func.isRequired,
+  connections: PropTypes.objectOf(
+    PropTypes.shape({
+      authType: PropTypes.string,
+      apiKey: PropTypes.string,
+      graphqlEndpoint: PropTypes.string,
+      userpoolId: PropTypes.string,
+      userpoolClientId: PropTypes.string,
+      username: PropTypes.string,
+      password: PropTypes.string,
+    })
+  ).isRequired,
 };
 
 export default ExistingConnectionDialog;

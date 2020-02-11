@@ -66,7 +66,7 @@ export const saveCognitoConnection = connectionDetails => {
     userpoolClientId,
     graphqlEndpoint,
     currentEnv: name,
-    users: users,
+    users,
     authType: 'cognito',
   };
 };
