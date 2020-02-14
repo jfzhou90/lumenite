@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { Button, ButtonGroup } from '@material-ui/core';
-import { AddIcon } from '../../../../assets/icons';
+import { SaveIcon } from '../../../../assets/icons';
 import { generateUuid } from '../../../../lib/utils/qol';
 
 import './toolbar.scss';
@@ -75,7 +75,7 @@ const GraphiQLToolbar = ({ prettify, merge, copy, toggleHistory, toggleCollectio
           Collection
         </Button>
         <Button color='primary' size='small' aria-label='Add to collection' onClick={null}>
-          <AddIcon />
+          <SaveIcon />
         </Button>
       </ButtonGroup>
     </div>

@@ -10,7 +10,7 @@ import StorageButton from './components/storageSpeedDial';
 import { connectToCognito, connectViaApiKey } from '../../store/asyncActions/auth';
 import { getStoredConnections } from '../../store/utils/authStorage';
 
-import AppLogo from '../../assets/illustrations/appLogo';
+import snorlaxPicture from '../../assets/img/snorlaxClipart.png';
 import './login.scss';
 
 const LoginPage = () => {
@@ -60,7 +60,7 @@ const LoginPage = () => {
         connections={storedConnections}
       />
 
-      <AppLogo />
+      <img id='main_img--snorlax' src={snorlaxPicture} alt='Snorlax' />
       <div id='main_div--connection_container'>
         <h1 id='connection_container--h1_title'>Lumenite</h1>
         <div id='connection_container--button_group'>
