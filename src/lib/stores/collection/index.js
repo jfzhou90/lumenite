@@ -28,8 +28,6 @@ const collectionStore = configureStore({
 });
 
 const collectionContext = createContext(null);
-
-// Export your custom hooks if you wish to use them in other files.
 export const useCollectionStore = createStoreHook(collectionContext);
 export const useCollectionDispatch = createDispatchHook(collectionContext);
 export const useCollectionSelector = createSelectorHook(collectionContext);

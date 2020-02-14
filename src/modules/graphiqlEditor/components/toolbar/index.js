@@ -1,12 +1,19 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { Button, ButtonGroup } from '@material-ui/core';
-import { SaveIcon } from '../../../../assets/icons';
+import { useDispatch } from 'react-redux';
+
 import { generateUuid } from '../../../../lib/utils/qol';
+import { displayActions } from '../../../../store/slices/display';
+
+import { SaveIcon } from '../../../../assets/icons';
 
 import './toolbar.scss';
 
-const GraphiQLToolbar = ({ prettify, merge, copy, toggleHistory, toggleCollection }) => {
+const GraphiQLToolbar = ({ prettify, merge, copy, toggleHistory }) => {
+  const dispatch = useDispatch();
+
+  const toggleCollectionsSidebar = () => dispatch(displayActions.TOGGLE_COLLECTIONS_SIDEBAR());
   return (
     <div id='editor_toolbar' className='editor_toolbar'>
       <Button
@@ -67,7 +74,7 @@ const GraphiQLToolbar = ({ prettify, merge, copy, toggleHistory, toggleCollectio
       <ButtonGroup variant='contained' color='primary' aria-label='split button'>
         <Button
           color='primary'
-          onClick={toggleCollection}
+          onClick={toggleCollectionsSidebar}
           title='Show Collection'
           aria-label='Show Collection'
           size='small'
@@ -87,7 +94,6 @@ GraphiQLToolbar.propTypes = {
   merge: PropTypes.func.isRequired,
   copy: PropTypes.func.isRequired,
   toggleHistory: PropTypes.func.isRequired,
-  toggleCollection: PropTypes.func.isRequired,
 };
 
 export default memo(GraphiQLToolbar);

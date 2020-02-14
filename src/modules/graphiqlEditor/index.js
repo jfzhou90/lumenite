@@ -1,14 +1,15 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useCallback } from 'react';
 import GraphiQL from 'graphiql';
 import { useSelector, shallowEqual } from 'react-redux';
 
-import { toast } from 'react-toastify';
 import { getAccessToken } from '../../lib/auth/cognito';
 import { fetchIntrospectionQuery } from '../../lib/auth/restApi';
+import { tryFunction } from '../../lib/utils/qol';
 
 import GraphQlFooter from './components/footer';
 import CustomToolbar from './components/toolbar';
 import CollectionSidebar from './components/collection';
+import CustomDialogs from './dialogs';
 
 import './graphiql.scss';
 
@@ -45,16 +46,9 @@ const defaultQuery = `# Welcome to Lumenite
 `;
 
 const GraphQLEditor = () => {
-  const [showCollection, setShowCollection] = useState(false);
   const graphiql = useRef(null);
   const { authType, apiKey, userpoolId, userpoolClientId, graphqlEndpoint } = useSelector(
-    state => ({
-      authType: state.auth.authType,
-      apiKey: state.auth.apiKey,
-      userpoolId: state.auth.userpoolId,
-      userpoolClientId: state.auth.userpoolClientId,
-      graphqlEndpoint: state.auth.graphqlEndpoint,
-    }),
+    ({ auth }) => auth,
     shallowEqual
   );
 
@@ -69,23 +63,15 @@ const GraphQLEditor = () => {
     [apiKey, authType, graphqlEndpoint, userpoolClientId, userpoolId]
   );
 
-  const tryFunction = func => {
-    try {
-      func();
-    } catch (error) {
-      toast.error(`Error: ${error}`);
-    }
-  };
-
   const prettify = () => tryFunction(graphiql.current.handlePrettifyQuery);
   const mergeQuery = () => tryFunction(graphiql.current.handleMergeQuery);
   const copyQuery = () => tryFunction(graphiql.current.handleCopyQuery);
   const toggleHistory = () => tryFunction(graphiql.current.handleToggleHistory);
-  const toggleCollection = () => setShowCollection(!showCollection);
 
   return (
     <div className='editor_div'>
-      <CollectionSidebar open={showCollection} toggle={toggleCollection} />
+      <CustomDialogs />
+      <CollectionSidebar />
       <GraphiQL
         ref={graphiql}
         fetcher={graphQLFetcher}
@@ -101,7 +87,6 @@ const GraphQLEditor = () => {
             merge={mergeQuery}
             copy={copyQuery}
             toggleHistory={toggleHistory}
-            toggleCollection={toggleCollection}
           />
         </GraphiQL.Toolbar>
         <GraphiQL.Footer>

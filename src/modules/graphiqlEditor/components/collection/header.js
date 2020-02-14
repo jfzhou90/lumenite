@@ -1,17 +1,26 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
-const CollectionHeader = ({ toggle }) => (
-  <div className='collection_div--header'>
-    <span>Collections</span>
-    <button className='docExplorerHide' onClick={toggle} aria-label='Close History' type='button'>
-      {'\u2715'}
-    </button>
-  </div>
-);
+import { displayActions } from '../../../../store/slices/display';
 
-CollectionHeader.propTypes = {
-  toggle: PropTypes.func.isRequired,
+const CollectionHeader = () => {
+  const dispatch = useDispatch();
+
+  const toggleCollectionsSidebar = () => dispatch(displayActions.TOGGLE_COLLECTIONS_SIDEBAR());
+
+  return (
+    <div className='collection_div--header'>
+      <span>Collections</span>
+      <button
+        className='docExplorerHide'
+        onClick={toggleCollectionsSidebar}
+        aria-label='Close History'
+        type='button'
+      >
+        {'\u2715'}
+      </button>
+    </div>
+  );
 };
 
 export default CollectionHeader;
