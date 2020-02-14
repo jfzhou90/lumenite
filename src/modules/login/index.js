@@ -3,13 +3,15 @@ import Button from '@material-ui/core/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import snorlaxPicture from '../../assets/img/snorlaxClipart.png';
 import NewConnectionDialog from './dialog/newConnection';
 import ExistingConnectionDialog from './dialog/existingConnection';
 import StorageButton from './components/storageSpeedDial';
 
 import { connectToCognito, connectViaApiKey } from '../../store/asyncActions/auth';
 import { getStoredConnections } from '../../store/utils/authStorage';
+
+import AppLogo from '../../assets/illustrations/appLogo';
+import './login.scss';
 
 const LoginPage = () => {
   const [openNewConnectionDialog, setNewConnectionDialog] = useState(false);
@@ -58,7 +60,7 @@ const LoginPage = () => {
         connections={storedConnections}
       />
 
-      <img id='main_img--snorlax' src={snorlaxPicture} alt='Snorlax' />
+      <AppLogo />
       <div id='main_div--connection_container'>
         <h1 id='connection_container--h1_title'>Lumenite</h1>
         <div id='connection_container--button_group'>

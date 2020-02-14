@@ -3,10 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Form, Field } from 'react-final-form';
 import map from 'lodash/map';
 
-import { connectToCognito } from '../../../store/asyncActions/auth';
-import { authActions } from '../../../store/slices/auth';
-import { generateUuid } from '../../../lib/utils/qol';
-import encryptor from '../../../lib/utils/encryptor';
+import { connectToCognito } from '../../../../store/asyncActions/auth';
+import { authActions } from '../../../../store/slices/auth';
+import encryptor from '../../../../lib/utils/encryptor';
 
 const GraphQLFooter = () => {
   const {
@@ -46,14 +45,6 @@ const GraphQLFooter = () => {
 
   return (
     <div className='footer_toolbar'>
-      <button
-        type='button'
-        className='toolbar-button'
-        title='Copy UUID to clipboard'
-        onClick={generateUuid}
-      >
-        UUID
-      </button>
       {authType === 'cognito' && (
         <>
           <Form
