@@ -1,0 +1,25 @@
+@import '../../../../styles/colors';
+
+.editor_toolbar {
+  display: inline-flex;
+  button {
+    background-color: white !important;
+    width: 90px;
+    color: $brand_orange !important;
+    text-transform: none;
+    margin-right: 10px;
+  }
+
+  .MuiButtonGroup-root {
+    margin-right: 10px;
+    button {
+      margin-right: 0px;
+    }
+  }
+  .MuiButtonGroup-groupedContainedHorizontal:not(:last-child) {
+    border-right: 1px solid $brand_orange;
+  }
+  .MuiButtonGroup-groupedContainedHorizontal:last-child {
+    max-width: 45px;
+  }
+}

@@ -1,0 +1,225 @@
+@import '../../styles/colors';
+
+.editor_div {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+
+  &--lumenite_title {
+    font-family: pacifico;
+    font-size: 1.5rem;
+  }
+
+  .graphiql-container {
+    height: 100vh;
+
+    .execute-button {
+      background: white;
+      svg {
+        fill: $brand_orange;
+      }
+    }
+
+    .topBar,
+    .variable-editor-title,
+    .history-title-bar,
+    .docExplorerShow,
+    .doc-explorer-title-bar {
+      background: $brand_orange;
+      color: White;
+      border: none;
+    }
+
+    .history-contents {
+      li:hover {
+        background: $brand_orange_light1;
+        color: #0c0c0d;
+      }
+    }
+
+    .execute-button-wrap {
+      .execute-options {
+        background: #0c0c0d;
+        .selected {
+          background: $brand_orange_light1;
+          color: #0c0c0d;
+        }
+      }
+    }
+
+    .history-contents,
+    .doc-explorer-contents {
+      background: #2a2a2e;
+      color: white;
+      border: none;
+    }
+
+    .execute-button,
+    .toolbar-button {
+      box-shadow: none;
+    }
+    .cm-s-orion.CodeMirror {
+      background: #2a2a2e;
+      color: #b1b1b3;
+    }
+    .cm-s-orion div.CodeMirror-selected {
+      background: #353b48;
+    }
+    .cm-s-orion .CodeMirror-line::selection,
+    .cm-s-orion .CodeMirror-line > span::selection,
+    .cm-s-orion .CodeMirror-line > span > span::selection {
+      background: #353b48;
+    }
+    .cm-s-orion .CodeMirror-line::-moz-selection,
+    .cm-s-orion .CodeMirror-line > span::-moz-selection,
+    .cm-s-orion .CodeMirror-line > span > span::-moz-selection {
+      background: #353b48;
+    }
+    .cm-s-orion .CodeMirror-gutters {
+      background: #0c0c0d;
+      border-right: 1px solid #0c0c0d;
+    }
+    .cm-s-orion .CodeMirror-guttermarker {
+      color: #555;
+    }
+    .cm-s-orion .CodeMirror-linenumber {
+      color: #939393;
+    }
+    .cm-s-orion .CodeMirror-cursor {
+      border-left: 1px solid #fff;
+    }
+
+    .cm-s-orion span.cm-comment {
+      color: #939393;
+    }
+    .cm-s-orion span.cm-atom {
+      color: #ff7de9;
+    }
+    .cm-s-orion span.cm-quote {
+      color: #ff7de9;
+    }
+    .cm-s-orion span.cm-builtin {
+      color: #ff7de9;
+    }
+    .cm-s-orion span.cm-attribute {
+      color: #ff7de9;
+    }
+    .cm-s-orion span.cm-keyword {
+      color: #ff7de9;
+    }
+    .cm-s-orion span.cm-error {
+      color: #ff7de9;
+    }
+
+    .cm-s-orion span.cm-number {
+      color: #6b89ff;
+    }
+    .cm-s-orion span.cm-string {
+      color: #6b89ff;
+    }
+    .cm-s-orion span.cm-string-2 {
+      color: #6b89ff;
+    }
+
+    .cm-s-orion span.cm-meta {
+      color: #939393;
+    }
+    .cm-s-orion span.cm-hr {
+      color: #939393;
+    }
+
+    .cm-s-orion span.cm-header {
+      color: #75bfff;
+    }
+    .cm-s-orion span.cm-qualifier {
+      color: #75bfff;
+    }
+    .cm-s-orion span.cm-variable-2 {
+      color: #75bfff;
+    }
+
+    .cm-s-orion span.cm-property {
+      color: $brand_orange;
+    }
+
+    .cm-s-orion span.cm-def {
+      color: #75bfff;
+    }
+    .cm-s-orion span.cm-bracket {
+      color: #75bfff;
+    }
+    .cm-s-orion span.cm-tag {
+      color: #75bfff;
+    }
+    .cm-s-orion span.cm-link:visited {
+      color: #75bfff;
+    }
+
+    .cm-s-orion span.cm-variable {
+      color: #b98eff;
+    }
+    .cm-s-orion span.cm-variable-3 {
+      color: #d7d7db;
+    }
+    .cm-s-orion span.cm-link {
+      color: #737373;
+    }
+    .cm-s-orion span.cm-operator {
+      color: #b1b1b3;
+    }
+    .cm-s-orion span.cm-special {
+      color: #d7d7db;
+    }
+
+    .cm-s-orion .CodeMirror-activeline-background {
+      background: rgba(185, 215, 253, 0.15);
+    }
+    .cm-s-orion .CodeMirror-matchingbracket {
+      outline: solid 1px rgba(255, 255, 255, 0.25);
+      color: white !important;
+    }
+    .footer {
+      height: 29px;
+      background: $brand_orange;
+      border-top: none;
+      &_toolbar {
+        display: inline-flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 29px;
+        width: 100%;
+        form {
+          display: inline-flex;
+          input {
+            width: 80px;
+            margin-right: 5px;
+          }
+          @media (max-width: 1000px) {
+            display: none;
+          }
+        }
+
+        span {
+          padding-left: 30px;
+          align-self: center;
+
+          select {
+            height: 25px;
+          }
+          @media (max-width: 1500px) {
+            display: none;
+          }
+        }
+
+        .logout-button {
+          margin: 0 5px;
+        }
+
+        .toolbar-select {
+          padding: 3px 11px 5px;
+          max-width: 150px;
+        }
+      }
+    }
+  }
+}
