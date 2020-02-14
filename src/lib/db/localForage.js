@@ -7,11 +7,6 @@ export default class DB {
       name: 'Lumenite',
       storeName,
     });
-    this.storage.getItem('connections', (_, connection) => {
-      if (!connection && storeName === 'connections') {
-        this.storage.setItem('connections', JSON.parse(localStorage.getItem('connections')));
-      }
-    });
   }
 
   getItem(key) {
