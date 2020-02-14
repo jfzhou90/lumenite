@@ -37,7 +37,7 @@ const NewConnectionDialog = ({ open, onClose, connect }) => {
   const onSubmit = data => connect(authType, data);
 
   return (
-    <Dialog open={open} onClose={onClose} aria-labelledby='new_connection_form'>
+    <Dialog open={open} onClose={onClose} aria-labelledby='new_connection_form' maxWidth='sm'>
       <DialogTitle id='new_connection_form'>New connection</DialogTitle>
 
       <DialogContent id='new_connection_form--content'>
