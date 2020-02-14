@@ -1,13 +1,24 @@
 import React from 'react';
-
+import { useDispatch } from 'react-redux';
 import { Button } from '@material-ui/core';
-import ScientistTeam from '../../../../assets/svg/scientistTeam';
 
-const EmptyCollection = () => (
-  <div className='collection_div--empty'>
-    <ScientistTeam />
-    <Button color='primary'>Create a collection</Button>
-  </div>
-);
+import { displayActions } from '../../../../store/slices/display';
+
+import ArmsWide from '../../../../assets/svg/armsWide';
+
+const EmptyCollection = () => {
+  const dispatch = useDispatch();
+  const toggleCreateCollectionDialog = () =>
+    dispatch(displayActions.TOGGLE_CREATE_COLLECTION_DIALOG());
+
+  return (
+    <div className='collection_div--empty'>
+      <ArmsWide />
+      <Button color='primary' onClick={toggleCreateCollectionDialog}>
+        Create a collection
+      </Button>
+    </div>
+  );
+};
 
 export default EmptyCollection;
