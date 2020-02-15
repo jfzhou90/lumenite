@@ -14,6 +14,7 @@
     "graphql": "^14.6.0",
     "immer": "^5.3.4",
     "localforage": "^1.7.3",
+    "localforage-getitems": "^1.4.2",
     "lodash": "^4.17.15",
     "node-sass": "^4.13.1",
     "prop-types": "^15.7.2",
