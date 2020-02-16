@@ -73,10 +73,17 @@ const NewConnectionDialog = ({ open, onClose, connect }) => {
                 validate={required}
                 maxLength={200}
                 required
+                submitOnEnter
               />
 
               {authType === 'apiKey' && (
-                <FormField name='apiKey' id='apiKey' label='API Key' required={false} />
+                <FormField
+                  name='apiKey'
+                  id='apiKey'
+                  label='API Key'
+                  required={false}
+                  submitOnEnter
+                />
               )}
 
               {authType === 'cognito' && (
@@ -112,6 +119,7 @@ const NewConnectionDialog = ({ open, onClose, connect }) => {
                     type='password'
                     validate={required}
                     required
+                    submitOnEnter
                   />
                 </>
               )}

@@ -3,17 +3,17 @@ import { useDispatch } from 'react-redux';
 
 import { displayActions } from '../../../../store/slices/display';
 
-const CollectionHeader = () => {
+const WorkspaceHeader = () => {
   const dispatch = useDispatch();
 
-  const toggleCollectionsSidebar = () => dispatch(displayActions.TOGGLE_COLLECTIONS_SIDEBAR());
+  const toggleWorkspaceSidebar = () => dispatch(displayActions.TOGGLE_WORKSPACE_SIDEBAR());
 
   return (
-    <div className='collection_div--header'>
-      <span>Collections</span>
+    <div className='workspace_div--header'>
+      <span>Workspace</span>
       <button
         className='docExplorerHide'
-        onClick={toggleCollectionsSidebar}
+        onClick={toggleWorkspaceSidebar}
         aria-label='Close History'
         type='button'
       >
@@ -23,4 +23,4 @@ const CollectionHeader = () => {
   );
 };
 
-export default CollectionHeader;
+export default WorkspaceHeader;
