@@ -1,0 +1,99 @@
+@import '../../../../styles/colors';
+
+.workspace_div {
+  width: 500px;
+  background-color: #2a2a2e;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+  z-index: 8;
+
+  &.hidden {
+    display: none;
+  }
+
+  .workspace_div--empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+
+    button {
+      background-color: white;
+      font-weight: bold;
+    }
+  }
+
+  .workspace_div--header {
+    height: 34px;
+    background-color: $brand_orange;
+    padding: 8px 8px 5px;
+    display: flex;
+
+    span {
+      color: white;
+      flex: 1;
+      font-weight: bold;
+      overflow: hidden;
+      padding: 10px 0 10px 10px;
+      text-align: center;
+      text-overflow: ellipsis;
+      user-select: text;
+      white-space: nowrap;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    button {
+      cursor: pointer;
+      font-size: 18px;
+      margin: -7px -8px -6px 0;
+      padding: 18px 16px 15px 12px;
+      background: 0;
+      border: 0;
+      line-height: 14px;
+    }
+  }
+
+  .collection_list_div {
+    display: flex;
+    flex-direction: column;
+
+    button {
+      max-width: 200px;
+      align-self: flex-end;
+      margin: 5px;
+    }
+
+    &--list {
+      max-height: calc(100vh - 150px);
+      overflow: auto;
+    }
+
+    .MuiExpansionPanel-root {
+      color: white;
+      background-color: #2a2a2e;
+      &.Mui-expanded {
+        margin: 1px 0;
+      }
+
+      .MuiExpansionPanelSummary-content {
+        font-weight: bold;
+      }
+
+      .MuiExpansionPanelSummary-root:hover {
+        color: black;
+        background: $brand_orange_light1;
+      }
+
+      .MuiExpansionPanelSummary-root.Mui-expanded {
+        background: lighten($brand_orange, 5%);
+        color: black;
+      }
+
+      .MuiExpansionPanelDetails-root,
+      &:before,
+      &:after {
+        color: black;
+        background-color: white;
+      }
+    }
+  }
+}

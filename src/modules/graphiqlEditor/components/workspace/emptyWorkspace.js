@@ -12,7 +12,7 @@ const EmptyCollection = () => {
     dispatch(displayActions.TOGGLE_CREATE_COLLECTION_DIALOG());
 
   return (
-    <div className='collection_div--empty'>
+    <div className='workspace_div--empty'>
       <ArmsWide />
       <Button color='primary' onClick={toggleCreateCollectionDialog}>
         Create a collection

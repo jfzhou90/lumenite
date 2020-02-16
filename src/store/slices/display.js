@@ -2,7 +2,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  collectionsSidebar: false,
+  workspaceSidebar: false,
   createCollectionDialog: false,
 };
 
@@ -11,8 +11,8 @@ const displaySlice = createSlice({
   name: 'display',
   initialState,
   reducers: {
-    TOGGLE_COLLECTIONS_SIDEBAR(state) {
-      state.collectionsSidebar = !state.collectionsSidebar;
+    TOGGLE_WORKSPACE_SIDEBAR(state) {
+      state.workspaceSidebar = !state.workspaceSidebar;
     },
     TOGGLE_CREATE_COLLECTION_DIALOG(state) {
       state.createCollectionDialog = !state.createCollectionDialog;

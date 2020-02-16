@@ -13,7 +13,7 @@ import './toolbar.scss';
 const GraphiQLToolbar = ({ prettify, merge, copy, toggleHistory }) => {
   const dispatch = useDispatch();
 
-  const toggleCollectionsSidebar = () => dispatch(displayActions.TOGGLE_COLLECTIONS_SIDEBAR());
+  const toggleWorkspaceSidebar = () => dispatch(displayActions.TOGGLE_WORKSPACE_SIDEBAR());
   return (
     <div id='editor_toolbar' className='editor_toolbar'>
       <Button
@@ -74,9 +74,9 @@ const GraphiQLToolbar = ({ prettify, merge, copy, toggleHistory }) => {
       <ButtonGroup variant='contained' color='primary' aria-label='split button'>
         <Button
           color='primary'
-          onClick={toggleCollectionsSidebar}
-          title='Show Collection'
-          aria-label='Show Collection'
+          onClick={toggleWorkspaceSidebar}
+          title='Show Workspace'
+          aria-label='Show Workspace '
           size='small'
         >
           Collection
