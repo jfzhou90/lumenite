@@ -9,7 +9,7 @@ import { tryFunction } from '../../lib/utils/qol';
 import GraphQlFooter from './components/footer';
 import CustomToolbar from './components/toolbar';
 import WorkspaceSidebar from './components/workspace';
-import CustomDialogs from './dialogs';
+import CreateCollectionDialog from './dialogs/createCollection';
 
 import './graphiql.scss';
 
@@ -70,7 +70,7 @@ const GraphQLEditor = () => {
 
   return (
     <div className='editor_div'>
-      <CustomDialogs />
+      <CreateCollectionDialog />
       <WorkspaceSidebar />
       <GraphiQL
         ref={graphiql}
