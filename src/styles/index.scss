@@ -5,10 +5,12 @@
 @import './buttons';
 
 ::-webkit-scrollbar {
-  width: 0px;
+  width: 3px;
+  height: 3px;
   background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
   background: $brand_orange;
+  border-radius: 8px;
 }

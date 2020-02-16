@@ -1,8 +1,10 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, memo } from 'react';
 import classnames from 'classnames';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import keys from 'lodash/keys';
+import PropTypes from 'prop-types';
 
-import { getGqlCollectionsDetails } from '../../../../store/asyncActions/workspace';
+import { getCollectionsDetails } from '../../../../store/asyncActions/workspace';
 
 import WorkspaceHeader from './header';
 import EmptyWorkspace from './emptyWorkspace';
@@ -11,13 +13,13 @@ import CollectionList from './collectionList';
 import HourGlass from '../../../../assets/illustrations/hourGlass';
 import './workspace.scss';
 
-const WorkspaceSidebar = () => {
+const WorkspaceSidebar = ({ setQuery }) => {
   const dispatch = useDispatch();
   const open = useSelector(({ display }) => display.workspaceSidebar);
   const { workspaceId, isEmpty, isLoading } = useSelector(
     ({ workspace }) => ({
       workspaceId: workspace.workspaceId,
-      isEmpty: !workspace.collections?.length,
+      isEmpty: !keys(workspace.collections).length,
       isLoading: workspace.isLoading,
     }),
     shallowEqual
@@ -25,7 +27,7 @@ const WorkspaceSidebar = () => {
   const mainClasses = classnames('workspace_div', { hidden: open });
 
   const fetchCollections = useCallback(() => {
-    dispatch(getGqlCollectionsDetails(workspaceId));
+    dispatch(getCollectionsDetails(workspaceId));
   }, [dispatch, workspaceId]);
 
   useEffect(() => {
@@ -37,9 +39,13 @@ const WorkspaceSidebar = () => {
       <WorkspaceHeader />
       {isLoading && <HourGlass />}
       {isEmpty && !isLoading && <EmptyWorkspace />}
-      {!isEmpty && !isLoading && <CollectionList />}
+      {!isEmpty && !isLoading && <CollectionList setQuery={setQuery} />}
     </div>
   );
 };
 
-export default WorkspaceSidebar;
+WorkspaceSidebar.propTypes = {
+  setQuery: PropTypes.func.isRequired,
+};
+
+export default memo(WorkspaceSidebar);

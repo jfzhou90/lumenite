@@ -1,16 +1,25 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
-const CollectionItem = ({ name, link, id }) => {
+import QueryList from './queryList';
+
+import CookieMan from '../../../../assets/illustrations/cookie';
+
+const CollectionItem = ({ name, link, id, setQuery }) => {
+  const [expanded, setExpanded] = useState(false);
   const formattedLink = /http/.test(link) ? link : `//${link}`;
+  const isEmpty = useSelector(({ workspace }) => !workspace.collections[id]?.queries?.length);
+
+  const toggleExpansion = () => setExpanded(!expanded);
 
   return (
-    <MuiExpansionPanel square>
-      <MuiExpansionPanelSummary aria-controls={`${id}-content`} id={id}>
+    <MuiExpansionPanel square expanded={expanded}>
+      <MuiExpansionPanelSummary aria-controls={`${id}-content`} id={id} onClick={toggleExpansion}>
         <Typography>{name}</Typography>
       </MuiExpansionPanelSummary>
       <MuiExpansionPanelDetails>
@@ -21,7 +30,13 @@ const CollectionItem = ({ name, link, id }) => {
             </a>
           </Typography>
         )}
-        SOMETHING SHOULD BE HERE
+        {isEmpty && (
+          <div className='query_list--empty'>
+            <CookieMan />
+            <span>This is not the gingerbread you are looking for, please save a query</span>
+          </div>
+        )}
+        {!isEmpty && expanded && <QueryList collectionId={id} setQuery={setQuery} />}
       </MuiExpansionPanelDetails>
     </MuiExpansionPanel>
   );
@@ -30,6 +45,7 @@ const CollectionItem = ({ name, link, id }) => {
 CollectionItem.propTypes = {
   name: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  setQuery: PropTypes.func.isRequired,
   link: PropTypes.string,
 };
 

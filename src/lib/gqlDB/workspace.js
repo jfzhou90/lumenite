@@ -6,7 +6,7 @@ class WorkspaceDB {
   constructor(storeName) {
     this.storage = localForage.createInstance();
     this.storage.config({
-      name: 'Lumenite',
+      name: 'Lumenite-GQL',
       storeName,
     });
   }
@@ -15,16 +15,16 @@ class WorkspaceDB {
     return this.storage.getItem(key);
   }
 
-  getAllGqlCollectionsIds(workspaceId = defaultWorkspace) {
-    return this.storage.getItem(workspaceId).then(workspace => workspace?.gqlCollections || []);
+  getAllCollectionsIds(workspaceId = defaultWorkspace) {
+    return this.storage.getItem(workspaceId).then(workspace => workspace?.collections || []);
   }
 
-  addGqlCollectionToWorkspace({ workspaceId, collectionId }) {
+  addCollectionToWorkspace({ workspaceId, collectionId }) {
     return this.storage.getItem(workspaceId).then(workspace => {
       if (!workspace) throw new Error('Workspace does not exist');
       const clone = { ...workspace };
-      clone.gqlCollections = [collectionId, ...workspace.gqlCollections];
-      return this.storage.setItem(workspaceId, clone).then(({ gqlCollections }) => gqlCollections);
+      clone.collections = [collectionId, ...workspace.collections];
+      return this.storage.setItem(workspaceId, clone).then(({ collections }) => collections);
     });
   }
 
@@ -47,8 +47,7 @@ workspaceDB.getItem(defaultWorkspace).then(workspace => {
       link: '',
       storage: 'localForage',
       dateCreated: new Date().toISOString(),
-      gqlCollections: [],
-      restApiCollection: [],
+      collections: [],
     });
   }
 });
