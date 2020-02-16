@@ -53,8 +53,17 @@
   }
 
   .collection_list_div {
+    width: 400px;
     display: flex;
     flex-direction: column;
+    .MuiExpansionPanelSummary-content {
+      p {
+        max-width: 300px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
 
     button {
       max-width: 200px;
@@ -97,6 +106,10 @@
 
       .MuiTypography-subtitle2 {
         padding: 2px 10px;
+        max-width: 300px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
         a {
           color: $brand_orange_light3;
           &:visited {

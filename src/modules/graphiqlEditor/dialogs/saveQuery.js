@@ -67,7 +67,14 @@ const SaveQueryDialog = ({ save }) => {
                 />
               )}
 
-              <FormField name='name' id='name' label='Name' required validate={required} />
+              <FormField
+                name='name'
+                id='name'
+                label='Name'
+                required
+                validate={required}
+                maxLength={25}
+              />
 
               <FormField name='link' id='link' label='Link' />
 
