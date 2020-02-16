@@ -2,7 +2,15 @@
 import localForage from 'localforage';
 import uuid from 'uuid/v4';
 import map from 'lodash/map';
+import compact from 'lodash/compact';
 
+const defaultCollectionProps = {
+  id: `collection.${uuid()}`,
+  name: 'ERROR',
+  link: '',
+  notes: '',
+  queries: [],
+};
 class CollectionDB {
   constructor(storeName) {
     this.storage = localForage.createInstance();
@@ -15,13 +23,13 @@ class CollectionDB {
   createCollection(value) {
     const collectionId = value && `collection.${uuid()}`;
     return this.storage
-      .setItem(collectionId, { id: collectionId, ...value })
+      .setItem(collectionId, { ...defaultCollectionProps, id: collectionId, queries: [], ...value })
       .then(() => collectionId);
   }
 
-  getAllCollectionsDetails(collectionIds = []) {
+  async getAllCollectionsDetails(collectionIds = []) {
     const promises = map(collectionIds, collectionId => this.storage.getItem(collectionId));
-    return Promise.all(promises);
+    return Promise.all(promises).then(result => compact(result));
   }
 }
 

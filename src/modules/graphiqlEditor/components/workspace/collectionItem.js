@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 
 const CollectionItem = ({ name, link, id }) => {
   const formattedLink = /http/.test(link) ? link : `//${link}`;
+
   return (
     <MuiExpansionPanel square>
       <MuiExpansionPanelSummary aria-controls={`${id}-content`} id={id}>
@@ -35,4 +36,4 @@ CollectionItem.defaultProps = {
   link: undefined,
 };
 
-export default CollectionItem;
+export default memo(CollectionItem);
