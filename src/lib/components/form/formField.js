@@ -39,7 +39,7 @@ const FormField = ({
               autoComplete: 'off',
               'aria-required': required,
               onKeyPress: e => {
-                if (e.key === 'Enter' && submitOnEnter) e.preventDefault();
+                if (e.key === 'Enter' && !submitOnEnter) e.preventDefault();
               },
             },
           }}
