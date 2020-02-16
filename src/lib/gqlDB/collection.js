@@ -14,16 +14,19 @@ class CollectionDB {
   constructor(storeName) {
     this.storage = localForage.createInstance();
     this.storage.config({
-      name: 'Lumenite',
+      name: 'Lumenite-GQL',
       storeName,
     });
   }
 
   createCollection(value) {
     const collectionId = value && `collection.${uuid()}`;
-    return this.storage
-      .setItem(collectionId, { ...defaultCollectionProps, id: collectionId, queries: [], ...value })
-      .then(() => collectionId);
+    return this.storage.setItem(collectionId, {
+      ...defaultCollectionProps,
+      id: collectionId,
+      queries: [],
+      ...value,
+    });
   }
 
   getAllCollectionsDetails(collectionIds = []) {
@@ -31,15 +34,19 @@ class CollectionDB {
     return Promise.all(promises).then(result => compact(result));
   }
 
-  addGqlQueryToCollection({ collectionId, queryId }) {
+  addQueryToCollection({ collectionId, queryId }) {
     return this.storage.getItem(collectionId).then(collection => {
       if (!collection) throw new Error('Invalid collection');
       const clone = { ...collection };
       clone.queries = [queryId, ...collection.queries];
-      this.storage
+      return this.storage
         .setItem(collectionId, clone)
-        .then(({ queries }) => ({ [collectionId]: queries }));
+        .then(({ queries }) => ({ collectionId, queries }));
     });
+  }
+
+  getAllQueries(collectionId) {
+    return this.storage.getItem(collectionId).then(collection => collection.queries);
   }
 }
 

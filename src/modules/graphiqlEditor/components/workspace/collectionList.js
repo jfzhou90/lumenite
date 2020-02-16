@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import map from 'lodash/map';
 import sortBy from 'lodash/sortBy';
 import { Button } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
 import { displayActions } from '../../../../store/slices/display';
 
 import CollectionItem from './collectionItem';
 
-const CollectionList = () => {
+const CollectionList = ({ setQuery }) => {
   const dispatch = useDispatch();
   const collections = useSelector(
-    ({ workspace }) => sortBy(workspace.collections, 'name'),
+    ({ workspace }) => sortBy(workspace.collections, collection => collection.name),
     shallowEqual
   );
 
@@ -25,11 +26,15 @@ const CollectionList = () => {
       </Button>
       <div className='collection_list_div--list'>
         {map(collections, ({ name, id, link }) => (
-          <CollectionItem key={id} name={name} id={id} link={link} />
+          <CollectionItem key={id} name={name} id={id} link={link} setQuery={setQuery} />
         ))}
       </div>
     </div>
   );
 };
 
-export default CollectionList;
+CollectionList.propTypes = {
+  setQuery: PropTypes.func.isRequired,
+};
+
+export default memo(CollectionList);

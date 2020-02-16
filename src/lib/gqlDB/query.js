@@ -16,7 +16,7 @@ class QueryDB {
   constructor(storeName) {
     this.storage = localForage.createInstance();
     this.storage.config({
-      name: 'Lumenite',
+      name: 'Lumenite-GQL',
       storeName,
     });
   }
@@ -28,8 +28,8 @@ class QueryDB {
       .then(() => queryId);
   }
 
-  async getAllCollectionsDetails(collectionIds = []) {
-    const promises = map(collectionIds, collectionId => this.storage.getItem(collectionId));
+  async getAllQueryDetails(queryIds = []) {
+    const promises = map(queryIds, queryId => this.storage.getItem(queryId));
     return Promise.all(promises).then(result => compact(result));
   }
 }

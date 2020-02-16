@@ -1,29 +1,38 @@
-import workspaceDB, { defaultWorkspace } from '../../lib/db/workspace';
-import collectionDB from '../../lib/db/collection';
+import reduce from 'lodash/reduce';
+
+import workspaceDB, { defaultWorkspace } from '../../lib/gqlDB/workspace';
+import collectionDB from '../../lib/gqlDB/collection';
 import { workspaceActions } from '../slices/workspace';
 import { displayActions } from '../slices/display';
 
 export const getWorkspace = (key = defaultWorkspace) =>
   workspaceDB.getItem(key).then(workspace => workspace || workspaceDB.getItem(defaultWorkspace));
 
-export const getGqlCollectionsDetails = workspaceId => dispatch => {
+export const getCollectionsDetails = workspaceId => dispatch => {
   return workspaceDB
-    .getAllGqlCollectionsIds(workspaceId)
-    .then(gqlCollectionIds => collectionDB.getAllCollectionsDetails(gqlCollectionIds))
-    .then(gqlCollectionDetails =>
-      dispatch(workspaceActions.COLLECTION_LIST_LOADED(gqlCollectionDetails))
-    );
+    .getAllCollectionsIds(workspaceId)
+    .then(collectionIds => collectionDB.getAllCollectionsDetails(collectionIds))
+    .then(collectionDetails => {
+      const collectionMap = reduce(
+        collectionDetails,
+        (result, collection) => ({ ...result, [collection.id]: collection }),
+        {}
+      );
+      return dispatch(workspaceActions.COLLECTION_LIST_LOADED(collectionMap));
+    });
 };
 
-export const createGqlCollection = ({ workspaceId, ...collectionDetails }) => dispatch => {
+export const createCollection = ({ workspaceId, ...collectionDetails }) => dispatch => {
   dispatch(workspaceActions.SUBMITTING_DATA());
 
   collectionDB
     .createCollection(collectionDetails)
-    .then(collectionId => workspaceDB.addGqlCollectionToWorkspace({ workspaceId, collectionId }))
-    .then(collectionIds => collectionDB.getAllCollectionsDetails(collectionIds))
-    .then(collections => {
-      dispatch(workspaceActions.CREATE_GQL_COLLECTION(collections));
+    .then(collection => {
+      workspaceDB.addCollectionToWorkspace({ workspaceId, collectionId: collection.id });
+      return { [collection.id]: collection };
+    })
+    .then(collection => {
+      dispatch(workspaceActions.CREATE_GQL_COLLECTION(collection));
       dispatch(displayActions.TOGGLE_CREATE_COLLECTION_DIALOG());
     })
     .catch(error => dispatch(workspaceActions.ACTION_ERROR(error)));

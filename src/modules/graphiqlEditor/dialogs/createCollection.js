@@ -4,7 +4,7 @@ import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mate
 import { Form } from 'react-final-form';
 
 import { displayActions } from '../../../store/slices/display';
-import { createGqlCollection } from '../../../store/asyncActions/workspace';
+import { createCollection } from '../../../store/asyncActions/workspace';
 import FormField from '../../../lib/components/form/formField';
 import { required } from '../../../lib/utils/form';
 
@@ -24,7 +24,7 @@ const CreateCollectionDialog = () => {
   const toggleCreateCollectionDialog = () =>
     dispatch(displayActions.TOGGLE_CREATE_COLLECTION_DIALOG());
 
-  const submitForm = formData => dispatch(createGqlCollection({ workspaceId, ...formData }));
+  const submitForm = formData => dispatch(createCollection({ workspaceId, ...formData }));
 
   return (
     <Dialog

@@ -82,11 +82,16 @@ const GraphQLEditor = () => {
     }
   };
 
+  const setQuery = useCallback(({ query, variable }) => {
+    graphiql.current.getQueryEditor().setValue(query);
+    graphiql.current.getVariableEditor().setValue(variable);
+  }, []);
+
   return (
     <div className='editor_div'>
       <CreateCollectionDialog />
       <SaveQueryDialog save={saveQuery} />
-      <WorkspaceSidebar />
+      <WorkspaceSidebar setQuery={setQuery} />
       <GraphiQL
         ref={graphiql}
         fetcher={graphQLFetcher}
