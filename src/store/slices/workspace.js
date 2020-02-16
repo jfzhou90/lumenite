@@ -31,6 +31,11 @@ const workspaceSlice = createSlice({
       state.collections = action.payload;
       state.isSubmitting = false;
     },
+    ADD_QUERY(state, action) {
+      toast.success('Query saved!');
+      state.queries = { ...state.queries, ...action.payload };
+      state.isSubmitting = false;
+    },
     ACTION_ERROR(state, action) {
       toast.error(toast.error(`Error: ${action.payload}`));
       state.isSubmitting = false;

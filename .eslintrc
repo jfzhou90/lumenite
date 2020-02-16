@@ -10,7 +10,7 @@
         "html": "enforce",
         "custom": "enforce",
         "explicitSpread": "enforce",
-        "exceptions": ["TextField"]
+        "exceptions": ["TextField", "Select"]
       }
     ]
   }

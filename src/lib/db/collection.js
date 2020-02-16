@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import localForage from 'localforage';
 import uuid from 'uuid/v4';
 import map from 'lodash/map';
@@ -27,9 +26,20 @@ class CollectionDB {
       .then(() => collectionId);
   }
 
-  async getAllCollectionsDetails(collectionIds = []) {
+  getAllCollectionsDetails(collectionIds = []) {
     const promises = map(collectionIds, collectionId => this.storage.getItem(collectionId));
     return Promise.all(promises).then(result => compact(result));
+  }
+
+  addGqlQueryToCollection({ collectionId, queryId }) {
+    return this.storage.getItem(collectionId).then(collection => {
+      if (!collection) throw new Error('Invalid collection');
+      const clone = { ...collection };
+      clone.queries = [queryId, ...collection.queries];
+      this.storage
+        .setItem(collectionId, clone)
+        .then(({ queries }) => ({ [collectionId]: queries }));
+    });
   }
 }
 

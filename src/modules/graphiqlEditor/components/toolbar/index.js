@@ -14,6 +14,8 @@ const GraphiQLToolbar = ({ prettify, merge, copy, toggleHistory }) => {
   const dispatch = useDispatch();
 
   const toggleWorkspaceSidebar = () => dispatch(displayActions.TOGGLE_WORKSPACE_SIDEBAR());
+  const toggleSaveQueryDialog = () => dispatch(displayActions.TOGGLE_SAVE_QUERY_DIALOG());
+
   return (
     <div id='editor_toolbar' className='editor_toolbar'>
       <Button
@@ -81,7 +83,12 @@ const GraphiQLToolbar = ({ prettify, merge, copy, toggleHistory }) => {
         >
           Collection
         </Button>
-        <Button color='primary' size='small' aria-label='Add to collection' onClick={null}>
+        <Button
+          color='primary'
+          size='small'
+          aria-label='Add to collection'
+          onClick={toggleSaveQueryDialog}
+        >
           <SaveIcon />
         </Button>
       </ButtonGroup>
