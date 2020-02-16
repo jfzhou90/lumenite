@@ -21,6 +21,7 @@ const CollectionItem = ({ name, link, id }) => {
             </a>
           </Typography>
         )}
+        SOMETHING SHOULD BE HERE
       </MuiExpansionPanelDetails>
     </MuiExpansionPanel>
   );
