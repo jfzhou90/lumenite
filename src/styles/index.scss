@@ -3,3 +3,12 @@
 @import './colors';
 @import './fonts';
 @import './buttons';
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $brand_orange;
+}
