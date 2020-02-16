@@ -33,12 +33,16 @@ const workspaceSlice = createSlice({
     },
     ADD_QUERY(state, action) {
       toast.success('Query saved!');
-      const { queries, collectionId } = action.payload;
-      state.collections[collectionId].queries = queries;
+      const { query, collectionId } = action.payload;
+      state.collections[collectionId].queries.push(query.id);
+      const previousQueries = state.queries[collectionId] || {};
+      state.queries[collectionId] = { ...previousQueries, [query.id]: query };
       state.isSubmitting = false;
     },
     GET_QUERIES(state, action) {
-      state.queries = { ...state.queries, ...action.payload };
+      const { collectionId, queries } = action.payload;
+      const queryObj = state.queries[collectionId] || {};
+      state.queries[collectionId] = { ...queryObj, ...queries };
     },
     ACTION_ERROR(state, action) {
       toast.error(`Error: ${action.payload}`);

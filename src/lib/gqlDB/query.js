@@ -23,9 +23,7 @@ class QueryDB {
 
   createQuery(value) {
     const queryId = value && `query.${uuid()}`;
-    return this.storage
-      .setItem(queryId, { ...defaultQueryProps, id: queryId, ...value })
-      .then(() => queryId);
+    return this.storage.setItem(queryId, { ...defaultQueryProps, id: queryId, ...value });
   }
 
   async getAllQueryDetails(queryIds = []) {

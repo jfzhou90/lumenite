@@ -1,34 +1,24 @@
-import React, { memo, useEffect, useState, useCallback } from 'react';
+import React, { memo, useState } from 'react';
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { getQueries } from '../../../../store/asyncActions/collection';
+import QueryList from './queryList';
+
+import CookieMan from '../../../../assets/illustrations/cookie';
 
 const CollectionItem = ({ name, link, id, setQuery }) => {
   const [expanded, setExpanded] = useState(false);
-  const dispatch = useDispatch();
   const formattedLink = /http/.test(link) ? link : `//${link}`;
-  const queryIdList = useSelector(({ workspace }) => workspace.collections[id]?.queries);
-  const queries = useSelector(({ workspace }) => workspace.queries[id], shallowEqual);
+  const isEmpty = useSelector(({ workspace }) => !workspace.collections[id]?.queries?.length);
 
   const toggleExpansion = () => setExpanded(!expanded);
 
-  const fetchQueryDetails = useCallback(() => {
-    dispatch(getQueries(id));
-  }, [dispatch, id]);
-
-  useEffect(() => {
-    if (expanded) fetchQueryDetails();
-  }, [queryIdList, expanded, fetchQueryDetails]);
-
   return (
     <MuiExpansionPanel square expanded={expanded}>
-      {/* eslint-disable-next-line no-console */}
-      {console.log(queries, setQuery)}
       <MuiExpansionPanelSummary aria-controls={`${id}-content`} id={id} onClick={toggleExpansion}>
         <Typography>{name}</Typography>
       </MuiExpansionPanelSummary>
@@ -40,7 +30,13 @@ const CollectionItem = ({ name, link, id, setQuery }) => {
             </a>
           </Typography>
         )}
-        {!queryIdList.length && <div>you got nothing</div>}
+        {isEmpty && (
+          <div className='query_list--empty'>
+            <CookieMan />
+            <span>This is not the gingerbread you are looking for, please save a query</span>
+          </div>
+        )}
+        {!isEmpty && expanded && <QueryList collectionId={id} setQuery={setQuery} />}
       </MuiExpansionPanelDetails>
     </MuiExpansionPanel>
   );
