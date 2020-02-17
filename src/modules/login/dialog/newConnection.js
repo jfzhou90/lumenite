@@ -18,7 +18,8 @@ import { Form } from 'react-final-form';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import FormField from '../components/formField';
+import FormField from '../../../lib/components/form/formField';
+import { isValidUserPoolId, required, composeValidators } from '../../../lib/utils/form';
 
 const NewConnectionDialog = ({ open, onClose, connect }) => {
   const isConnecting = useSelector(state => state.auth.isConnecting);
@@ -26,18 +27,20 @@ const NewConnectionDialog = ({ open, onClose, connect }) => {
   const storedConnections = localStorage.getItem('connections');
   const connectionsKeys = storedConnections ? Object.keys(JSON.parse(storedConnections)) : [];
 
-  const required = value => (value ? undefined : 'Required');
   const isValidName = value => (includes(connectionsKeys, value) ? 'invalid' : undefined);
-  const isValidUserPoolId = value => (/^[\w-]+_.+$/.test(value) ? undefined : 'Invalid');
-  const composeValidators = (...validators) => value =>
-    validators.reduce((error, validator) => error || validator(value), undefined);
 
   const updateAuthType = event => setAuthType(event.currentTarget.value);
 
   const onSubmit = data => connect(authType, data);
 
   return (
-    <Dialog open={open} onClose={onClose} aria-labelledby='new_connection_form'>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      aria-labelledby='new_connection_form'
+      maxWidth='sm'
+      disableBackdropClick
+    >
       <DialogTitle id='new_connection_form'>New connection</DialogTitle>
 
       <DialogContent id='new_connection_form--content'>
@@ -66,6 +69,7 @@ const NewConnectionDialog = ({ open, onClose, connect }) => {
                 label='Connection Name'
                 validate={composeValidators(isValidName, required)}
                 autoFocus
+                required
               />
 
               <FormField
@@ -74,10 +78,18 @@ const NewConnectionDialog = ({ open, onClose, connect }) => {
                 label='GraphQL Endpoint'
                 validate={required}
                 maxLength={200}
+                required
+                submitOnEnter
               />
 
               {authType === 'apiKey' && (
-                <FormField name='apiKey' id='apiKey' label='API Key' required={false} />
+                <FormField
+                  name='apiKey'
+                  id='apiKey'
+                  label='API Key'
+                  required={false}
+                  submitOnEnter
+                />
               )}
 
               {authType === 'cognito' && (
@@ -87,6 +99,7 @@ const NewConnectionDialog = ({ open, onClose, connect }) => {
                     id='userpoolId'
                     label='Cognito Userpool Id'
                     validate={composeValidators(required, isValidUserPoolId)}
+                    required
                   />
 
                   <FormField
@@ -94,9 +107,16 @@ const NewConnectionDialog = ({ open, onClose, connect }) => {
                     id='userpoolClientId'
                     label='Cognito Userpool Client Id'
                     validate={required}
+                    required
                   />
 
-                  <FormField name='username' id='username' label='Username' validate={required} />
+                  <FormField
+                    name='username'
+                    id='username'
+                    label='Username'
+                    validate={required}
+                    required
+                  />
 
                   <FormField
                     name='password'
@@ -104,6 +124,8 @@ const NewConnectionDialog = ({ open, onClose, connect }) => {
                     label='Password'
                     type='password'
                     validate={required}
+                    required
+                    submitOnEnter
                   />
                 </>
               )}

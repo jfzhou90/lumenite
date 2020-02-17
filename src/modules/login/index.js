@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Button from '@material-ui/core/Button';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 
-import snorlaxPicture from '../../assets/img/snorlaxClipart.png';
 import NewConnectionDialog from './dialog/newConnection';
 import ExistingConnectionDialog from './dialog/existingConnection';
 import StorageButton from './components/storageSpeedDial';
@@ -10,11 +10,27 @@ import StorageButton from './components/storageSpeedDial';
 import { connectToCognito, connectViaApiKey } from '../../store/asyncActions/auth';
 import { getStoredConnections } from '../../store/utils/authStorage';
 
+import snorlaxPicture from '../../assets/img/snorlaxClipart.png';
+import './login.scss';
+
 const LoginPage = () => {
   const [openNewConnectionDialog, setNewConnectionDialog] = useState(false);
   const [openExistingConnectionDialog, setExistingConnectionDialog] = useState(false);
   const [storedConnections, setStoredConnections] = useState(getStoredConnections());
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const history = useHistory();
+  const location = useLocation();
   const dispatch = useDispatch();
+
+  const redirect = useCallback(() => {
+    history.replace({ pathname: location.state.from?.pathname || '/' });
+  }, [history, location.state.from]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      redirect();
+    }
+  }, [isAuthenticated, redirect]);
 
   const resetConnection = () => setStoredConnections(null);
 
@@ -69,7 +85,7 @@ const LoginPage = () => {
         </div>
       </div>
       <StorageButton resetApp={resetConnection} />
-      <div id='login_page--version'>v1.1.1</div>
+      <div id='login_page--version'>v1.2.0</div>
     </div>
   );
 };

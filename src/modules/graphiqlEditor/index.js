@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useRef, useCallback } from 'react';
 import GraphiQL from 'graphiql';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { toast } from 'react-toastify';
 
 import { getAccessToken } from '../../lib/auth/cognito';
 import { fetchIntrospectionQuery } from '../../lib/auth/restApi';
+import { tryFunction } from '../../lib/utils/qol';
+import { saveGqlQueries } from '../../store/asyncActions/collection';
 
 import GraphQlFooter from './components/footer';
+import CustomToolbar from './components/toolbar';
+import WorkspaceSidebar from './components/workspace';
+import CreateCollectionDialog from './dialogs/createCollection';
+import SaveQueryDialog from './dialogs/saveQuery';
+import EditCollectionDialog from './dialogs/editCollection';
+
+import './graphiql.scss';
 
 const defaultQuery = `# Welcome to Lumenite
 #
@@ -40,39 +50,67 @@ const defaultQuery = `# Welcome to Lumenite
 `;
 
 const GraphQLEditor = () => {
+  const graphiql = useRef(null);
+  const dispatch = useDispatch();
   const { authType, apiKey, userpoolId, userpoolClientId, graphqlEndpoint } = useSelector(
-    state => ({
-      authType: state.auth.authType,
-      apiKey: state.auth.apiKey,
-      userpoolId: state.auth.userpoolId,
-      userpoolClientId: state.auth.userpoolClientId,
-      graphqlEndpoint: state.auth.graphqlEndpoint,
-    }),
+    ({ auth }) => auth,
     shallowEqual
   );
 
-  const graphQLFetcher = graphQLParams => {
-    if (authType === 'cognito') {
-      return getAccessToken({ userpoolId, userpoolClientId }).then(token =>
-        fetchIntrospectionQuery({ graphqlEndpoint, token, graphQLParams })
-      );
-    }
+  const graphQLFetcher = useCallback(
+    async graphQLParams => {
+      const token =
+        authType === 'cognito' && (await getAccessToken({ userpoolId, userpoolClientId }));
 
-    if (authType === 'apiKey') {
-      return fetchIntrospectionQuery({ graphqlEndpoint, apiKey, graphQLParams });
-    }
+      const params = token ? { token } : apiKey && { apiKey };
+      return fetchIntrospectionQuery({ graphqlEndpoint, graphQLParams, ...params });
+    },
+    [apiKey, authType, graphqlEndpoint, userpoolClientId, userpoolId]
+  );
 
-    return undefined;
+  const prettify = () => tryFunction(graphiql.current.handlePrettifyQuery);
+  const mergeQuery = () => tryFunction(graphiql.current.handleMergeQuery);
+  const copyQuery = () => tryFunction(graphiql.current.handleCopyQuery);
+  const toggleHistory = () => tryFunction(graphiql.current.handleToggleHistory);
+
+  const saveQuery = formData => {
+    try {
+      const query = graphiql.current.getQueryEditor().getValue();
+      const variable = graphiql.current.getVariableEditor().getValue();
+      dispatch(saveGqlQueries({ query, variable, ...formData }));
+    } catch (error) {
+      toast.error(`Error: ${error}`);
+    }
   };
+
+  const setQuery = useCallback(({ query, variable }) => {
+    graphiql.current.getQueryEditor().setValue(query);
+    graphiql.current.getVariableEditor().setValue(variable);
+  }, []);
 
   return (
     <div className='editor_div'>
-      {/* TODO: ADD COLLECTION FEATURE */}
-      <GraphiQL fetcher={graphQLFetcher} defaultQuery={defaultQuery} editorTheme='orion'>
-        {/* <GraphiQL.Toolbar></GraphiQL.Toolbar> */}
+      <CreateCollectionDialog />
+      <SaveQueryDialog save={saveQuery} />
+      <EditCollectionDialog />
+      <WorkspaceSidebar setQuery={setQuery} />
+      <GraphiQL
+        ref={graphiql}
+        fetcher={graphQLFetcher}
+        defaultQuery={defaultQuery}
+        editorTheme='orion'
+      >
         <GraphiQL.Logo>
           <span className='editor_div--lumenite_title'>Lumenite</span>
         </GraphiQL.Logo>
+        <GraphiQL.Toolbar>
+          <CustomToolbar
+            prettify={prettify}
+            merge={mergeQuery}
+            copy={copyQuery}
+            toggleHistory={toggleHistory}
+          />
+        </GraphiQL.Toolbar>
         <GraphiQL.Footer>
           <GraphQlFooter />
         </GraphiQL.Footer>

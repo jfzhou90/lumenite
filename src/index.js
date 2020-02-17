@@ -2,21 +2,26 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import { ToastContainer } from 'react-toastify';
 
 import configureStore from './store';
 import * as serviceWorker from './serviceWorker';
 
 import App from './App';
 import './styles/index.scss';
+import 'react-toastify/dist/ReactToastify.css';
 
 const { store, persistor } = configureStore();
 
 render(
-  <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      <App />
-    </PersistGate>
-  </Provider>,
+  <>
+    <ToastContainer autoClose={3000} hideProgressBar />
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
+    </Provider>
+  </>,
   document.getElementById('root')
 );
 

@@ -2,6 +2,15 @@
 @import '../../node_modules/graphiql/graphiql.css';
 @import './colors';
 @import './fonts';
-@import './login';
 @import './buttons';
-@import './graphiql';
+
+::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $brand_orange;
+  border-radius: 8px;
+}

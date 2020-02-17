@@ -13,6 +13,8 @@ import {
 import sessionStorage from 'redux-persist/lib/storage/session';
 
 import authReducer from './slices/auth';
+import displayReducer from './slices/display';
+import workspaceReducer from './slices/workspace';
 
 const logger =
   process.env.NODE_ENV === 'development'
@@ -37,6 +39,8 @@ export default () => {
   const store = configureStore({
     reducer: {
       auth: persistReducer(authPersistConfig, authReducer),
+      display: displayReducer,
+      workspace: workspaceReducer,
     },
     middleware: [
       ...getDefaultMiddleware({
