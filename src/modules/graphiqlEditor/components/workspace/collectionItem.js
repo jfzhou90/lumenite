@@ -22,7 +22,7 @@ const CollectionItem = ({ name, link, id, setQuery }) => {
 
   const toggleExpansion = () => setExpanded(!expanded);
   const toggleEditDialog = event => {
-    event.stopPropagation();
+    if (expanded) event.stopPropagation();
     dispatch(viewCollectionInfo(id));
   };
 
