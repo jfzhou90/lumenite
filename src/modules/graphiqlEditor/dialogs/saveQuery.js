@@ -78,7 +78,14 @@ const SaveQueryDialog = ({ save }) => {
 
               <FormField name='link' id='link' label='Link' />
 
-              <FormField name='notes' id='notes' label='Notes' />
+              <FormField
+                name='notes'
+                id='notes'
+                label='Notes'
+                rowsMax={7}
+                multiline
+                maxLength={500}
+              />
 
               <DialogActions>
                 <Button color='secondary' onClick={toggleSaveQueryDialog}>

@@ -19,6 +19,14 @@ class CollectionDB {
     });
   }
 
+  getCollection(collectionId) {
+    return this.storage.getItem(collectionId);
+  }
+
+  updateCollection(collectionDetails) {
+    return this.storage.setItem(collectionDetails.id, collectionDetails);
+  }
+
   createCollection(value) {
     const collectionId = value && `collection.${uuid()}`;
     return this.storage.setItem(collectionId, {

@@ -31,6 +31,11 @@ const workspaceSlice = createSlice({
       state.collections = { ...state.collections, ...action.payload };
       state.isSubmitting = false;
     },
+    UPDATE_COLLECTION(state, action) {
+      toast.success('Collection info updated!');
+      state.collections = { ...state.collections, [action.payload.id]: action.payload };
+      state.isSubmitting = false;
+    },
     ADD_QUERY(state, action) {
       toast.success('Query saved!');
       const { query, collectionId } = action.payload;

@@ -9,7 +9,7 @@ export const getWorkspace = (key = defaultWorkspace) =>
   workspaceDB.getItem(key).then(workspace => workspace || workspaceDB.getItem(defaultWorkspace));
 
 export const getCollectionsDetails = workspaceId => dispatch => {
-  return workspaceDB
+  workspaceDB
     .getAllCollectionsIds(workspaceId)
     .then(collectionIds => collectionDB.getAllCollectionsDetails(collectionIds))
     .then(collectionDetails => {
@@ -18,7 +18,7 @@ export const getCollectionsDetails = workspaceId => dispatch => {
         (result, collection) => ({ ...result, [collection.id]: collection }),
         {}
       );
-      return dispatch(workspaceActions.COLLECTION_LIST_LOADED(collectionMap));
+      dispatch(workspaceActions.COLLECTION_LIST_LOADED(collectionMap));
     });
 };
 
