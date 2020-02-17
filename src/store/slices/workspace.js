@@ -26,9 +26,14 @@ const workspaceSlice = createSlice({
     SUBMITTING_DATA(state) {
       state.isSubmitting = true;
     },
-    CREATE_GQL_COLLECTION(state, action) {
+    CREATE_COLLECTION(state, action) {
       toast.success('New collection created!');
       state.collections = { ...state.collections, ...action.payload };
+      state.isSubmitting = false;
+    },
+    UPDATE_COLLECTION(state, action) {
+      toast.success('Collection info updated!');
+      state.collections = { ...state.collections, [action.payload.id]: action.payload };
       state.isSubmitting = false;
     },
     ADD_QUERY(state, action) {

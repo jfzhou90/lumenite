@@ -1,0 +1,10 @@
+#edit_collection_dialog {
+  .MuiPaper-root {
+    min-width: 500px;
+
+    pre {
+      max-height: 200px;
+      overflow: auto;
+    }
+  }
+}

@@ -47,9 +47,9 @@ const CreateCollectionDialog = () => {
                 name='notes'
                 id='notes'
                 label='Notes'
-                rowsMax={5}
+                rowsMax={7}
                 multiline
-                maxLength={300}
+                maxLength={500}
               />
               <DialogActions>
                 <Button color='secondary' onClick={toggleCreateCollectionDialog}>

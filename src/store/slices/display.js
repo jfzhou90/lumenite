@@ -5,6 +5,8 @@ const initialState = {
   workspaceSidebar: false,
   createCollectionDialog: false,
   saveQueryDialog: false,
+  editCollectionDialog: null,
+  editQueryDialog: false,
 };
 
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
@@ -20,6 +22,9 @@ const displaySlice = createSlice({
     },
     TOGGLE_SAVE_QUERY_DIALOG(state) {
       state.saveQueryDialog = !state.saveQueryDialog;
+    },
+    TOGGLE_EDIT_COLLECTION_DIALOG(state, action) {
+      state.editCollectionDialog = action.payload;
     },
   },
 });

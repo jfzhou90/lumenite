@@ -82,6 +82,11 @@
       &.Mui-expanded {
         margin: 1px 0;
       }
+      .info_button {
+        .MuiIconButton-label {
+          display: none;
+        }
+      }
 
       .MuiTypography-root {
         font-weight: bold;
@@ -90,11 +95,25 @@
       .MuiExpansionPanelSummary-root:hover {
         color: black;
         background: $brand_orange_light1;
+        .info_button {
+          .MuiIconButton-label {
+            display: block;
+            color: black;
+          }
+        }
       }
 
       .MuiExpansionPanelSummary-root.Mui-expanded {
+        min-height: 56px;
         background: lighten($brand_orange, 5%);
         color: black;
+      }
+      .MuiExpansionPanelSummary-content {
+        margin: 0px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
       }
 
       .MuiExpansionPanelDetails-root,
