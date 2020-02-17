@@ -15,6 +15,7 @@ import './workspace.scss';
 
 const WorkspaceSidebar = ({ setQuery }) => {
   const dispatch = useDispatch();
+
   const hidden = useSelector(({ display }) => !display.workspaceSidebar);
   const { workspaceId, isEmpty, isLoading } = useSelector(
     ({ workspace }) => ({
@@ -24,7 +25,9 @@ const WorkspaceSidebar = ({ setQuery }) => {
     }),
     shallowEqual
   );
+
   const mainClasses = classnames('workspace_div', { hidden });
+
 
   const fetchCollections = useCallback(() => {
     dispatch(getCollectionsDetails(workspaceId));
