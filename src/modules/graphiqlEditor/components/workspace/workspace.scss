@@ -84,7 +84,7 @@
       }
       .info_button {
         .MuiIconButton-label {
-          color: white;
+          display: none;
         }
       }
 
@@ -97,6 +97,7 @@
         background: $brand_orange_light1;
         .info_button {
           .MuiIconButton-label {
+            display: block;
             color: black;
           }
         }

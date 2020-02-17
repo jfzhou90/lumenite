@@ -32,7 +32,7 @@ export const createCollection = ({ workspaceId, ...collectionDetails }) => dispa
       return { [collection.id]: collection };
     })
     .then(collection => {
-      dispatch(workspaceActions.CREATE_GQL_COLLECTION(collection));
+      dispatch(workspaceActions.CREATE_COLLECTION(collection));
       dispatch(displayActions.TOGGLE_CREATE_COLLECTION_DIALOG());
     })
     .catch(error => dispatch(workspaceActions.ACTION_ERROR(error)));
