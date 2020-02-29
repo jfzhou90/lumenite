@@ -28,7 +28,6 @@ const WorkspaceSidebar = ({ setQuery }) => {
 
   const mainClasses = classnames('workspace_div', { hidden });
 
-
   const fetchCollections = useCallback(() => {
     dispatch(getCollectionsDetails(workspaceId));
   }, [dispatch, workspaceId]);
