@@ -1,4 +1,3 @@
-/* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 import { toast } from 'react-toastify';
 import { createSlice } from '@reduxjs/toolkit';
 
@@ -12,6 +11,7 @@ const initialState = {
   queries: {},
 };
 
+/* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 const workspaceSlice = createSlice({
   name: 'workspace',
   initialState,
