@@ -3,6 +3,7 @@ import uuid from 'uuid/v4';
 import map from 'lodash/map';
 import filter from 'lodash/filter';
 import compact from 'lodash/compact';
+import union from 'lodash/union';
 
 const defaultCollectionProps = {
   id: `collection.${uuid()}`,
@@ -39,7 +40,12 @@ class CollectionDB {
   }
 
   addCollection(collection) {
-    return this.storage.setItem(collection.id, collection);
+    return this.storage.getItem(collection.id).then(localCollection => {
+      const localQueries = localCollection?.queries || [];
+      const unionQuery = union(localQueries, collection.queries);
+      const updatedCollection = { ...collection, queries: unionQuery };
+      return this.storage.setItem(collection.id, updatedCollection);
+    });
   }
 
   getAllCollectionsDetails(collectionIds = []) {
