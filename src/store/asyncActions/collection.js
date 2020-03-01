@@ -35,11 +35,7 @@ export const getQueries = collectionId => dispatch => {
     .getAllQueries(collectionId)
     .then(queryIds => queryDB.getAllQueryDetails(queryIds))
     .then(queries => {
-      const queryMap = reduce(
-        queries,
-        (result, query) => ({ ...result, [query.id]: { ...query } }),
-        {}
-      );
+      const queryMap = reduce(queries, (result, query) => ({ ...result, [query.id]: query }), {});
       dispatch(workspaceActions.GET_QUERIES({ collectionId, queries: queryMap }));
     })
     .catch(error => dispatch(workspaceActions.ACTION_ERROR(error)));
