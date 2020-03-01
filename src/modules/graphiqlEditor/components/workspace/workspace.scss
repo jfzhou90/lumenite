@@ -1,7 +1,7 @@
 @import '../../../../styles/colors';
 
 .workspace_div {
-  width: 25%;
+  width: 20%;
   background-color: #2a2a2e;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
   z-index: 8;
@@ -82,6 +82,7 @@
       &.Mui-expanded {
         margin: 1px 0;
       }
+      .collection_link,
       .info_button {
         .MuiIconButton-label {
           display: none;
@@ -95,11 +96,16 @@
       .MuiExpansionPanelSummary-root:hover {
         color: black;
         background: $brand_orange_light1;
+        .collection_link,
         .info_button {
           .MuiIconButton-label {
             display: block;
             color: black;
           }
+        }
+
+        a {
+          color: black;
         }
       }
 
@@ -124,17 +130,12 @@
       }
 
       .MuiTypography-subtitle2 {
-        padding: 2px 10px;
-        max-width: 300px;
+        padding: 5px 10px;
+        max-width: 90%;
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
-        a {
-          color: $brand_orange_light3;
-          &:visited {
-            color: $brand_orange_light3;
-          }
-        }
+        color: $brand_orange_light3;
       }
 
       .MuiExpansionPanelDetails-root {
@@ -150,6 +151,20 @@
       width: 100%;
       max-height: 300px;
       overflow: auto;
+
+      > * {
+        padding: 0 5px 0 15px;
+        justify-content: space-between;
+
+        .edit_button {
+          visibility: hidden;
+        }
+
+        &:hover .edit_button {
+          visibility: visible;
+          color: white;
+        }
+      }
 
       &--empty {
         display: flex;

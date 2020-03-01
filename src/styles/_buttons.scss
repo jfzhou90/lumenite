@@ -41,6 +41,9 @@ button {
     &:hover {
       background-color: lighten(red, 40%);
     }
+    &:disabled {
+      color: grey;
+    }
   }
 
   &.MuiButton-textSecondary {

@@ -2,18 +2,35 @@ import React, { useEffect, useCallback, memo } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import map from 'lodash/map';
 import sortBy from 'lodash/sortBy';
-import { List, ListItem } from '@material-ui/core';
+import { List, ListItem, IconButton } from '@material-ui/core';
+import { Edit as EditIcon } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 
-import { getQueries } from '../../../../store/asyncActions/collection';
+import { getQueries, toggleEditQueryDialog } from '../../../../store/asyncActions/collection';
 
 const QueryItem = ({ name, variable, query, id, setQuery }) => {
+  const dispatch = useDispatch();
   const onClick = () => {
     setQuery({ variable, query });
   };
+
+  const toggleEdit = event => {
+    event.stopPropagation();
+    dispatch(toggleEditQueryDialog(id));
+  };
+
   return (
     <ListItem id={id} button onClick={onClick}>
       {name}
+      <IconButton
+        size='small'
+        onClick={toggleEdit}
+        className='edit_button'
+        disableFocusRipple
+        disableRipple
+      >
+        <EditIcon />
+      </IconButton>
     </ListItem>
   );
 };

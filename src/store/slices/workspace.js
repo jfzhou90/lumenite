@@ -33,7 +33,7 @@ const workspaceSlice = createSlice({
     },
     UPDATE_COLLECTION(state, action) {
       toast.success('Collection info updated!');
-      state.collections = { ...state.collections, [action.payload.id]: action.payload };
+      state.collections[action.payload.id] = action.payload;
       state.isSubmitting = false;
     },
     ADD_QUERY(state, action) {
@@ -44,10 +44,29 @@ const workspaceSlice = createSlice({
       state.queries[collectionId] = { ...previousQueries, [query.id]: query };
       state.isSubmitting = false;
     },
+    UPDATE_QUERY(state, action) {
+      toast.success('Query updated!!');
+      const { collectionId, id } = action.payload;
+      state.queries[collectionId][id] = action.payload;
+      state.isSubmitting = false;
+    },
     GET_QUERIES(state, action) {
       const { collectionId, queries } = action.payload;
       const queryObj = state.queries[collectionId] || {};
       state.queries[collectionId] = { ...queryObj, ...queries };
+    },
+    REMOVE_COLLECTION(state, action) {
+      toast.success('Collection deleted!');
+      const collectionId = action.payload;
+      delete state.collections[collectionId];
+      state.isSubmitting = false;
+    },
+    REMOVE_QUERY(state, action) {
+      toast.success('Query Deleted!');
+      const { collection, query } = action.payload;
+      state.collections[collection.id] = collection;
+      delete state.queries[collection.id][query.id];
+      state.isSubmitting = false;
     },
     ACTION_ERROR(state, action) {
       toast.error(`Error: ${action.payload}`);
