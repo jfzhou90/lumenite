@@ -47,7 +47,8 @@ const workspaceSlice = createSlice({
     UPDATE_QUERY(state, action) {
       toast.success('Query updated!!');
       const { collectionId, id } = action.payload;
-      state.queries[collectionId][id] = action.payload;
+      const previousQueries = state.queries[collectionId] || {};
+      state.queries[collectionId] = { ...previousQueries, [id]: action.payload };
       state.isSubmitting = false;
     },
     GET_QUERIES(state, action) {
@@ -64,8 +65,10 @@ const workspaceSlice = createSlice({
     REMOVE_QUERY(state, action) {
       toast.success('Query Deleted!');
       const { collection, query } = action.payload;
-      state.collections[collection.id] = collection;
-      delete state.queries[collection.id][query.id];
+      if (collection) {
+        state.collections[collection.id] = collection;
+        delete state.queries[collection.id][query.id];
+      }
 
       state.isSubmitting = false;
     },
