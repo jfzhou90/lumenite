@@ -1,6 +1,7 @@
 import localForage from 'localforage';
 import uuid from 'uuid/v4';
 import map from 'lodash/map';
+import filter from 'lodash/filter';
 import compact from 'lodash/compact';
 
 const defaultCollectionProps = {
@@ -55,6 +56,18 @@ class CollectionDB {
 
   getAllQueries(collectionId) {
     return this.storage.getItem(collectionId).then(collection => collection.queries);
+  }
+
+  removeCollection(collectionId) {
+    return this.storage.removeItem(collectionId);
+  }
+
+  removeQuery(query) {
+    return this.storage.getItem(query.collectionId).then(collection => {
+      if (!collection) return null;
+      const queries = filter(collection.queries, queryId => queryId !== query.id);
+      return this.storage.setItem(collection.id, { ...collection, queries });
+    });
   }
 }
 

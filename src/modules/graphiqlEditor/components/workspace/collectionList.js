@@ -25,8 +25,15 @@ const CollectionList = ({ setQuery }) => {
         New
       </Button>
       <div className='collection_list_div--list'>
-        {map(collections, ({ name, id, link }) => (
-          <CollectionItem key={id} name={name} id={id} link={link} setQuery={setQuery} />
+        {map(collections, ({ name, id, link, notes }) => (
+          <CollectionItem
+            key={id}
+            name={name}
+            id={id}
+            link={link}
+            notes={notes}
+            setQuery={setQuery}
+          />
         ))}
       </div>
     </div>

@@ -7,4 +7,11 @@
       overflow: auto;
     }
   }
+
+  #delete_collection {
+    margin: 20px 0 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+  }
 }
