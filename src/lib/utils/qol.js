@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 
 import collectionDB from '../gqlDB/collection';
 import queryDB from '../gqlDB/query';
+import workspaceDB, { defaultWorkspace } from '../gqlDB/workspace';
 
 export const generateUuid = () => {
   const el = document.createElement('textarea');
@@ -54,6 +55,10 @@ const addCollectionJsonToDB = async (jsonData, callback) => {
     const data = JSON.parse(jsonData);
     await queryDB.addQueries(data.queries);
     await collectionDB.addCollection(data.collection);
+    await workspaceDB.addCollectionToWorkspace({
+      workspaceId: defaultWorkspace,
+      collectionId: data.collection.id,
+    });
     toast.success('Collection has been imported successfully!');
     callback();
   } catch (error) {
