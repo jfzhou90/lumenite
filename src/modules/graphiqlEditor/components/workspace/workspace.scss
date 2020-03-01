@@ -69,6 +69,11 @@
         visibility: hidden;
         flex-direction: row;
 
+        > * {
+          padding: 3px;
+          margin: 0px;
+        }
+        .download_button,
         .collection_link,
         .info_button {
           .MuiIconButton-label {
@@ -114,7 +119,7 @@
       }
 
       .MuiExpansionPanelSummary-root {
-        padding: 0 16px;
+        padding: 0 8px 0 16px;
       }
 
       .MuiExpansionPanelSummary-root.Mui-expanded {

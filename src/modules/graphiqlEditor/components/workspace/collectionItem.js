@@ -6,9 +6,10 @@ import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconButton } from '@material-ui/core';
-import { Info as InfoIcon, Link as LinkIcon } from '@material-ui/icons';
+import { Info as InfoIcon, Link as LinkIcon, GetApp as DownloadIcon } from '@material-ui/icons';
 
 import { viewCollectionInfo } from '../../../../store/asyncActions/collection';
+import { exportCollection } from '../../../../lib/utils/qol';
 
 import QueryList from './queryList';
 
@@ -24,6 +25,11 @@ const CollectionItem = ({ name, link, id, notes, setQuery }) => {
   const toggleEditDialog = event => {
     if (expanded) event.stopPropagation();
     dispatch(viewCollectionInfo(id));
+  };
+
+  const downloadCollection = event => {
+    event.stopPropagation();
+    exportCollection(id);
   };
 
   return (
@@ -42,6 +48,9 @@ const CollectionItem = ({ name, link, id, notes, setQuery }) => {
               </a>
             </IconButton>
           )}
+          <IconButton size='small' className='download_button' onClick={downloadCollection}>
+            <DownloadIcon />
+          </IconButton>
           <IconButton size='small' className='info_button' onClick={toggleEditDialog}>
             <InfoIcon />
           </IconButton>
