@@ -30,7 +30,7 @@ const CollectionItem = ({ name, link, id, notes, setQuery }) => {
     <MuiExpansionPanel square expanded={expanded}>
       <MuiExpansionPanelSummary aria-controls={`${id}-content`} id={id} onClick={toggleExpansion}>
         <Typography>{name}</Typography>
-        <span>
+        <div className='collection_actions'>
           {link && (
             <IconButton
               size='small'
@@ -45,7 +45,7 @@ const CollectionItem = ({ name, link, id, notes, setQuery }) => {
           <IconButton size='small' className='info_button' onClick={toggleEditDialog}>
             <InfoIcon />
           </IconButton>
-        </span>
+        </div>
       </MuiExpansionPanelSummary>
       <MuiExpansionPanelDetails>
         {notes && <Typography variant='subtitle2'>{notes}</Typography>}

@@ -63,6 +63,22 @@
         white-space: nowrap;
         overflow: hidden;
       }
+
+      .collection_actions {
+        display: flex;
+        visibility: hidden;
+        flex-direction: row;
+        .collection_link,
+        .info_button {
+          .MuiIconButton-label {
+            display: block;
+            color: black;
+          }
+        }
+      }
+      &:hover .collection_actions {
+        visibility: visible;
+      }
     }
 
     button {
@@ -82,12 +98,6 @@
       &.Mui-expanded {
         margin: 1px 0;
       }
-      .collection_link,
-      .info_button {
-        .MuiIconButton-label {
-          display: none;
-        }
-      }
 
       .MuiTypography-root {
         font-weight: bold;
@@ -96,13 +106,6 @@
       .MuiExpansionPanelSummary-root:hover {
         color: black;
         background: $brand_orange_light1;
-        .collection_link,
-        .info_button {
-          .MuiIconButton-label {
-            display: block;
-            color: black;
-          }
-        }
 
         a {
           color: black;
