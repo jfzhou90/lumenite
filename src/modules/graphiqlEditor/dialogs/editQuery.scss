@@ -1,0 +1,16 @@
+#edit_query_dialog {
+  .MuiPaper-root {
+    width: 400px;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  .MuiFormControl-root {
+    margin-bottom: 15px;
+  }
+
+  #delete_query {
+    display: flex;
+  }
+}

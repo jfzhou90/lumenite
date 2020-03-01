@@ -4,9 +4,9 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   workspaceSidebar: false,
   createCollectionDialog: false,
-  saveQueryDialog: false,
   editCollectionDialog: null,
-  editQueryDialog: false,
+  saveQueryDialog: false,
+  editQueryDialog: null,
 };
 
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
@@ -20,11 +20,14 @@ const displaySlice = createSlice({
     TOGGLE_CREATE_COLLECTION_DIALOG(state) {
       state.createCollectionDialog = !state.createCollectionDialog;
     },
+    TOGGLE_EDIT_COLLECTION_DIALOG(state, action) {
+      state.editCollectionDialog = action.payload;
+    },
     TOGGLE_SAVE_QUERY_DIALOG(state) {
       state.saveQueryDialog = !state.saveQueryDialog;
     },
-    TOGGLE_EDIT_COLLECTION_DIALOG(state, action) {
-      state.editCollectionDialog = action.payload;
+    TOGGLE_EDIT_QUERY_DIALOG(state, action) {
+      state.editQueryDialog = action.payload;
     },
   },
 });

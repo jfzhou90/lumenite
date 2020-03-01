@@ -6,10 +6,9 @@ import compact from 'lodash/compact';
 const defaultQueryProps = {
   id: `query.${uuid()}`,
   name: 'ERROR',
-  link: '',
-  notes: '',
   query: '',
   variable: '',
+  collectionId: '',
 };
 
 class QueryDB {
@@ -29,6 +28,23 @@ class QueryDB {
   getAllQueryDetails(queryIds = []) {
     const promises = map(queryIds, queryId => this.storage.getItem(queryId));
     return Promise.all(promises).then(result => compact(result));
+  }
+
+  deleteQueries(queryIds = []) {
+    const promises = map(queryIds, queryId => this.storage.removeItem(queryId));
+    return Promise.all(promises);
+  }
+
+  getQueryDetails(queryId) {
+    return this.storage.getItem(queryId);
+  }
+
+  updateQuery(queryDetails) {
+    return this.storage.setItem(queryDetails.id, queryDetails);
+  }
+
+  deleteQuery(queryId) {
+    return this.storage.removeItem(queryId);
   }
 }
 

@@ -38,7 +38,7 @@ const SaveQueryDialog = ({ save }) => {
     dispatch(displayActions.TOGGLE_SAVE_QUERY_DIALOG());
   };
 
-  const isEmpty = !keys(collections).length;
+  const noCollection = !keys(collections).length;
   return (
     <Dialog
       open={open}
@@ -48,7 +48,7 @@ const SaveQueryDialog = ({ save }) => {
     >
       <DialogTitle>Save Query</DialogTitle>
       <DialogContent>
-        {isEmpty && (
+        {noCollection && (
           <DialogContentText>Please create a collection before trying to save!</DialogContentText>
         )}
 
@@ -56,42 +56,37 @@ const SaveQueryDialog = ({ save }) => {
           onSubmit={save}
           render={({ handleSubmit, invalid }) => (
             <form onSubmit={handleSubmit} noValidate>
-              {!isEmpty && (
-                <FormDropDown
-                  name='collectionId'
-                  id='collectionId'
-                  label='Collection'
-                  required
-                  validate={required}
-                  keyPair={collections}
-                />
+              {!noCollection && (
+                <>
+                  <FormDropDown
+                    name='collectionId'
+                    id='collectionId'
+                    label='Collection'
+                    required
+                    validate={required}
+                    keyPair={collections}
+                  />
+
+                  <FormField
+                    name='name'
+                    id='name'
+                    label='Name'
+                    required
+                    validate={required}
+                    maxLength={25}
+                  />
+                </>
               )}
-
-              <FormField
-                name='name'
-                id='name'
-                label='Name'
-                required
-                validate={required}
-                maxLength={25}
-              />
-
-              <FormField name='link' id='link' label='Link' />
-
-              <FormField
-                name='notes'
-                id='notes'
-                label='Notes'
-                rowsMax={7}
-                multiline
-                maxLength={500}
-              />
 
               <DialogActions>
                 <Button color='secondary' onClick={toggleSaveQueryDialog}>
                   Cancel
                 </Button>
-                <Button color='primary' disabled={invalid || isSubmitting} onClick={handleSubmit}>
+                <Button
+                  color='primary'
+                  disabled={invalid || isSubmitting || noCollection}
+                  onClick={handleSubmit}
+                >
                   Save
                 </Button>
               </DialogActions>
