@@ -64,8 +64,9 @@ const workspaceSlice = createSlice({
     REMOVE_QUERY(state, action) {
       toast.success('Query Deleted!');
       const { collection, query } = action.payload;
-      state.collections[collection?.id] = collection;
-      delete state.queries[collection?.id][query.id];
+      state.collections[collection.id] = collection;
+      delete state.queries[collection.id][query.id];
+
       state.isSubmitting = false;
     },
     ACTION_ERROR(state, action) {
