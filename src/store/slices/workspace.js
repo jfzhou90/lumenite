@@ -66,6 +66,7 @@ const workspaceSlice = createSlice({
       const { collection, query } = action.payload;
       state.collections[collection.id] = collection;
       delete state.queries[collection.id][query.id];
+
       state.isSubmitting = false;
     },
     ACTION_ERROR(state, action) {
