@@ -14,6 +14,7 @@ import WorkspaceSidebar from './components/workspace';
 import CreateCollectionDialog from './dialogs/createCollection';
 import SaveQueryDialog from './dialogs/saveQuery';
 import EditCollectionDialog from './dialogs/editCollection';
+import EditQueryDialog from './dialogs/editQuery';
 
 import './graphiql.scss';
 
@@ -90,10 +91,11 @@ const GraphQLEditor = () => {
 
   return (
     <div className='editor_div'>
-      <CreateCollectionDialog />
-      <SaveQueryDialog save={saveQuery} />
-      <EditCollectionDialog />
       <WorkspaceSidebar setQuery={setQuery} />
+      <CreateCollectionDialog />
+      <EditCollectionDialog />
+      <SaveQueryDialog save={saveQuery} />
+      <EditQueryDialog />
       <GraphiQL
         ref={graphiql}
         fetcher={graphQLFetcher}

@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconButton } from '@material-ui/core';
-import { Info as InfoIcon } from '@material-ui/icons';
+import { Info as InfoIcon, Link as LinkIcon } from '@material-ui/icons';
 
 import { viewCollectionInfo } from '../../../../store/asyncActions/collection';
 
@@ -14,7 +14,7 @@ import QueryList from './queryList';
 
 import CookieMan from '../../../../assets/illustrations/cookie';
 
-const CollectionItem = ({ name, link, id, setQuery }) => {
+const CollectionItem = ({ name, link, id, notes, setQuery }) => {
   const dispatch = useDispatch();
   const [expanded, setExpanded] = useState(false);
   const formattedLink = /http/.test(link) ? link : `//${link}`;
@@ -30,18 +30,25 @@ const CollectionItem = ({ name, link, id, setQuery }) => {
     <MuiExpansionPanel square expanded={expanded}>
       <MuiExpansionPanelSummary aria-controls={`${id}-content`} id={id} onClick={toggleExpansion}>
         <Typography>{name}</Typography>
-        <IconButton size='small' className='info_button' onClick={toggleEditDialog}>
-          <InfoIcon />
-        </IconButton>
+        <span>
+          {link && (
+            <IconButton
+              size='small'
+              className='collection_link'
+              onClick={event => event.stopPropagation()}
+            >
+              <a href={formattedLink} target='_blank' rel='noopener noreferrer'>
+                <LinkIcon />
+              </a>
+            </IconButton>
+          )}
+          <IconButton size='small' className='info_button' onClick={toggleEditDialog}>
+            <InfoIcon />
+          </IconButton>
+        </span>
       </MuiExpansionPanelSummary>
       <MuiExpansionPanelDetails>
-        {link && (
-          <Typography variant='subtitle2'>
-            <a rel='noopener noreferrer' target='_blank' href={formattedLink}>
-              {link}
-            </a>
-          </Typography>
-        )}
+        {notes && <Typography variant='subtitle2'>{notes}</Typography>}
         {isEmpty && (
           <div className='query_list--empty'>
             <CookieMan />
@@ -59,10 +66,12 @@ CollectionItem.propTypes = {
   id: PropTypes.string.isRequired,
   setQuery: PropTypes.func.isRequired,
   link: PropTypes.string,
+  notes: PropTypes.string,
 };
 
 CollectionItem.defaultProps = {
   link: undefined,
+  notes: undefined,
 };
 
 export default memo(CollectionItem);
