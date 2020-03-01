@@ -6,6 +6,8 @@ import { Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
 import { displayActions } from '../../../../store/slices/display';
+import { getCollectionsDetails } from '../../../../store/asyncActions/workspace';
+import { importCollection } from '../../../../lib/utils/qol';
 
 import CollectionItem from './collectionItem';
 
@@ -15,15 +17,40 @@ const CollectionList = ({ setQuery }) => {
     ({ workspace }) => sortBy(workspace.collections, collection => collection.name),
     shallowEqual
   );
+  const workspaceId = useSelector(({ workspace }) => workspace.id);
 
   const toggleCreateCollectionDialog = () =>
     dispatch(displayActions.TOGGLE_CREATE_COLLECTION_DIALOG());
 
+  const refreshCollectionList = () => {
+    dispatch(getCollectionsDetails(workspaceId));
+  };
+
+  const handleFileUpload = event => {
+    importCollection(event.target?.files[0], refreshCollectionList);
+  };
+
   return (
     <div className='collection_list_div'>
-      <Button color='primary' onClick={toggleCreateCollectionDialog}>
-        New
-      </Button>
+      <div className='collection_list_div--actions'>
+        <div>
+          <label htmlFor='import_collection_input'>
+            <Button component='span' color='primary'>
+              Import
+            </Button>
+            <input
+              id='import_collection_input'
+              style={{ display: 'none' }}
+              type='file'
+              multiple={false}
+              onChange={handleFileUpload}
+            />
+          </label>
+        </div>
+        <Button color='primary' onClick={toggleCreateCollectionDialog}>
+          New
+        </Button>
+      </div>
       <div className='collection_list_div--list'>
         {map(collections, ({ name, id, link, notes }) => (
           <CollectionItem

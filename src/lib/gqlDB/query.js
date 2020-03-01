@@ -24,6 +24,11 @@ class QueryDB {
     return this.storage.setItem(queryId, { ...defaultQueryProps, id: queryId, ...value });
   }
 
+  addQueries(queries = []) {
+    const promises = map(queries, query => this.storage.setItem(query.id, query));
+    return Promise.all(promises);
+  }
+
   getAllQueryDetails(queryIds = []) {
     const promises = map(queryIds, queryId => this.storage.getItem(queryId));
     return Promise.all(promises).then(result => compact(result));
