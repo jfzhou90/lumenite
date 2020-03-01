@@ -5,9 +5,8 @@ import queryDB from '../../lib/gqlDB/query';
 import { displayActions } from '../slices/display';
 import { workspaceActions } from '../slices/workspace';
 
-export const saveGqlQueries = queryProps => dispatch => {
-  const { collectionId, name } = queryProps;
-  if (!collectionId || !name) {
+export const saveGqlQueries = ({ collectionId, ...queryProps }) => dispatch => {
+  if (!collectionId || !queryProps.name) {
     return dispatch(
       workspaceActions.ACTION_ERROR(new Error('Missing collection ID / query name!'))
     );
@@ -36,11 +35,7 @@ export const getQueries = collectionId => dispatch => {
     .getAllQueries(collectionId)
     .then(queryIds => queryDB.getAllQueryDetails(queryIds))
     .then(queries => {
-      const queryMap = reduce(
-        queries,
-        (result, query) => ({ ...result, [query.id]: { ...query, collectionId } }),
-        {}
-      );
+      const queryMap = reduce(queries, (result, query) => ({ ...result, [query.id]: query }), {});
       dispatch(workspaceActions.GET_QUERIES({ collectionId, queries: queryMap }));
     })
     .catch(error => dispatch(workspaceActions.ACTION_ERROR(error)));
@@ -88,15 +83,15 @@ export const deleteCollection = collectionId => dispatch => {
     .catch(error => dispatch(workspaceActions.ACTION_ERROR(error)));
 };
 
-export const toggleEditQueryDialog = queryId => dispatch => {
-  if (!queryId) {
+export const toggleEditQueryDialog = ({ id, collectionId }) => dispatch => {
+  if (!id) {
     return dispatch(workspaceActions.ACTION_ERROR(new Error('Missing Query Id!')));
   }
 
   return queryDB
-    .getQueryDetails(queryId)
+    .getQueryDetails(id)
     .then(queryDetails => {
-      dispatch(displayActions.TOGGLE_EDIT_QUERY_DIALOG(queryDetails));
+      dispatch(displayActions.TOGGLE_EDIT_QUERY_DIALOG({ ...queryDetails, collectionId }));
     })
     .catch(error => dispatch(workspaceActions.ACTION_ERROR(error)));
 };
