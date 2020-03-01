@@ -8,7 +8,6 @@ const defaultQueryProps = {
   name: 'ERROR',
   query: '',
   variable: '',
-  collectionId: '',
 };
 
 class QueryDB {

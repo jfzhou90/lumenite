@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 
 import { getQueries, toggleEditQueryDialog } from '../../../../store/asyncActions/collection';
 
-const QueryItem = ({ name, variable, query, id, setQuery }) => {
+const QueryItem = ({ name, variable, query, id, collectionId, setQuery }) => {
   const dispatch = useDispatch();
   const onClick = () => {
     setQuery({ variable, query });
@@ -16,7 +16,7 @@ const QueryItem = ({ name, variable, query, id, setQuery }) => {
 
   const toggleEdit = event => {
     event.stopPropagation();
-    dispatch(toggleEditQueryDialog(id));
+    dispatch(toggleEditQueryDialog({ id, collectionId }));
   };
 
   return (
@@ -39,6 +39,7 @@ QueryItem.propTypes = {
   setQuery: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  collectionId: PropTypes.string.isRequired,
   variable: PropTypes.string.isRequired,
   query: PropTypes.string.isRequired,
 };
@@ -59,6 +60,7 @@ const QueryList = ({ collectionId, setQuery }) => {
     <List className='query_list'>
       {map(sortBy(queries, 'name'), ({ name, query, variable, id }) => (
         <QueryItem
+          collectionId={collectionId}
           name={name}
           key={id}
           query={query}
