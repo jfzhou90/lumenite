@@ -38,6 +38,10 @@ class CollectionDB {
     });
   }
 
+  addCollection(collection) {
+    return this.storage.setItem(collection.id, collection);
+  }
+
   getAllCollectionsDetails(collectionIds = []) {
     const promises = map(collectionIds, collectionId => this.storage.getItem(collectionId));
     return Promise.all(promises).then(result => compact(result));

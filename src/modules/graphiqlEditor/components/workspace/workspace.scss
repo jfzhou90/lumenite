@@ -19,6 +19,17 @@
     button {
       background-color: white;
       font-weight: bold;
+      width: 200px;
+    }
+
+    div {
+      span {
+        font-weight: bold;
+        color: $brand_orange;
+        &:hover {
+          background-color: #2a2a2e;
+        }
+      }
     }
   }
 
@@ -56,6 +67,17 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+
+    &--actions {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      span,
+      button {
+        max-width: 200px;
+      }
+    }
     .MuiExpansionPanelSummary-content {
       p {
         max-width: 300px;
@@ -85,12 +107,6 @@
       &:hover .collection_actions {
         visibility: visible;
       }
-    }
-
-    button {
-      max-width: 200px;
-      align-self: flex-end;
-      margin: 5px;
     }
 
     &--list {
@@ -183,6 +199,7 @@
         display: flex;
         align-items: center;
         color: white;
+        padding-right: 8px;
       }
 
       .MuiListItem-root {

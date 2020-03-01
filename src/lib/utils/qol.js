@@ -48,3 +48,28 @@ export const exportCollection = async collectionId => {
   element.click();
   document.body.removeChild(element);
 };
+
+const addCollectionJsonToDB = async (jsonData, callback) => {
+  try {
+    const data = JSON.parse(jsonData);
+    await queryDB.addQueries(data.queries);
+    await collectionDB.addCollection(data.collection);
+    toast.success('Collection has been imported successfully!');
+    callback();
+  } catch (error) {
+    toast.error('Error: Unable to parse file');
+  }
+};
+
+export const importCollection = async (file, callback) => {
+  if (!file) {
+    toast.error('Error: No file was uploaded');
+  }
+
+  const fileReader = new FileReader();
+  fileReader.onloadend = () => {
+    addCollectionJsonToDB(fileReader.result, callback);
+  };
+
+  fileReader.readAsText(file);
+};
