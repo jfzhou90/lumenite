@@ -23,8 +23,8 @@ const LoginPage = () => {
   const dispatch = useDispatch();
 
   const redirect = useCallback(() => {
-    history.replace({ pathname: location.state.from?.pathname || '/' });
-  }, [history, location.state.from]);
+    history.replace({ pathname: location.state?.from?.pathname || '/' });
+  }, [history, location.state]);
 
   useEffect(() => {
     if (isAuthenticated) {

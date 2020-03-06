@@ -19,7 +19,8 @@ export const getCollectionsDetails = workspaceId => dispatch => {
         {}
       );
       dispatch(workspaceActions.COLLECTION_LIST_LOADED(collectionMap));
-    });
+    })
+    .catch(error => dispatch(workspaceActions.ACTION_ERROR(error)));
 };
 
 export const createCollection = ({ workspaceId, ...collectionDetails }) => dispatch => {

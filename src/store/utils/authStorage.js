@@ -44,8 +44,6 @@ const updateConnection = (storedConnections, name, currentConnection) => {
   } else {
     const combinedUsers = { ...parsedStored[name].users, ...currentConnection.users };
     parsedStored[name].users = combinedUsers;
-    // TODO: REMOVE THIS LINE IN THE FUTURE, need it to save older connections
-    parsedStored[name].authType = 'cognito';
   }
 
   localStorage.setItem('connections', JSON.stringify(parsedStored));
