@@ -3,7 +3,7 @@
   "plugins": ["jsx-a11y", "prettier"],
   "rules": {
     "semi": 1,
-    "max-lines": [2, { "max": 100, "skipBlankLines": true, "skipComments": true }],
+    "max-lines": [2, { "max": 100, "skipComments": true, "skipBlankLines": true }],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/jsx-props-no-spreading": [
       2,
