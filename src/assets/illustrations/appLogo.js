@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React from 'react';
 import Lottie from 'react-lottie';
 

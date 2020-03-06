@@ -1,3 +1,4 @@
+/* eslint max-lines: [2, {"max": 150, "skipComments": true, "skipBlankLines": true}] */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {

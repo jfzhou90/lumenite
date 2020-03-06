@@ -1,3 +1,4 @@
+/* eslint max-lines: [2, {"max": 150, "skipComments": true, "skipBlankLines": true}] */
 import React, { useState } from 'react';
 import includes from 'lodash/includes';
 import {

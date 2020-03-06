@@ -1,3 +1,4 @@
+/* eslint max-lines: [2, {"max": 150, "skipComments": true, "skipBlankLines": true}] */
 import React, { useRef, useCallback } from 'react';
 import GraphiQL from 'graphiql';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';

@@ -1,3 +1,4 @@
+/* eslint max-lines: [2, {"max": 150, "skipComments": true, "skipBlankLines": true}] */
 import reduce from 'lodash/reduce';
 
 import collectionDB from '../../lib/gqlDB/collection';

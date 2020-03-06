@@ -1,3 +1,4 @@
+/* eslint max-lines: [2, {"max": 150, "skipComments": true, "skipBlankLines": true}] */
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Field } from 'react-final-form';
