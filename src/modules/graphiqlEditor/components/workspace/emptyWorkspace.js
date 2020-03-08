@@ -10,7 +10,7 @@ import ArmsWide from '../../../../assets/svg/armsWide';
 
 const EmptyCollection = () => {
   const dispatch = useDispatch();
-  const workspaceId = useSelector(({ workspace }) => workspace.id);
+  const workspaceId = useSelector(({ workspace }) => workspace.workspaceId);
 
   const toggleCreateCollectionDialog = () =>
     dispatch(displayActions.TOGGLE_CREATE_COLLECTION_DIALOG());
