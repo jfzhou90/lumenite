@@ -1,3 +1,4 @@
+/* eslint max-lines: [2, {"max": 150, "skipComments": true, "skipBlankLines": true}] */
 import reduce from 'lodash/reduce';
 
 import collectionDB from '../../lib/gqlDB/collection';
@@ -96,6 +97,19 @@ export const toggleEditQueryDialog = ({ id, collectionId }) => dispatch => {
     .catch(error => dispatch(workspaceActions.ACTION_ERROR(error)));
 };
 
+export const toggleOverWriteQueryDialog = ({ id, collectionId }) => dispatch => {
+  if (!id) {
+    return dispatch(workspaceActions.ACTION_ERROR(new Error('Missing Query Id!')));
+  }
+
+  return queryDB
+    .getQueryDetails(id)
+    .then(queryDetails => {
+      dispatch(displayActions.TOGGLE_OVERWRITE_QUERY_DIALOG({ ...queryDetails, collectionId }));
+    })
+    .catch(error => dispatch(workspaceActions.ACTION_ERROR(error)));
+};
+
 export const editQuery = queryDetails => dispatch => {
   if (!queryDetails) {
     return dispatch(workspaceActions.ACTION_ERROR(new Error('Unable to update Query')));
@@ -106,7 +120,7 @@ export const editQuery = queryDetails => dispatch => {
     .updateQuery(queryDetails)
     .then(updatedQuery => {
       dispatch(workspaceActions.UPDATE_QUERY(updatedQuery));
-      dispatch(displayActions.TOGGLE_EDIT_QUERY_DIALOG(null));
+      dispatch(displayActions.CLOSE_QUERY_DIALOG());
     })
     .catch(error => dispatch(workspaceActions.ACTION_ERROR(error)));
 };

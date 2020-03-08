@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 export const composeValidators = (...validators) => value =>
   validators.reduce((error, validator) => error || validator(value), undefined);
 
