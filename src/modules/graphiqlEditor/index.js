@@ -16,6 +16,7 @@ import CreateCollectionDialog from './dialogs/createCollection';
 import SaveQueryDialog from './dialogs/saveQuery';
 import EditCollectionDialog from './dialogs/editCollection';
 import EditQueryDialog from './dialogs/editQuery';
+import OverwriteQueryDialog from './dialogs/overWriteQuery';
 
 import './graphiql.scss';
 
@@ -90,6 +91,17 @@ const GraphQLEditor = () => {
     graphiql.current.getVariableEditor().setValue(variable);
   }, []);
 
+  const getQueryData = useCallback(() => {
+    try {
+      const query = graphiql.current.getQueryEditor().getValue();
+      const variable = graphiql.current.getVariableEditor().getValue();
+      return { query, variable };
+    } catch (error) {
+      toast.error(`Error: ${error}`);
+    }
+    return {};
+  }, []);
+
   return (
     <div className='editor_div'>
       <WorkspaceSidebar setQuery={setQuery} />
@@ -97,6 +109,7 @@ const GraphQLEditor = () => {
       <EditCollectionDialog />
       <SaveQueryDialog save={saveQuery} />
       <EditQueryDialog />
+      <OverwriteQueryDialog getQueryData={getQueryData} />
       <GraphiQL
         ref={graphiql}
         fetcher={graphQLFetcher}

@@ -187,13 +187,16 @@
         justify-content: space-between;
         font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 
-        .edit_button {
+        .query_actions {
           visibility: hidden;
         }
 
-        &:hover .edit_button {
+        &:hover .query_actions {
           visibility: visible;
-          color: white;
+
+          > * {
+            color: white;
+          }
         }
       }
 

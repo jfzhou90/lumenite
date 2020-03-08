@@ -6,6 +6,7 @@ const initialState = {
   editCollectionDialog: null,
   saveQueryDialog: false,
   editQueryDialog: null,
+  overwriteQueryDialog: null,
 };
 
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
@@ -27,6 +28,13 @@ const displaySlice = createSlice({
     },
     TOGGLE_EDIT_QUERY_DIALOG(state, action) {
       state.editQueryDialog = action.payload;
+    },
+    TOGGLE_OVERWRITE_QUERY_DIALOG(state, action) {
+      state.overwriteQueryDialog = action.payload;
+    },
+    CLOSE_QUERY_DIALOG(state) {
+      state.editQueryDialog = null;
+      state.overwriteQueryDialog = null;
     },
   },
 });

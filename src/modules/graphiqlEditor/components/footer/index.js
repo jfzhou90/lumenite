@@ -1,4 +1,3 @@
-/* eslint max-lines: [2, {"max": 150, "skipComments": true, "skipBlankLines": true}] */
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Field } from 'react-final-form';
@@ -50,16 +49,9 @@ const GraphQLFooter = () => {
         <>
           <Form
             onSubmit={changeUser}
-            validate={({ username, password }) => {
-              const error = {};
-              if (!username) {
-                error.username = 'Required';
-              }
-              if (!password) {
-                error.password = 'Required';
-              }
-              return error;
-            }}
+            validate={({ username, password }) =>
+              !username || !password ? { params: 'required' } : {}
+            }
             render={({ handleSubmit, invalid, form }) => (
               <form
                 onSubmit={event => {

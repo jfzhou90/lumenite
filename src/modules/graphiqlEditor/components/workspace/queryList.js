@@ -3,14 +3,18 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import map from 'lodash/map';
 import sortBy from 'lodash/sortBy';
 import { List, ListItem, IconButton } from '@material-ui/core';
-import { Edit as EditIcon } from '@material-ui/icons';
+import { Edit as EditIcon, SwapHoriz as SwapIcon } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 
-import { getQueries, toggleEditQueryDialog } from '../../../../store/asyncActions/collection';
+import {
+  getQueries,
+  toggleEditQueryDialog,
+  toggleOverWriteQueryDialog,
+} from '../../../../store/asyncActions/collection';
 
 const QueryItem = ({ name, variable, query, id, collectionId, setQuery }) => {
   const dispatch = useDispatch();
-  const onClick = () => {
+  const handleSetQuery = () => {
     setQuery({ variable, query });
   };
 
@@ -19,18 +23,35 @@ const QueryItem = ({ name, variable, query, id, collectionId, setQuery }) => {
     dispatch(toggleEditQueryDialog({ id, collectionId }));
   };
 
+  const toggleOverwrite = event => {
+    event.stopPropagation();
+    dispatch(toggleOverWriteQueryDialog({ id, collectionId }));
+  };
+
   return (
-    <ListItem id={id} button onClick={onClick}>
+    <ListItem id={id} button onClick={handleSetQuery}>
       {name}
-      <IconButton
-        size='small'
-        onClick={toggleEdit}
-        className='edit_button'
-        disableFocusRipple
-        disableRipple
-      >
-        <EditIcon />
-      </IconButton>
+      <div className='query_actions'>
+        <IconButton
+          size='small'
+          onClick={toggleOverwrite}
+          className='overwrite_button'
+          disableFocusRipple
+          disableRipple
+        >
+          <SwapIcon />
+        </IconButton>
+
+        <IconButton
+          size='small'
+          onClick={toggleEdit}
+          className='edit_button'
+          disableFocusRipple
+          disableRipple
+        >
+          <EditIcon />
+        </IconButton>
+      </div>
     </ListItem>
   );
 };

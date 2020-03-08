@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import uuid from 'uuid/v4';
 import { toast } from 'react-toastify';
 
@@ -66,9 +65,9 @@ const addCollectionJsonToDB = async (jsonData, callback) => {
   }
 };
 
-export const importCollection = async (file, callback) => {
+export const importCollection = (file, callback) => {
   if (!file) {
-    toast.error('Error: No file was uploaded');
+    return;
   }
 
   const fileReader = new FileReader();

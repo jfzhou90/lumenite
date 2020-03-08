@@ -29,12 +29,9 @@ const authSlice = createSlice({
     CONNECTED_TO_COGNITO(state, action) {
       const { user, cognitoConnection } = action.payload;
       toast.success('You have been successfully authenticated!');
-      Object.assign(state, {
-        isConnecting: false,
-        isAuthenticated: true,
-        ...cognitoConnection,
-        user,
-      });
+      state.isConnecting = false;
+      state.isAuthenticated = true;
+      Object.assign(state, { ...cognitoConnection, user });
     },
     CONNECTED_VIA_APIKEY(state, action) {
       const { apiConnection } = action.payload;
